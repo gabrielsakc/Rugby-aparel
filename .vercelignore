@@ -21,8 +21,7 @@ England/Screenshot_1.png
 England/cartel coll.png
 England/flag 2.png
 
-Scotland/*
-!Scotland/20603606-scaled.jpg
+# Scotland: exposed for scotland.html (full folder in use)
 
 # ─── Generated: excluir renders de modelos no usados ─────────
 generated/model-ar-desert.png
@@ -71,8 +70,7 @@ wales blanco.png
 Argentina Blanco.png
 Argentina Blanco  Bordado.png
 Argentina.png
-SCOTLAND blanco.png
-Scotland.png
+# SCOTLAND blanco.png and Scotland.png used for scotland.html
 Japón blanco.png
 Cartel generico.png
 LOGO WEB.png
