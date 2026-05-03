@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__30997ac5-ed4c-4d90-a8d7-77ca8a103f55__balance",
+      "mcp__30997ac5-ed4c-4d90-a8d7-77ca8a103f55__models_explore",
+      "mcp__30997ac5-ed4c-4d90-a8d7-77ca8a103f55__generate_image",
+      "mcp__30997ac5-ed4c-4d90-a8d7-77ca8a103f55__job_display",
+      "Bash(mkdir -p \"D:/rugby apparel/generated\")",
+      "Bash(curl -sS -o australia.png \"https://d8j0ntlcm91z4.cloudfront.net/user_37iJNCV5bvhEjLqujPmEatnbsXN/hf_20260502_183258_4c8ad972-07b3-4a39-88e9-5494cde08a29.png\")",
+      "Bash(curl -sS -o fiji.png \"https://d8j0ntlcm91z4.cloudfront.net/user_37iJNCV5bvhEjLqujPmEatnbsXN/hf_20260502_183301_90791a59-b93d-4fc8-9448-d4feecb7d2d6.png\")",
+      "Bash(curl -sS -o italia.png \"https://d8j0ntlcm91z4.cloudfront.net/user_37iJNCV5bvhEjLqujPmEatnbsXN/hf_20260502_183304_31a9ed11-4486-49b3-a820-5ab817c0e625.png\")",
+      "Bash(curl -sS -o espana.png \"https://d8j0ntlcm91z4.cloudfront.net/user_37iJNCV5bvhEjLqujPmEatnbsXN/hf_20260502_183307_dd471986-bf04-4eb3-8422-bdcc3533ec71.png\")",
+      "Bash(grep -E \"^\\(australia|fiji|italia|espana|brasil|paraguay\\)\\\\.png$\")",
+      "Bash(curl -sS -o \"D:/rugby apparel/generated/newzealand.png\" \"https://d8j0ntlcm91z4.cloudfront.net/user_37iJNCV5bvhEjLqujPmEatnbsXN/hf_20260502_184720_63cbf3e1-62df-4a2f-9df9-f77f3bca1dbd.png\")",
+      "Bash(curl -sS -o \"model-ar-white.png\" \"https://d8j0ntlcm91z4.cloudfront.net/user_37iJNCV5bvhEjLqujPmEatnbsXN/hf_20260502_195104_4c6f60e1-635c-488d-bae3-3403e805aff7.png\")",
+      "Bash(curl -sS -o \"model-ar-desert.png\" \"https://d8j0ntlcm91z4.cloudfront.net/user_37iJNCV5bvhEjLqujPmEatnbsXN/hf_20260502_195114_6c8c00e9-b4e4-41df-87e0-8c6a44d16eef.png\")",
+      "Bash(curl -sS -o \"model-ar-navy.png\" \"https://d8j0ntlcm91z4.cloudfront.net/user_37iJNCV5bvhEjLqujPmEatnbsXN/hf_20260502_195107_59261c56-9fa8-44f7-8de9-4d3c955d59e9.png\")",
+      "Bash(curl -sS -o \"model-ar-hoodie.png\" \"https://d8j0ntlcm91z4.cloudfront.net/user_37iJNCV5bvhEjLqujPmEatnbsXN/hf_20260502_195111_206b2290-bcdf-4b4b-8b38-3b9f36fc10e3.png\")",
+      "Bash(grep -E \"\\\\.png$\")",
+      "WebSearch"
+    ]
+  }
+}

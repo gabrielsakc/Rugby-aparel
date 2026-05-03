@@ -1,0 +1,2913 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="tactical">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="description" content="THE H CONNECTION — Rugby apparel by union. Country collections built on organic cotton, embroidered crests and editorial restraint." />
+<title>THE H CONNECTION — Rugby Apparel / Country Collections</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&display=swap" rel="stylesheet" />
+
+<style>
+  /* ============================================================
+     DESIGN TOKENS — Tactical Telemetry × Editorial Industrial
+  ============================================================ */
+  :root {
+    --bg: #0A0A0A;
+    --bg-elev: #111111;
+    --bg-tint: #161616;
+    --ink: #EAEAEA;
+    --ink-mute: #8A8A8A;
+    --ink-faint: #4A4A4A;
+    --hairline: rgba(234, 234, 234, 0.08);
+    --hairline-strong: rgba(234, 234, 234, 0.16);
+    --hazard: #E61919;
+    --phosphor: #4AF626;
+    --paper: #F4F4F0;
+
+    --font-display: "Archivo Black", "Inter Tight", sans-serif;
+    --font-body: "Space Grotesk", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+    --font-serif: "Fraunces", "Times New Roman", serif;
+
+    --ease: cubic-bezier(0.32, 0.72, 0, 1);
+    --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+
+    --grid: clamp(16px, 2vw, 32px);
+    --maxw: 1480px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *::selection { background: var(--hazard); color: var(--ink); }
+
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    min-height: 100dvh;
+  }
+
+  img, svg { display: block; max-width: 100%; height: auto; }
+  a { color: inherit; text-decoration: none; }
+  button { background: none; border: none; color: inherit; cursor: pointer; font: inherit; }
+
+  /* ============================================================
+     GLOBAL OVERLAYS — Scanlines + Noise (fixed, GPU-safe)
+  ============================================================ */
+  .scanlines, .noise {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 90;
+  }
+  .scanlines {
+    background: repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 2px,
+      rgba(0, 0, 0, 0.18) 2px,
+      rgba(0, 0, 0, 0.18) 3px
+    );
+    mix-blend-mode: multiply;
+    opacity: 0.5;
+  }
+  .noise {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.4'/></svg>");
+    opacity: 0.06;
+    mix-blend-mode: overlay;
+  }
+
+  /* ============================================================
+     UTILITIES
+  ============================================================ */
+  .container {
+    width: 100%;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding-inline: var(--grid);
+  }
+  .mono { font-family: var(--font-mono); letter-spacing: 0.04em; }
+  .serif { font-family: var(--font-serif); }
+  .display { font-family: var(--font-display); letter-spacing: -0.04em; line-height: 0.85; text-transform: uppercase; }
+  .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-mute);
+  }
+  .hairline { border-top: 1px solid var(--hairline); }
+  .hazard { color: var(--hazard); }
+  .phosphor { color: var(--phosphor); }
+
+  .reveal { opacity: 0; transform: translate3d(0, 24px, 0); transition: opacity 1s var(--ease-soft), transform 1s var(--ease-soft); }
+  .reveal.in { opacity: 1; transform: translate3d(0, 0, 0); }
+  .reveal[data-delay="1"] { transition-delay: 80ms; }
+  .reveal[data-delay="2"] { transition-delay: 160ms; }
+  .reveal[data-delay="3"] { transition-delay: 240ms; }
+  .reveal[data-delay="4"] { transition-delay: 320ms; }
+  .reveal[data-delay="5"] { transition-delay: 400ms; }
+  .reveal[data-delay="6"] { transition-delay: 480ms; }
+
+  /* ============================================================
+     TOP UTILITY TICKER
+  ============================================================ */
+  .telemetry-bar {
+    position: relative;
+    z-index: 80;
+    background: var(--bg);
+    border-bottom: 1px solid var(--hairline);
+    overflow: hidden;
+    height: 32px;
+    display: flex;
+    align-items: center;
+  }
+  .telemetry-bar .track {
+    display: flex;
+    gap: 64px;
+    white-space: nowrap;
+    animation: ticker 60s linear infinite;
+    will-change: transform;
+  }
+  .telemetry-bar .item {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-mute);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .telemetry-bar .item .dot {
+    width: 6px; height: 6px; background: var(--phosphor); border-radius: 0;
+    box-shadow: 0 0 8px rgba(74, 246, 38, 0.6);
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  .telemetry-bar .item .dot.hz { background: var(--hazard); box-shadow: 0 0 8px rgba(230, 25, 25, 0.6); }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.85); }
+  }
+
+  /* ============================================================
+     NAVIGATION
+  ============================================================ */
+  nav.primary {
+    position: sticky;
+    top: 0;
+    z-index: 70;
+    background: rgba(10, 10, 10, 0.86);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid var(--hairline);
+  }
+  nav.primary .row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    height: 72px;
+    gap: 32px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+    background: var(--ink);
+    color: var(--bg);
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display);
+    font-size: 22px;
+    line-height: 1;
+    position: relative;
+  }
+  .brand-mark::after {
+    content: "®";
+    position: absolute;
+    top: -6px; right: -10px;
+    font-size: 9px;
+    color: var(--ink);
+    font-family: var(--font-mono);
+  }
+  .brand-text { display: flex; flex-direction: column; line-height: 1; gap: 3px; }
+  .brand-text .name { font-family: var(--font-display); font-size: 13px; letter-spacing: -0.02em; text-transform: uppercase; }
+  .brand-text .meta { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--ink-mute); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+  }
+  .nav-links a {
+    position: relative;
+    padding: 4px 0;
+    color: var(--ink-mute);
+    transition: color 0.4s var(--ease);
+  }
+  .nav-links a::before {
+    content: "[";
+    margin-right: 6px;
+    color: var(--ink-faint);
+    transition: color 0.4s var(--ease);
+  }
+  .nav-links a::after {
+    content: "]";
+    margin-left: 6px;
+    color: var(--ink-faint);
+    transition: color 0.4s var(--ease);
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::before, .nav-links a:hover::after { color: var(--hazard); }
+
+  .nav-actions { display: flex; gap: 12px; align-items: center; }
+  .icon-btn {
+    width: 40px; height: 40px;
+    border: 1px solid var(--hairline-strong);
+    display: grid; place-items: center;
+    transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  }
+  .icon-btn:hover { border-color: var(--ink); background: rgba(234, 234, 234, 0.04); }
+  .icon-btn svg { width: 16px; height: 16px; stroke: var(--ink); stroke-width: 1.5; fill: none; }
+  .cart-btn { position: relative; }
+  .cart-btn .count {
+    position: absolute; top: -6px; right: -6px;
+    background: var(--hazard); color: var(--ink);
+    width: 18px; height: 18px;
+    font-family: var(--font-mono); font-size: 10px;
+    display: grid; place-items: center;
+  }
+
+  /* ============================================================
+     BRAND LOGO IMAGE — drops white background on dark surfaces
+  ============================================================ */
+  .brand-logo {
+    display: block;
+    height: auto;
+    user-select: none;
+    -webkit-user-drag: none;
+    mix-blend-mode: screen;
+    filter: brightness(1.15) contrast(1.05);
+  }
+
+  /* ============================================================
+     RUGBY GOALPOST "H" — inline display character
+  ============================================================ */
+  .goalposts {
+    display: inline-block;
+    width: 0.92em;
+    height: 1.55em;
+    vertical-align: -0.46em;
+    margin: 0 0.12em 0 0.1em;
+    color: currentColor;
+    position: relative;
+  }
+  .goalposts svg { display: block; height: 100%; width: 100%; fill: currentColor; }
+  .goalposts.tall { height: 1.85em; vertical-align: -0.66em; }
+  .goalposts.hazard { color: var(--hazard); }
+
+  /* ============================================================
+     INTRO VIDEO — full-bleed cinematic
+  ============================================================ */
+  .intro-video {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 21/9;
+    max-height: 88dvh;
+    min-height: 360px;
+    overflow: hidden;
+    background: #000;
+    border-bottom: 1px solid var(--hairline);
+    isolation: isolate;
+  }
+  .intro-video video,
+  .intro-video > img.fallback {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: contrast(1.04);
+  }
+  .intro-video::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(10,10,10,0.45) 0%, rgba(10,10,10,0) 22%, rgba(10,10,10,0) 60%, rgba(10,10,10,0.85) 100%);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .intro-video::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 3px,
+      rgba(0,0,0,0.18) 3px,
+      rgba(0,0,0,0.18) 4px
+    );
+    mix-blend-mode: multiply;
+    opacity: 0.4;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .intro-video .frame {
+    position: absolute;
+    inset: 24px;
+    border: 1px dashed rgba(234,234,234,0.16);
+    z-index: 4;
+    pointer-events: none;
+  }
+  .intro-video .corner {
+    position: absolute;
+    width: 28px; height: 28px;
+    border: 1px solid var(--hazard);
+    z-index: 5;
+  }
+  .intro-video .corner.tl { top: 16px; left: 16px; border-right: none; border-bottom: none; }
+  .intro-video .corner.tr { top: 16px; right: 16px; border-left: none; border-bottom: none; }
+  .intro-video .corner.bl { bottom: 16px; left: 16px; border-right: none; border-top: none; }
+  .intro-video .corner.br { bottom: 16px; right: 16px; border-left: none; border-top: none; }
+
+  .intro-video .meta-tl {
+    position: absolute;
+    top: 32px; left: 56px;
+    z-index: 5;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+  .intro-video .meta-tl .key { color: var(--ink-mute); display: block; }
+  .intro-video .rec {
+    position: absolute;
+    top: 32px; right: 56px;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    background: rgba(10,10,10,0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--hazard);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .intro-video .rec .dot {
+    width: 6px; height: 6px;
+    background: var(--hazard);
+    border-radius: 50%;
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+
+  .intro-video .lower {
+    position: absolute;
+    left: 56px;
+    right: 56px;
+    bottom: 40px;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: end;
+    color: var(--ink);
+  }
+  .intro-video .reel-title {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 7vw, 120px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    max-width: 14ch;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.08em;
+  }
+  .intro-video .reel-title .word { display: inline-block; }
+  .intro-video .reel-title .accent {
+    color: var(--hazard);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    text-transform: lowercase;
+    letter-spacing: -0.02em;
+  }
+  .intro-video .reel-logo {
+    position: absolute;
+    top: 28px; left: 56px;
+    z-index: 5;
+    width: clamp(280px, 30vw, 460px);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .intro-video .reel-logo img { width: 100%; height: auto; }
+  .intro-video .reel-logo .cap {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border-top: 1px solid var(--hairline-strong);
+    padding-top: 8px;
+    line-height: 1.6;
+  }
+  .intro-video .reel-logo .cap span { color: var(--ink-mute); margin-right: 6px; }
+  .intro-video .reel-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-align: right;
+    line-height: 1.7;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .intro-video .reel-meta .key { color: var(--ink-mute); }
+
+  .intro-video .controls {
+    position: absolute;
+    bottom: 32px;
+    right: 56px;
+    z-index: 6;
+    display: flex;
+    gap: 8px;
+  }
+  .intro-video .controls button {
+    width: 38px; height: 38px;
+    background: rgba(10,10,10,0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--hairline-strong);
+    color: var(--ink);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  }
+  .intro-video .controls button:hover { border-color: var(--hazard); background: rgba(10,10,10,0.85); }
+  .intro-video .controls button svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 1.6; fill: none; }
+
+  /* timecode strip */
+  .intro-video .timecode {
+    position: absolute;
+    bottom: 8px; left: 56px;
+    z-index: 5;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 1024px) {
+    .intro-video { aspect-ratio: 16/9; max-height: 70dvh; }
+    .intro-video .meta-tl, .intro-video .lower, .intro-video .timecode { left: 32px; }
+    .intro-video .rec, .intro-video .controls, .intro-video .lower { right: 32px; }
+  }
+  @media (max-width: 640px) {
+    .intro-video { aspect-ratio: 4/5; max-height: 80dvh; }
+    .intro-video .meta-tl, .intro-video .timecode { left: 20px; }
+    .intro-video .rec { right: 20px; padding: 4px 8px; font-size: 9px; }
+    .intro-video .lower { left: 20px; right: 20px; bottom: 32px; grid-template-columns: 1fr; }
+    .intro-video .reel-meta { text-align: left; }
+    .intro-video .controls { right: 20px; bottom: 24px; }
+    .intro-video .frame { inset: 16px; }
+    .intro-video .corner { width: 20px; height: 20px; }
+  }
+
+  /* ============================================================
+     HERO
+  ============================================================ */
+  .hero {
+    position: relative;
+    padding: 80px 0 100px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .hero-topbrand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 48px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .hero-topbrand .logo-wrap {
+    width: clamp(220px, 22vw, 340px);
+    flex-shrink: 0;
+  }
+  .hero-topbrand .logo-wrap img { width: 100%; height: auto; display: block; }
+  .hero-topbrand .meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    line-height: 1.7;
+    border-left: 1px solid var(--hairline);
+    padding-left: 16px;
+  }
+  .hero-topbrand .meta .key { color: var(--hazard); display: block; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 48px;
+    align-items: end;
+  }
+  .hero-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 64px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .hero-meta .group { display: flex; flex-direction: column; gap: 4px; }
+  .hero-meta .group .key { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; color: var(--ink-faint); text-transform: uppercase; }
+  .hero-meta .group .val { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--ink); text-transform: uppercase; }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(72px, 13vw, 220px);
+    line-height: 0.84;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+  }
+  .hero-title .line { display: block; position: relative; }
+  .hero-title .line.shift { padding-left: clamp(40px, 8vw, 140px); }
+  .hero-title .accent {
+    color: var(--hazard);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    text-transform: lowercase;
+    font-size: 0.7em;
+  }
+  .hero-title .h-mark {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 0.04em 0.18em 0.06em;
+    transform: skew(-2deg);
+  }
+
+  .hero-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-bottom: 16px;
+  }
+  .hero-image {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background: var(--bg-elev);
+  }
+  .hero-image img,
+  .hero-image video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(0.75) contrast(1.1) brightness(0.9);
+    transition: filter 1.2s var(--ease-soft), transform 8s var(--ease-soft);
+  }
+  .hero-image:hover img,
+  .hero-image:hover video { filter: grayscale(0) contrast(1.05); transform: scale(1.02); }
+  .hero-image .mute-btn {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    z-index: 4;
+    width: 36px;
+    height: 36px;
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--hairline-strong);
+    color: var(--ink);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  }
+  .hero-image .mute-btn:hover { border-color: var(--hazard); background: rgba(10, 10, 10, 0.9); }
+  .hero-image .mute-btn svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 1.6; fill: none; }
+  .hero-image .rec-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 9px;
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--hazard);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .hero-image .rec-badge .rec-dot {
+    width: 5px; height: 5px;
+    background: var(--hazard);
+    border-radius: 50%;
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  .hero-image::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10,10,10,0) 50%, rgba(10,10,10,0.8) 100%);
+    z-index: 2;
+  }
+  .hero-image .crosshair {
+    position: absolute;
+    width: 24px; height: 24px;
+    border: 1px solid var(--hazard);
+    z-index: 3;
+  }
+  .hero-image .crosshair::before, .hero-image .crosshair::after {
+    content: "";
+    position: absolute;
+    background: var(--hazard);
+  }
+  .hero-image .crosshair::before { left: 50%; top: -6px; bottom: -6px; width: 1px; transform: translateX(-50%); }
+  .hero-image .crosshair::after { top: 50%; left: -6px; right: -6px; height: 1px; transform: translateY(-50%); }
+  .hero-image .crosshair.tl { top: 12px; left: 12px; }
+  .hero-image .crosshair.br { bottom: 12px; right: 12px; }
+  .hero-image .tag {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    z-index: 3;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-image .tag .dot { width: 6px; height: 6px; background: var(--hazard); }
+
+  .hero-lockup {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px 0;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .hero-lockup img {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+  }
+
+  .hero-aside .lede {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(16px, 1.4vw, 22px);
+    line-height: 1.45;
+    color: var(--ink-mute);
+    max-width: 32ch;
+  }
+  .hero-aside .lede em { color: var(--ink); font-style: normal; font-family: var(--font-display); font-size: 0.9em; letter-spacing: -0.01em; }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px 14px 22px;
+    background: var(--ink);
+    color: var(--bg);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    width: max-content;
+    transition: transform 0.3s var(--ease);
+  }
+  .hero-cta:hover { transform: translateY(-1px); }
+  .hero-cta:active { transform: translateY(0) scale(0.98); }
+  .hero-cta .arrow {
+    width: 28px; height: 28px;
+    background: var(--bg);
+    color: var(--ink);
+    display: grid; place-items: center;
+    transition: transform 0.4s var(--ease);
+  }
+  .hero-cta:hover .arrow { transform: translate(2px, -2px); }
+  .hero-cta .arrow svg { width: 12px; height: 12px; stroke: var(--ink); stroke-width: 2; fill: none; }
+
+  .country-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--hairline);
+  }
+  .country-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    padding: 6px 10px;
+    border: 1px solid var(--hairline-strong);
+    transition: all 0.3s var(--ease);
+    cursor: pointer;
+  }
+  .country-tag:hover { color: var(--ink); border-color: var(--hazard); }
+  .country-tag .iso { color: var(--hazard); margin-right: 8px; }
+
+  /* ============================================================
+     MANIFESTO
+  ============================================================ */
+  .manifesto {
+    padding: clamp(80px, 12vw, 160px) 0;
+    border-bottom: 1px solid var(--hairline);
+    position: relative;
+  }
+  .manifesto-grid {
+    display: grid;
+    grid-template-columns: 0.4fr 1.6fr 0.4fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .manifesto-grid .col-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    line-height: 1.6;
+  }
+  .manifesto-grid .col-meta .num { color: var(--hazard); display: block; font-size: 14px; margin-bottom: 12px; }
+  .manifesto-text {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(22px, 2.6vw, 38px);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .manifesto-text strong { font-style: italic; font-weight: 300; color: var(--hazard); }
+  .manifesto-text mark { background: none; color: var(--ink); border-bottom: 1px solid var(--hazard); padding-bottom: 2px; }
+
+  /* ============================================================
+     COUNTRY COLLECTIONS — BENTO
+  ============================================================ */
+  .collections {
+    padding: clamp(80px, 10vw, 140px) 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .section-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    margin-bottom: 64px;
+    align-items: end;
+  }
+  .section-head .left { display: flex; flex-direction: column; gap: 16px; }
+  .section-head .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-mute);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-head .eyebrow::before {
+    content: "";
+    width: 32px; height: 1px; background: var(--hazard);
+  }
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 6vw, 88px);
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+  .section-head h2 .it {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    text-transform: lowercase;
+    color: var(--hazard);
+  }
+  .section-head .right {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-mute);
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(220px, auto);
+    gap: 1px;
+    background: var(--hairline);
+  }
+  .bento > .tile { background: var(--bg); }
+
+  .tile {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    isolation: isolate;
+  }
+  .tile.span-7 { grid-column: span 7; grid-row: span 2; }
+  .tile.span-5 { grid-column: span 5; grid-row: span 1; }
+  .tile.span-4 { grid-column: span 4; grid-row: span 2; }
+  .tile.span-3 { grid-column: span 3; grid-row: span 1; }
+  .tile.span-6 { grid-column: span 6; grid-row: span 1; }
+  .tile.span-12 { grid-column: span 12; grid-row: span 1; min-height: 120px; }
+
+  .tile-media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .tile-media img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(0.85) contrast(1.05) brightness(0.7);
+    transition: filter 1.4s var(--ease-soft), transform 6s var(--ease-soft);
+  }
+  .tile:hover .tile-media img { filter: grayscale(0) contrast(1) brightness(0.85); transform: scale(1.06); }
+  .tile-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10,10,10,0.2) 0%, rgba(10,10,10,0.85) 100%);
+    z-index: 1;
+  }
+
+  .tile-content {
+    position: relative;
+    z-index: 2;
+    padding: 28px;
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    color: var(--ink);
+  }
+  .tile-content .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink-mute);
+  }
+  .tile-content .top .iso { color: var(--ink); }
+  .tile-content .name {
+    align-self: end;
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4.4vw, 76px);
+    line-height: 0.86;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+  .tile-content .name .sub {
+    display: block;
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-style: italic;
+    font-size: 0.34em;
+    color: var(--ink-mute);
+    letter-spacing: 0;
+    text-transform: lowercase;
+    margin-top: 10px;
+  }
+  .tile-content .bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-mute);
+    margin-top: 24px;
+  }
+  .tile-content .bottom .pieces { color: var(--ink); }
+  .tile-content .bottom .arrow {
+    transition: transform 0.5s var(--ease);
+    color: var(--ink);
+  }
+  .tile:hover .tile-content .bottom .arrow { transform: translate(4px, -4px); color: var(--hazard); }
+
+  .tile.compact .tile-content { padding: 20px; }
+  .tile.compact .tile-content .name { font-size: clamp(28px, 3vw, 48px); }
+
+  .tile-banner {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 24px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    grid-column: span 12;
+  }
+  .tile-banner .text {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 2vw, 32px);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .tile-banner .text .it { font-family: var(--font-serif); font-style: italic; font-weight: 300; letter-spacing: -0.01em; text-transform: lowercase; }
+  .tile-banner .meta { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; }
+
+  /* ============================================================
+     FEATURED DROP — Spec Sheet
+  ============================================================ */
+  .drop {
+    padding: clamp(80px, 10vw, 140px) 0;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--bg);
+  }
+  .drop-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 64px;
+    align-items: stretch;
+  }
+  .drop-visual {
+    position: relative;
+    background: var(--bg-elev);
+    aspect-ratio: 4/5;
+    overflow: hidden;
+  }
+  .drop-visual img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    padding: 8% 12%;
+    transition: transform 0.8s var(--ease-soft);
+  }
+  .drop-visual:hover img { transform: scale(1.05); }
+  .drop-visual .corners {
+    position: absolute;
+    inset: 16px;
+    pointer-events: none;
+    border: 1px dashed var(--hairline-strong);
+  }
+  .drop-visual .corners::before, .drop-visual .corners::after,
+  .drop-visual .corners > .tr, .drop-visual .corners > .bl {
+    content: "";
+    position: absolute;
+    width: 14px; height: 14px;
+    border: 1px solid var(--hazard);
+  }
+  .drop-visual .corners::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+  .drop-visual .corners::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+  .drop-visual .corners .tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+  .drop-visual .corners .bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+
+  .drop-visual .axis {
+    position: absolute;
+    bottom: 16px; left: 16px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .drop-visual .ref {
+    position: absolute;
+    top: 24px; right: 24px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--hazard);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    line-height: 1.6;
+    text-align: right;
+  }
+
+  .drop-spec {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32px;
+    padding: 8px 0;
+  }
+  .drop-spec .head { display: flex; flex-direction: column; gap: 14px; }
+  .drop-spec .id {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--hazard);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .drop-spec .id::before { content: "//"; color: var(--ink-faint); }
+  .drop-spec h3 {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 5vw, 76px);
+    line-height: 0.86;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+  .drop-spec h3 .it {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    text-transform: lowercase;
+    color: var(--ink-mute);
+  }
+  .drop-spec .pitch {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--ink-mute);
+    max-width: 44ch;
+  }
+
+  .spec-table {
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .spec-row {
+    display: grid;
+    grid-template-columns: 0.8fr 2fr auto;
+    gap: 24px;
+    padding: 14px 0;
+    border-top: 1px dashed var(--hairline);
+    align-items: baseline;
+  }
+  .spec-row:first-child { border-top: none; }
+  .spec-row .key {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-mute);
+  }
+  .spec-row .val {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .spec-row .unit {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+  }
+
+  .drop-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .price-block { display: flex; flex-direction: column; gap: 4px; padding-right: 24px; border-right: 1px solid var(--hairline); margin-right: 4px; }
+  .price-block .price { font-family: var(--font-display); font-size: 28px; letter-spacing: -0.02em; }
+  .price-block .meta { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--ink-mute); }
+
+  /* ============================================================
+     HERITAGE — EDITORIAL SPLIT
+  ============================================================ */
+  .heritage {
+    padding: clamp(100px, 14vw, 180px) 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .heritage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .heritage-text {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    max-width: 56ch;
+  }
+  .heritage-text .quote {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(28px, 3vw, 44px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .heritage-text .quote::before {
+    content: "“";
+    display: block;
+    font-size: 80px;
+    line-height: 0.5;
+    color: var(--hazard);
+    margin-bottom: 16px;
+  }
+  .heritage-text p {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink-mute);
+    max-width: 52ch;
+  }
+  .heritage-text .signoff {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink-mute);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-top: 24px;
+    border-top: 1px solid var(--hairline);
+  }
+  .heritage-text .signoff .who { color: var(--ink); }
+
+  .heritage-visual {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background: var(--bg-elev);
+  }
+  .heritage-visual img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(1) contrast(1.15);
+    transition: filter 1.4s var(--ease-soft);
+  }
+  .heritage-visual:hover img { filter: grayscale(0.6) contrast(1.05); }
+  .heritage-visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.4) 0, rgba(0,0,0,0.4) 1px, transparent 1px, transparent 4px);
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  .heritage-visual .stamp {
+    position: absolute;
+    top: 24px; left: 24px;
+    z-index: 3;
+    border: 1px solid var(--hazard);
+    color: var(--hazard);
+    padding: 6px 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .heritage-visual .caption {
+    position: absolute;
+    bottom: 24px; left: 24px; right: 24px;
+    z-index: 3;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ============================================================
+     CRAFT GRID — 3 dimensional spec cards
+  ============================================================ */
+  .craft {
+    padding: clamp(80px, 10vw, 140px) 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .craft-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--hairline);
+    margin-top: 56px;
+  }
+  .craft-card {
+    background: var(--bg);
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    min-height: 420px;
+    position: relative;
+    transition: background 0.5s var(--ease);
+  }
+  .craft-card:hover { background: var(--bg-tint); }
+  .craft-card .num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--hazard);
+  }
+  .craft-card .title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 2.6vw, 40px);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+  .craft-card .body {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-mute);
+    max-width: 36ch;
+  }
+  .craft-card .footnote {
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    border-top: 1px dashed var(--hairline-strong);
+    padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .craft-card .footnote .stat { color: var(--ink); }
+
+  .craft-card .icon {
+    width: 48px; height: 48px;
+    border: 1px solid var(--hairline-strong);
+    display: grid; place-items: center;
+    color: var(--ink);
+  }
+  .craft-card .icon svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.4; fill: none; }
+
+  /* ============================================================
+     FIXTURES — match calendar telemetry
+  ============================================================ */
+  .fixtures {
+    padding: clamp(80px, 10vw, 140px) 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .fixture-list {
+    margin-top: 56px;
+    border-top: 1px solid var(--hairline-strong);
+  }
+  .fixture {
+    display: grid;
+    grid-template-columns: 80px 1fr 1.4fr 1fr 100px;
+    gap: 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--hairline);
+    align-items: center;
+    transition: background 0.4s var(--ease), padding 0.4s var(--ease);
+    cursor: pointer;
+  }
+  .fixture:hover { background: rgba(234, 234, 234, 0.02); padding-inline: 16px; }
+  .fixture .date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    line-height: 1.5;
+  }
+  .fixture .date .num { display: block; font-family: var(--font-display); font-size: 24px; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 4px; }
+  .fixture .match {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 1.8vw, 26px);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .fixture .match .vs { color: var(--hazard); margin: 0 12px; font-family: var(--font-serif); font-style: italic; font-weight: 300; }
+  .fixture .venue {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-mute);
+  }
+  .fixture .drop-info {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .fixture .drop-info .live { color: var(--phosphor); }
+  .fixture .status {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-align: right;
+    display: flex; align-items: center; justify-content: flex-end; gap: 8px;
+  }
+  .fixture .status .dot { width: 6px; height: 6px; }
+  .fixture .status .dot.live { background: var(--phosphor); animation: pulse 1.4s ease-in-out infinite; }
+  .fixture .status .dot.queued { background: var(--ink-faint); }
+  .fixture .status .dot.shipped { background: var(--hazard); }
+
+  /* ============================================================
+     NEWSROOM — The Journal / weekly editorial wire
+  ============================================================ */
+  .newsroom {
+    padding: clamp(80px, 10vw, 140px) 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .newsroom .exec {
+    margin-top: 56px;
+    padding: 36px 40px;
+    border: 1px solid var(--hairline-strong);
+    background: var(--bg-elev);
+    display: grid;
+    grid-template-columns: 0.4fr 1.6fr 0.4fr;
+    gap: 40px;
+    align-items: start;
+    position: relative;
+  }
+  .newsroom .exec::before, .newsroom .exec::after,
+  .newsroom .exec .tr, .newsroom .exec .bl {
+    content: "";
+    position: absolute;
+    width: 14px; height: 14px;
+    border: 1px solid var(--hazard);
+  }
+  .newsroom .exec::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+  .newsroom .exec::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+  .newsroom .exec .tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+  .newsroom .exec .bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+  .newsroom .exec .meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    line-height: 1.7;
+  }
+  .newsroom .exec .meta .num { color: var(--hazard); display: block; font-size: 14px; margin-bottom: 12px; }
+  .newsroom .exec .text {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(20px, 1.8vw, 26px);
+    line-height: 1.4;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .newsroom .exec .text strong { font-style: italic; font-weight: 300; color: var(--hazard); }
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1px;
+    background: var(--hairline);
+    margin-top: 56px;
+  }
+  .news-card {
+    background: var(--bg);
+    padding: 28px 30px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: background 0.4s var(--ease);
+    cursor: pointer;
+    position: relative;
+  }
+  .news-card:hover { background: var(--bg-tint); }
+  .news-card.span-12 { grid-column: span 12; }
+  .news-card.span-8 { grid-column: span 8; }
+  .news-card.span-6 { grid-column: span 6; }
+  .news-card.span-4 { grid-column: span 4; }
+
+  .news-card .head {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--hairline-strong);
+  }
+  .news-card .head .src { color: var(--hazard); }
+  .news-card .head .date { color: var(--ink-faint); }
+  .news-card .cat {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .news-card .cat .pill {
+    display: inline-block;
+    padding: 4px 8px;
+    border: 1px solid var(--hairline-strong);
+    margin-right: 6px;
+    color: var(--ink);
+  }
+  .news-card .cat .country { color: var(--hazard); margin-left: 6px; }
+
+  .news-card h3 {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 1.8vw, 28px);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+  }
+  .news-card.span-8 h3, .news-card.span-12 h3 {
+    font-size: clamp(28px, 2.6vw, 44px);
+    line-height: 0.95;
+  }
+  .news-card .summary {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-mute);
+    max-width: 60ch;
+  }
+  .news-card .why {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink);
+    padding-top: 12px;
+    border-top: 1px dashed var(--hairline-strong);
+    max-width: 60ch;
+  }
+  .news-card .why::before { content: "// Why it matters — "; color: var(--hazard); font-style: normal; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; margin-right: 6px; }
+  .news-card .read-more {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    align-self: flex-start;
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 14px;
+    transition: color 0.3s var(--ease);
+  }
+  .news-card .read-more::after {
+    content: "↗";
+    transition: transform 0.4s var(--ease);
+  }
+  .news-card:hover .read-more { color: var(--hazard); }
+  .news-card:hover .read-more::after { transform: translate(3px, -3px); }
+
+  /* TRENDS — closing block */
+  .trends {
+    margin-top: 1px;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 48px 40px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 56px;
+    align-items: start;
+  }
+  .trends .tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--hazard);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .trends .tag::before { content: ""; width: 32px; height: 1px; background: var(--hazard); }
+  .trends h3 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3vw, 48px);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin-top: 16px;
+  }
+  .trends h3 .it { font-family: var(--font-serif); font-style: italic; font-weight: 300; text-transform: lowercase; letter-spacing: -0.02em; color: var(--hazard); }
+  .trends ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .trends ul li {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 18px;
+    padding: 14px 0;
+    border-top: 1px solid rgba(10,10,10,0.12);
+    align-items: baseline;
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.45;
+  }
+  .trends ul li:first-child { border-top: none; }
+  .trends ul li .num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; color: var(--hazard); }
+  .trends ul li strong { font-family: var(--font-display); font-size: 0.95em; letter-spacing: -0.01em; text-transform: uppercase; color: var(--bg); }
+
+  @media (max-width: 1024px) {
+    .news-card.span-8, .news-card.span-6, .news-card.span-4 { grid-column: span 12; }
+    .newsroom .exec { grid-template-columns: 1fr; gap: 24px; }
+    .trends { grid-template-columns: 1fr; gap: 24px; padding: 32px 24px; }
+  }
+
+  /* ============================================================
+     NEWSLETTER
+  ============================================================ */
+  .newsletter {
+    padding: clamp(80px, 10vw, 140px) 0;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--bg);
+  }
+  .newsletter-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .newsletter h2 {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 5vw, 76px);
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+  .newsletter h2 .it {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    text-transform: lowercase;
+    letter-spacing: -0.02em;
+    color: var(--hazard);
+  }
+  .newsletter .lede {
+    margin-top: 24px;
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--ink-mute);
+    max-width: 42ch;
+  }
+  .nl-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .nl-form label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .nl-form .row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0;
+    border: 1px solid var(--hairline-strong);
+  }
+  .nl-form input {
+    background: transparent;
+    border: none;
+    color: var(--ink);
+    padding: 18px 20px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    outline: none;
+    width: 100%;
+  }
+  .nl-form input::placeholder { color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.16em; font-size: 12px; }
+  .nl-form input:focus + button, .nl-form .row:focus-within { border-color: var(--hazard); }
+  .nl-form button.submit {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 0 28px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: background 0.3s var(--ease), color 0.3s var(--ease);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nl-form button.submit:hover { background: var(--hazard); color: var(--ink); }
+  .nl-form .legal {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    line-height: 1.7;
+  }
+  .nl-form .legal a { color: var(--ink); border-bottom: 1px solid var(--hairline-strong); }
+
+  /* ============================================================
+     FOOTER
+  ============================================================ */
+  footer.site {
+    padding: 64px 0 32px;
+    background: var(--bg);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 64px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .footer-brand { display: flex; flex-direction: column; gap: 24px; max-width: 36ch; }
+  .footer-brand .pitch {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--ink-mute);
+  }
+  .footer-col h4 {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-mute);
+    transition: color 0.3s var(--ease);
+  }
+  .footer-col a:hover { color: var(--hazard); }
+
+  .footer-bottom {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-faint);
+  }
+  .footer-bottom .center { text-align: center; }
+  .footer-bottom .right { text-align: right; }
+  .footer-bottom .reg { color: var(--hazard); }
+
+  .footer-logo {
+    margin: 0 0 32px;
+    padding: 24px 0 8px;
+    border-top: 1px solid var(--hairline);
+    overflow: hidden;
+  }
+  .footer-logo img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* ============================================================
+     RESPONSIVE
+  ============================================================ */
+  @media (max-width: 1024px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+    .hero-aside { order: -1; }
+    .drop-grid, .heritage-grid, .newsletter-grid { grid-template-columns: 1fr; gap: 48px; }
+    .craft-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .fixture { grid-template-columns: 70px 1fr 80px; gap: 16px; }
+    .fixture .venue, .fixture .drop-info { display: none; }
+    .nav-links { display: none; }
+    .manifesto-grid { grid-template-columns: 1fr; gap: 24px; }
+    .section-head { grid-template-columns: 1fr; gap: 16px; }
+    .section-head .right { text-align: left; }
+
+    .bento { display: flex; flex-direction: column; gap: 1px; }
+    .tile.span-7, .tile.span-5, .tile.span-4, .tile.span-3, .tile.span-6, .tile.span-12 {
+      grid-column: unset; grid-row: unset;
+      width: 100%;
+      min-height: 320px;
+    }
+    .tile-banner { padding: 20px; flex-direction: column; gap: 12px; align-items: flex-start; text-align: left; }
+  }
+  @media (max-width: 640px) {
+    :root { --grid: 16px; }
+    .telemetry-bar { height: 28px; }
+    nav.primary .row { height: 64px; gap: 16px; }
+    .brand-text { display: none; }
+    .hero { padding: 48px 0 64px; }
+    .hero-meta { flex-wrap: wrap; gap: 24px; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { grid-template-columns: 1fr; text-align: left; }
+    .footer-bottom .center, .footer-bottom .right { text-align: left; }
+    .heritage-text .quote::before { font-size: 60px; }
+    .price-block { border-right: none; padding-right: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     FIXED OVERLAYS
+========================================================= -->
+<div class="scanlines"></div>
+<div class="noise"></div>
+
+<!-- =========================================================
+     TELEMETRY TICKER
+========================================================= -->
+<div class="telemetry-bar" role="banner" aria-label="Live status">
+  <div class="track">
+    <span class="item"><span class="dot"></span>OPERATIONAL // ALL ZONES</span>
+    <span class="item">REV 04.62 / DROP 12 — “SIX NATIONS”</span>
+    <span class="item"><span class="dot hz"></span>NEW: ARGENTINA EMBROIDERED CREST — 184 PCS REMAINING</span>
+    <span class="item">SHIPPING: EU 48H · UK 72H · GLOBAL 5–8D</span>
+    <span class="item"><span class="dot"></span>STUDIO BUENOS AIRES — 34.5° S / 58.4° W</span>
+    <span class="item">MATCH DAY: SAT 14:00 GMT — TWICKENHAM</span>
+    <!-- duplicate for seamless loop -->
+    <span class="item"><span class="dot"></span>OPERATIONAL // ALL ZONES</span>
+    <span class="item">REV 04.62 / DROP 12 — “SIX NATIONS”</span>
+    <span class="item"><span class="dot hz"></span>NEW: ARGENTINA EMBROIDERED CREST — 184 PCS REMAINING</span>
+    <span class="item">SHIPPING: EU 48H · UK 72H · GLOBAL 5–8D</span>
+    <span class="item"><span class="dot"></span>STUDIO BUENOS AIRES — 34.5° S / 58.4° W</span>
+    <span class="item">MATCH DAY: SAT 14:00 GMT — TWICKENHAM</span>
+  </div>
+</div>
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+<nav class="primary" aria-label="Primary">
+  <div class="container">
+    <div class="row">
+      <a href="#" class="brand" aria-label="The H Connection home">
+        <div class="brand-mark">H</div>
+        <div class="brand-text">
+          <span class="name">The H Connection</span>
+          <span class="meta">EST. 2022 · BUENOS AIRES</span>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="#collections">Collections</a>
+        <a href="#drop">Shop</a>
+        <a href="#heritage">Heritage</a>
+        <a href="#fixtures">Fixtures</a>
+        <a href="#journal">Journal</a>
+      </div>
+      <div class="nav-actions">
+        <button class="icon-btn" aria-label="Search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <button class="icon-btn" aria-label="Account">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <button class="icon-btn cart-btn" aria-label="Cart">
+          <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="count">02</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- =========================================================
+     INTRO REEL — full-bleed
+========================================================= -->
+<section class="intro-video" aria-label="Brand intro reel">
+  <video
+    id="hero-video"
+    poster="video%20pres/video_pres_Primer_Fotograma.png"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    aria-label="The H Connection — brand presentation reel"
+  >
+    <source src="video%20pres/video%20pres.mp4" type="video/mp4" />
+    <img class="fallback" src="video%20pres/video_pres_Primer_Fotograma.png" alt="H Connection brand reel — first frame" />
+  </video>
+
+  <div class="frame" aria-hidden="true"></div>
+  <span class="corner tl" aria-hidden="true"></span>
+  <span class="corner tr" aria-hidden="true"></span>
+  <span class="corner bl" aria-hidden="true"></span>
+  <span class="corner br" aria-hidden="true"></span>
+
+  <div class="reel-logo">
+    <img class="brand-logo" src="logo%202.png" alt="The H Connection logotype" />
+    <span class="cap"><span>REEL</span>04.62 / FRAME 0001</span>
+  </div>
+
+  <div class="rec"><span class="dot"></span>REC · LIVE</div>
+
+  <div class="lower">
+    <h2 class="reel-title">
+      <span class="word">The</span>
+      <span class="goalposts tall hazard" aria-label="H">
+        <svg viewBox="0 0 90 140" preserveAspectRatio="none" aria-hidden="true">
+          <rect x="6"  y="0"   width="22" height="140" />
+          <rect x="62" y="0"   width="22" height="140" />
+          <rect x="6"  y="100" width="78" height="20"  />
+        </svg>
+      </span>
+      <span class="word">Connection</span>
+    </h2>
+    <div class="reel-meta">
+      <span><span class="key">DURATION</span> 00:00:42</span>
+      <span><span class="key">FORMAT</span> H.264 / 1080P</span>
+      <span><span class="key">FILED</span> SAN ISIDRO · 04.62</span>
+    </div>
+  </div>
+
+  <span class="timecode" id="timecode">00:00:00:00</span>
+
+  <div class="controls">
+    <button id="muteBtn" aria-label="Toggle audio" aria-pressed="true">
+      <svg id="iconMuted" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4Z"/><line x1="22" y1="9" x2="16" y2="15"/><line x1="16" y1="9" x2="22" y2="15"/></svg>
+    </button>
+  </div>
+</section>
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-topbrand reveal">
+      <div class="logo-wrap">
+        <img class="brand-logo" src="logo%202.png" alt="The H Connection logotype" />
+      </div>
+      <div class="meta">
+        <span class="key">// Atelier</span>
+        EST. 2022<br/>
+        BUENOS AIRES — DUBLIN
+      </div>
+    </div>
+
+    <div class="hero-meta reveal">
+      <div class="group">
+        <span class="key">Index</span>
+        <span class="val">N° 04 — Spring/Autumn 26</span>
+      </div>
+      <div class="group">
+        <span class="key">Filed</span>
+        <span class="val">02 May 2026</span>
+      </div>
+      <div class="group">
+        <span class="key">Origin</span>
+        <span class="val">Buenos Aires · Dublin · Cardiff</span>
+      </div>
+      <div class="group">
+        <span class="key">Status</span>
+        <span class="val hazard">DROP 12 LIVE</span>
+      </div>
+    </div>
+
+    <div class="hero-grid">
+      <div>
+        <h1 class="hero-title">
+          <span class="line reveal" data-delay="1">The <span class="accent">union</span></span>
+          <span class="line shift reveal" data-delay="2">between</span>
+          <span class="line reveal" data-delay="3"><span class="h-mark">H</span>emispheres,</span>
+          <span class="line shift reveal" data-delay="4">stitched.</span>
+        </h1>
+
+        <div class="country-tags reveal" data-delay="5">
+          <span class="country-tag"><span class="iso">AR</span>Argentina</span>
+          <span class="country-tag"><span class="iso">EN</span>England</span>
+          <span class="country-tag"><span class="iso">FR</span>France</span>
+          <span class="country-tag"><span class="iso">IE</span>Ireland</span>
+          <span class="country-tag"><span class="iso">SC</span>Scotland</span>
+          <span class="country-tag"><span class="iso">WA</span>Wales</span>
+          <span class="country-tag"><span class="iso">NZ</span>Aotearoa</span>
+          <span class="country-tag"><span class="iso">ZA</span>South Africa</span>
+          <span class="country-tag"><span class="iso">JP</span>Japan</span>
+          <span class="country-tag"><span class="iso">AU</span>Australia</span>
+          <span class="country-tag"><span class="iso">FJ</span>Fiji</span>
+          <span class="country-tag"><span class="iso">IT</span>Italia</span>
+          <span class="country-tag"><span class="iso">ES</span>España</span>
+          <span class="country-tag"><span class="iso">BR</span>Brasil</span>
+          <span class="country-tag"><span class="iso">PY</span>Paraguay</span>
+        </div>
+      </div>
+
+      <aside class="hero-aside">
+        <figure class="hero-image reveal" data-delay="2">
+          <img src="twickenham-match-day.jpg" alt="Twickenham crowd on match day, framed in monochrome." loading="lazy" />
+          <span class="crosshair tl"></span>
+          <span class="crosshair br"></span>
+          <span class="tag"><span class="dot"></span>FIELD CAPTURE / TWICKENHAM</span>
+        </figure>
+
+        <p class="lede reveal" data-delay="3">
+          Six countries. One craft. <em>Organic cotton</em>, embroidered crests, and a refusal to dilute the rituals of the game.
+        </p>
+
+        <a href="#collections" class="hero-cta reveal" data-delay="4">
+          Open the catalogue
+          <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     MANIFESTO
+========================================================= -->
+<section class="manifesto">
+  <div class="container">
+    <div class="manifesto-grid">
+      <div class="col-meta reveal">
+        <span class="num">01 / 06</span>
+        Manifesto<br/>
+        Fragment<br/>
+        Filed 04.62
+      </div>
+      <p class="manifesto-text reveal" data-delay="1">
+        We don't print jerseys. We <strong>document allegiances</strong>.
+        Each country lives as a <mark>discrete catalogue</mark> — its colours, its anthem, its scars.
+        Worn off the pitch. Washed cold. Passed down.
+      </p>
+      <div class="col-meta reveal" data-delay="2" style="text-align:right">
+        <span class="num">END</span>
+        H/CONNECTION<br/>
+        EDITORIAL<br/>
+        VOL. IV
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     COUNTRY COLLECTIONS BENTO
+========================================================= -->
+<section class="collections" id="collections">
+  <div class="container">
+    <header class="section-head">
+      <div class="left reveal">
+        <span class="eyebrow">02 / Country Catalogue</span>
+        <h2>Collections <span class="it">by union</span></h2>
+      </div>
+      <div class="right reveal" data-delay="1">
+        Nine nations indexed.<br/>
+        Twelve drops per cycle.<br/>
+        <span class="hazard">Embroidered, never printed.</span>
+      </div>
+    </header>
+
+    <div class="bento">
+
+      <!-- Argentina — large hero tile -->
+      <a href="argentina.html" class="tile span-7">
+        <div class="tile-media">
+          <img src="Argentina/el-festejo-de-los-pumas-tras-la-victoria-ante-J4LTT5AWFBHQXJW6DDP65HSWYE.jpg" alt="Los Pumas celebrating victory" loading="lazy" />
+        </div>
+        <div class="tile-content">
+          <div class="top">
+            <span class="iso">AR / 54° W</span>
+            <span>14 PIECES</span>
+          </div>
+          <div class="name">Argentina<span class="sub">Los Pumas — embroidered cresta, organic jersey weight</span></div>
+          <div class="bottom">
+            <span class="pieces">DROP 12 — LIVE</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Ireland — top right -->
+      <a href="#" class="tile span-5">
+        <div class="tile-media">
+          <img src="Ireland/IMG_0431.jpg" alt="Irish rugby player in motion" loading="lazy" />
+        </div>
+        <div class="tile-content">
+          <div class="top">
+            <span class="iso">IE / 08° W</span>
+            <span>11 PIECES</span>
+          </div>
+          <div class="name">Ireland<span class="sub">Burgundy organic cotton, shamrock crest</span></div>
+          <div class="bottom">
+            <span class="pieces">RESTOCK FRI</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- England — small tile -->
+      <a href="#" class="tile span-5 compact">
+        <div class="tile-media">
+          <img src="England/GettyImages-878946488.webp" alt="England rugby crowd" loading="lazy" />
+        </div>
+        <div class="tile-content">
+          <div class="top">
+            <span class="iso">EN / 00°</span>
+            <span>09 PIECES</span>
+          </div>
+          <div class="name">England<span class="sub">Twickenham white, navy contrast</span></div>
+          <div class="bottom">
+            <span class="pieces">IN STOCK</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Banner row -->
+      <div class="tile-banner">
+        <div class="text">— Live Catalogue <span class="it">— drops timed to fixtures</span></div>
+        <div class="meta">FREE EU SHIPPING / ORDERS &gt; €120</div>
+      </div>
+
+      <!-- France -->
+      <a href="#" class="tile span-4">
+        <div class="tile-media">
+          <img src="Francia/img-3551-64fbd76db8dd0730081948.jpg" alt="French rugby team" loading="lazy" />
+        </div>
+        <div class="tile-content">
+          <div class="top">
+            <span class="iso">FR / 02° E</span>
+            <span>17 PIECES</span>
+          </div>
+          <div class="name">France<span class="sub">Le Coq — Bleu, Blanc, &amp; oxblood</span></div>
+          <div class="bottom">
+            <span class="pieces">EXPANDED</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Wales -->
+      <a href="#" class="tile span-4">
+        <div class="tile-media">
+          <img src="five-nations-rugby-wales-v-scotland-19th-january-1974-j-p-r-williams-ETYB5R.jpg" alt="Five Nations vintage Wales vs Scotland 1974" loading="lazy" />
+        </div>
+        <div class="tile-content">
+          <div class="top">
+            <span class="iso">WA / 03° W</span>
+            <span>08 PIECES</span>
+          </div>
+          <div class="name">Wales<span class="sub">Y Ddraig Goch — natural &amp; navy</span></div>
+          <div class="bottom">
+            <span class="pieces">LOW STOCK</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Scotland -->
+      <a href="#" class="tile span-4">
+        <div class="tile-media">
+          <img src="Scotland/20603606-scaled.jpg" alt="Scotland rugby" loading="lazy" />
+        </div>
+        <div class="tile-content">
+          <div class="top">
+            <span class="iso">SC / 04° W</span>
+            <span>10 PIECES</span>
+          </div>
+          <div class="name">Scotland<span class="sub">Murrayfield navy, thistle stitch</span></div>
+          <div class="bottom">
+            <span class="pieces">IN STOCK</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- South Africa -->
+      <a href="#" class="tile span-3 compact">
+        <div class="tile-media">
+          <img src="Springboks-and-Tonga-players-huddle-Alamy.jpg" alt="Springboks and Tonga players in huddle" loading="lazy" />
+        </div>
+        <div class="tile-content">
+          <div class="top">
+            <span class="iso">ZA / 22° E</span>
+            <span>06 PCS</span>
+          </div>
+          <div class="name" style="font-size:clamp(22px,2.4vw,32px)">South Africa<span class="sub">Springbok green, RSA gold</span></div>
+          <div class="bottom">
+            <span class="pieces">CAPSULE — 06.06</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Japan -->
+      <a href="#" class="tile span-3 compact">
+        <div class="tile-media">
+          <img src="Japón.png" alt="Japan rugby crest" loading="lazy" />
+        </div>
+        <div class="tile-content">
+          <div class="top">
+            <span class="iso">JP / 138° E</span>
+            <span>04 PCS</span>
+          </div>
+          <div class="name" style="font-size:clamp(22px,2.4vw,32px)">Japan<span class="sub">Sakura on natural</span></div>
+          <div class="bottom">
+            <span class="pieces hazard">PRE-ORDER</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Aotearoa New Zealand — hero of the row -->
+      <a href="#" class="tile span-6">
+        <div class="tile-media">
+          <img src="generated/newzealand.png" alt="Milford Sound, New Zealand — fjord at dawn with mist on glacial peaks" loading="lazy" />
+        </div>
+        <div class="tile-content">
+          <div class="top">
+            <span class="iso">NZ / 174° E</span>
+            <span>15 PIECES</span>
+          </div>
+          <div class="name">New Zealand<span class="sub">Aotearoa — silver fern, obsidian black</span></div>
+          <div class="bottom">
+            <span class="pieces hazard">FLAGSHIP DROP</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Banner: Expanded Catalogue -->
+      <div class="tile-banner">
+        <div class="text">— Expanded territory <span class="it">— six new indexes</span> filed</div>
+        <div class="meta">FILED 02.05 / FREE EU SHIPPING &gt; €120</div>
+      </div>
+
+      <!-- Australia -->
+      <a href="#" class="tile span-7">
+        <div class="tile-media">
+          <img src="generated/australia.png" alt="Red kangaroos in the Australian outback at golden hour" loading="lazy" />
+        </div>
+        <div class="tile-content">
+          <div class="top">
+            <span class="iso">AU / 144° E</span>
+            <span>13 PIECES</span>
+          </div>
+          <div class="name">Australia<span class="sub">Wallabies — gold weave, Bledisloe heritage</span></div>
+          <div class="bottom">
+            <span class="pieces">IN STOCK</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Fiji -->
+      <a href="#" class="tile span-5">
+        <div class="tile-media">
+          <img src="generated/fiji.png" alt="Natadola Beach, Fiji — palm trees and ocean horizon at golden hour" loading="lazy" />
+        </div>
+        <div class="tile-content">
+          <div class="top">
+            <span class="iso">FJ / 178° E</span>
+            <span>07 PIECES</span>
+          </div>
+          <div class="name">Fiji<span class="sub">Bati — saturated indigo, sevens-built tee</span></div>
+          <div class="bottom">
+            <span class="pieces hazard">PRE-ORDER</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Italia -->
+      <a href="#" class="tile span-4">
+        <div class="tile-media">
+          <img src="generated/italia.png" alt="Roman Colosseum at dawn under stormy sky" loading="lazy" />
+        </div>
+        <div class="tile-content">
+          <div class="top">
+            <span class="iso">IT / 12° E</span>
+            <span>09 PIECES</span>
+          </div>
+          <div class="name">Italia<span class="sub">Azzurri — Roman blue, sage trim</span></div>
+          <div class="bottom">
+            <span class="pieces">RESTOCK MON</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- España -->
+      <a href="#" class="tile span-4">
+        <div class="tile-media">
+          <img src="generated/espana.png" alt="Spanish dehesa at sunset, fighting bull silhouette under cork oaks" loading="lazy" />
+        </div>
+        <div class="tile-content">
+          <div class="top">
+            <span class="iso">ES / 04° W</span>
+            <span>06 PIECES</span>
+          </div>
+          <div class="name">España<span class="sub">Los Leones — bull burgundy, scarlet stripe</span></div>
+          <div class="bottom">
+            <span class="pieces hazard">NEW DROP</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Brasil -->
+      <a href="#" class="tile span-4">
+        <div class="tile-media">
+          <img src="generated/brasil.png" alt="Christ the Redeemer over Rio de Janeiro at dawn, Sugarloaf in distance" loading="lazy" />
+        </div>
+        <div class="tile-content">
+          <div class="top">
+            <span class="iso">BR / 47° W</span>
+            <span>05 PIECES</span>
+          </div>
+          <div class="name">Brasil<span class="sub">Tupis — verde-amarelo, equator-weight cotton</span></div>
+          <div class="bottom">
+            <span class="pieces hazard">PRE-ORDER</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Paraguay — wide thin -->
+      <a href="#" class="tile span-12 compact" style="min-height:160px">
+        <div class="tile-media">
+          <img src="generated/paraguay.png" alt="Paraguay Pantanal wetland at sunrise — yacaré caiman in still water with reeds" loading="lazy" />
+        </div>
+        <div class="tile-content" style="grid-template-rows: auto auto; grid-template-columns: 1fr auto; align-items:center; padding:28px">
+          <div class="top" style="grid-column: 1 / 2">
+            <span class="iso">PY / 57° W</span>
+          </div>
+          <div class="name" style="font-size:clamp(28px,3.2vw,52px); grid-column: 1 / 2; align-self:center">
+            Paraguay<span class="sub" style="margin-top:6px">Yacarés — yerba green, river clay accent</span>
+          </div>
+          <div class="bottom" style="grid-column: 2 / 3; grid-row: 1 / 3; align-self:center; flex-direction:column; align-items:flex-end; gap:12px; margin-top:0">
+            <span class="pieces" style="color:var(--ink-faint)">04 PCS · WAITLIST</span>
+            <span class="arrow" style="font-size:18px">→</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     FEATURED DROP — Spec Sheet
+========================================================= -->
+<section class="drop" id="drop">
+  <div class="container">
+    <header class="section-head reveal">
+      <div class="left">
+        <span class="eyebrow">03 / Featured Drop</span>
+        <h2>Argentina N°10 <span class="it">— polo</span></h2>
+      </div>
+      <div class="right">
+        SKU AR-PL-10-NV<br/>
+        Limited to <span class="hazard">184 units</span>
+      </div>
+    </header>
+
+    <div class="drop-grid">
+      <div class="drop-visual reveal">
+        <span class="corners"><span class="tr"></span><span class="bl"></span></span>
+        <span class="ref">REF 10/A<br/>FRONT VIEW<br/>1:1.25</span>
+        <img src="Argentina/premium-polo-shirt-navy-front-664f8c393e963.png" alt="Argentina premium polo shirt navy" loading="lazy" />
+        <span class="axis">+ Y / + X — UNIT D-01 / TILE 04</span>
+      </div>
+
+      <div class="drop-spec reveal" data-delay="1">
+        <div class="head">
+          <span class="id">SKU AR-PL-10-NV · DROP 12</span>
+          <h3>Premium Polo<br/>— <span class="it">Pumas crest</span></h3>
+          <p class="pitch">
+            A polo built for the day after the match. Heavy-gauge piqué cotton, embroidered Pumas crest at the heart, mother-of-pearl placket buttons, and a tonal taping at the back of the neck.
+          </p>
+        </div>
+
+        <div class="spec-table">
+          <div class="spec-row">
+            <span class="key">Material</span>
+            <span class="val">220 GSM organic piqué cotton</span>
+            <span class="unit">GOTS</span>
+          </div>
+          <div class="spec-row">
+            <span class="key">Crest</span>
+            <span class="val">Embroidered, 6 thread colours</span>
+            <span class="unit">12.4 KST</span>
+          </div>
+          <div class="spec-row">
+            <span class="key">Origin</span>
+            <span class="val">Cut &amp; sewn — Buenos Aires</span>
+            <span class="unit">AR / 34.5°S</span>
+          </div>
+          <div class="spec-row">
+            <span class="key">Colour</span>
+            <span class="val">French Navy / White contrast</span>
+            <span class="unit">PMS 533C</span>
+          </div>
+          <div class="spec-row">
+            <span class="key">Fit</span>
+            <span class="val">Regular — true to size</span>
+            <span class="unit">XS / S / M / L / XL / XXL</span>
+          </div>
+          <div class="spec-row">
+            <span class="key">Care</span>
+            <span class="val">30°C wash, hang dry, no bleach</span>
+            <span class="unit">EN ISO 3758</span>
+          </div>
+        </div>
+
+        <div class="drop-actions">
+          <div class="price-block">
+            <span class="price">€78,40</span>
+            <span class="meta">VAT INCL · INTL. SHIPS €9</span>
+          </div>
+          <a href="#" class="hero-cta">
+            Add to Cart
+            <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     HERITAGE / EDITORIAL SPLIT
+========================================================= -->
+<section class="heritage" id="heritage">
+  <div class="container">
+    <div class="heritage-grid">
+      <div class="heritage-text reveal">
+        <span class="label">Heritage / Filed 1974</span>
+        <p class="quote">
+          Rugby is a sport of inches and decades. We make clothing that <em>respects both</em> — built once, worn for a generation.
+        </p>
+        <p>
+          The H Connection began in a garage in San Isidro, Buenos Aires, with a single embroidery machine and a stubborn belief that the rituals of rugby — the singing, the standing, the shaking of hands — deserve a wardrobe of their own. We do not chase seasonal cycles. We file new drops only when the craft demands it.
+        </p>
+        <p>
+          Every garment passes through three hands before it ships: the cutter, the embroiderer, and the inspector. Country collections are built in close conversation with players, supporters, and the unions themselves.
+        </p>
+        <div class="signoff">
+          <span>Filed by</span>
+          <span class="who">Hugo Etcheverry · Founder</span>
+          <span>—</span>
+          <span>SAN ISIDRO · 04.62</span>
+        </div>
+      </div>
+
+      <figure class="heritage-visual reveal" data-delay="1">
+        <span class="stamp">ARCHIVE 1974</span>
+        <img src="five-nations-rugby-wales-v-scotland-19th-january-1974-j-p-r-williams-ETYB5R.jpg" alt="Five Nations rugby Wales v Scotland January 1974, J.P.R. Williams" loading="lazy" />
+        <figcaption class="caption">
+          <span>FIVE NATIONS · 19/01/1974</span>
+          <span>FRAME 03/12</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     CRAFT GRID
+========================================================= -->
+<section class="craft">
+  <div class="container">
+    <header class="section-head">
+      <div class="left reveal">
+        <span class="eyebrow">04 / Build Standard</span>
+        <h2>Three rules. <span class="it">No exceptions.</span></h2>
+      </div>
+      <div class="right reveal" data-delay="1">
+        Materials sourced from the<br/>same five mills since 2022.<br/>
+        <span class="hazard">No outsourcing.</span>
+      </div>
+    </header>
+
+    <div class="craft-grid">
+      <article class="craft-card reveal">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 12c4-6 14-6 18 0-4 6-14 6-18 0Z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <span class="num">N° 01</span>
+        <h3 class="title">Organic Cotton<br/><span style="color:var(--ink-mute);font-family:var(--font-serif);font-style:italic;font-weight:300;letter-spacing:-0.01em;text-transform:lowercase;font-size:0.7em">— certified at the bale.</span></h3>
+        <p class="body">
+          Every garment begins with GOTS-certified organic cotton, sourced from a single co-operative in northern Argentina. No synthetic blends. No micro-plastics. The hand-feel is dense, the weight is honest.
+        </p>
+        <div class="footnote">
+          <span>GSM RANGE</span>
+          <span class="stat">180 — 320</span>
+        </div>
+      </article>
+
+      <article class="craft-card reveal" data-delay="1">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        </div>
+        <span class="num">N° 02</span>
+        <h3 class="title">Embroidered Crests<br/><span style="color:var(--ink-mute);font-family:var(--font-serif);font-style:italic;font-weight:300;letter-spacing:-0.01em;text-transform:lowercase;font-size:0.7em">— never printed.</span></h3>
+        <p class="body">
+          Crests are stitched on Tajima machines with up to nine thread colours. Each badge takes between 14 and 22 minutes to complete. The reverse is bound with a satin under-stitch so the inside is as finished as the outside.
+        </p>
+        <div class="footnote">
+          <span>STITCH COUNT</span>
+          <span class="stat">8.4K — 22.1K</span>
+        </div>
+      </article>
+
+      <article class="craft-card reveal" data-delay="2">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12Z"/></svg>
+        </div>
+        <span class="num">N° 03</span>
+        <h3 class="title">Lifetime Repair<br/><span style="color:var(--ink-mute);font-family:var(--font-serif);font-style:italic;font-weight:300;letter-spacing:-0.01em;text-transform:lowercase;font-size:0.7em">— ship it back, free.</span></h3>
+        <p class="body">
+          A torn collar, a frayed hem, a missing button. Send the garment to our atelier. We mend it, return it, no charge — for as long as we exist. The serial number sewn into the inner seam is your guarantee.
+        </p>
+        <div class="footnote">
+          <span>TURNAROUND</span>
+          <span class="stat">10 — 14 DAYS</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     FIXTURES — match calendar
+========================================================= -->
+<section class="fixtures" id="fixtures">
+  <div class="container">
+    <header class="section-head">
+      <div class="left reveal">
+        <span class="eyebrow">05 / Match Calendar</span>
+        <h2>Drops timed <span class="it">to fixtures.</span></h2>
+      </div>
+      <div class="right reveal" data-delay="1">
+        Each match day unlocks a<br/>limited capsule. <span class="hazard">12h windows.</span>
+      </div>
+    </header>
+
+    <div class="fixture-list">
+      <a href="#" class="fixture reveal">
+        <div class="date"><span class="num">02</span>SAT · MAY 26</div>
+        <div class="match">England <span class="vs">vs</span> Wales</div>
+        <div class="venue">Twickenham · 14:00 GMT</div>
+        <div class="drop-info"><span class="live">●</span> Capsule live · 12h</div>
+        <div class="status"><span class="dot live"></span>LIVE</div>
+      </a>
+      <a href="#" class="fixture reveal" data-delay="1">
+        <div class="date"><span class="num">09</span>SAT · MAY 26</div>
+        <div class="match">Ireland <span class="vs">vs</span> France</div>
+        <div class="venue">Aviva · 16:45 GMT</div>
+        <div class="drop-info">Capsule queued · 09 PCS</div>
+        <div class="status"><span class="dot queued"></span>QUEUED</div>
+      </a>
+      <a href="#" class="fixture reveal" data-delay="2">
+        <div class="date"><span class="num">16</span>SAT · MAY 26</div>
+        <div class="match">Scotland <span class="vs">vs</span> Argentina</div>
+        <div class="venue">Murrayfield · 14:30 GMT</div>
+        <div class="drop-info">Capsule queued · 12 PCS</div>
+        <div class="status"><span class="dot queued"></span>QUEUED</div>
+      </a>
+      <a href="#" class="fixture reveal" data-delay="3">
+        <div class="date"><span class="num">23</span>SAT · MAY 26</div>
+        <div class="match">South Africa <span class="vs">vs</span> Japan</div>
+        <div class="venue">Ellis Park · 15:00 SAST</div>
+        <div class="drop-info">Pre-order open · 06 PCS</div>
+        <div class="status"><span class="dot shipped"></span>PRE-ORDER</div>
+      </a>
+      <a href="#" class="fixture reveal" data-delay="4">
+        <div class="date"><span class="num">30</span>SAT · MAY 26</div>
+        <div class="match">Wales <span class="vs">vs</span> Italy</div>
+        <div class="venue">Principality · 14:00 GMT</div>
+        <div class="drop-info">Capsule queued · 08 PCS</div>
+        <div class="status"><span class="dot queued"></span>QUEUED</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     NEWSROOM / THE JOURNAL — wire copy from the last 72h
+========================================================= -->
+<section class="newsroom" id="journal">
+  <div class="container">
+    <header class="section-head">
+      <div class="left reveal">
+        <span class="eyebrow">06 / The Journal — Filed weekly</span>
+        <h2>The wire, <span class="it">cross-referenced.</span></h2>
+      </div>
+      <div class="right reveal" data-delay="1">
+        Sources: Rugby World · Planet Rugby · RugbyPass<br/>
+        Cross-ref: World Rugby · Six Nations Rugby<br/>
+        <span class="hazard">Filed 02 May 2026 — last 72h.</span>
+      </div>
+    </header>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <article class="exec reveal">
+      <span class="tr"></span><span class="bl"></span>
+      <div class="meta">
+        <span class="num">EXEC</span>
+        Executive<br/>summary<br/>02.05.2026
+      </div>
+      <p class="text">
+        The close of the European calendar and the reshuffling of the south dominate the week. <strong>Leinster</strong> booked their place in the Champions Cup final in Bilbao, while the south navigates an unusual year: <strong>no Rugby Championship</strong> in 2026 — the All Blacks embark on a historic tour of South Africa and Argentina will host Australia for the Puma Trophy. In parallel, World Rugby signs a strategic partnership with IMG and launches the <strong>Nations Cup</strong> on 4 July in Montevideo. The market is on the move: Furbank to Harlequins, Martin to Saracens, and Eddie Hearn (Matchroom) enters rugby by signing Pollock and Russell.
+      </p>
+      <div class="meta" style="text-align:right">
+        <span class="num">END</span>
+        Vol. 04.62<br/>The Journal<br/>H/Connection
+      </div>
+    </article>
+
+    <!-- NEWS GRID — 8 stories curated -->
+    <div class="news-grid">
+
+      <!-- 1. HERO — Leinster Champions Cup -->
+      <a class="news-card span-8 reveal" href="https://www.planetrugby.com/news/leinster-advance-to-investec-champions-cup-final-after-narrow-triumph-over-toulon" target="_blank" rel="noopener noreferrer">
+        <div class="head">
+          <span class="src">PLANET RUGBY · CROSS-REF RUGBY WORLD</span>
+          <span class="date">02 MAY 2026</span>
+        </div>
+        <span class="cat"><span class="pill">CLUBS &amp; LEAGUES</span><span class="country">IE / FR</span></span>
+        <h3>Leinster hold off Toulon (29-25) and return to the Champions Cup final</h3>
+        <p class="summary">
+          At the Aviva Stadium in Dublin, Leinster withstood a French comeback to qualify for the 23 May final in Bilbao. Tries from Conan, van der Flier, Ringrose and Doris; Harry Byrne added 3 conversions and a penalty. They await the winner of Bath vs Bordeaux-Bègles, who meet on Sunday.
+        </p>
+        <p class="why">It would be the Irish province's fifth European crown and consolidate their post-Sexton dominance.</p>
+        <span class="read-more">Read filing</span>
+      </a>
+
+      <!-- 2. No Rugby Championship -->
+      <a class="news-card span-4 reveal" data-delay="1" href="https://www.rugbyworld.com/news/why-will-there-be-no-rugby-championship-next-season-179256" target="_blank" rel="noopener noreferrer">
+        <div class="head">
+          <span class="src">RUGBY WORLD · CROSS-REF RUCK</span>
+          <span class="date">APR–MAY 2026</span>
+        </div>
+        <span class="cat"><span class="pill">INTL RUGBY</span><span class="country">NZ / ZA</span></span>
+        <h3>No Rugby Championship in 2026 — the All Blacks tour South Africa</h3>
+        <p class="summary">
+          The southern tournament gives way to New Zealand's first full Lions-style tour of South Africa since 1996. Eight matches scheduled: four vs URC clubs, one vs South Africa A, and three Tests vs the Springboks. Branded "The Greatest Rivalry".
+        </p>
+        <p class="why">Profound reshuffle of the southern calendar ahead of the 2027 World Cup.</p>
+        <span class="read-more">Read filing</span>
+      </a>
+
+      <!-- 3. Nations Cup -->
+      <a class="news-card span-4 reveal" data-delay="2" href="https://www.world.rugby/news/1043084/world-rugby-nations-cup-heads-to-the-americas-in-july-for-inaugural-2026-edition" target="_blank" rel="noopener noreferrer">
+        <div class="head">
+          <span class="src">WORLD RUGBY</span>
+          <span class="date">2026 — LAUNCH 04/07</span>
+        </div>
+        <span class="cat"><span class="pill">WORLD RUGBY / RULES</span><span class="country">UY · GE · 12 NAT.</span></span>
+        <h3>World Rugby Nations Cup launches 4 July in Montevideo</h3>
+        <p class="summary">
+          New tournament with 12 nations in two pools (Americas/Pacific and Europe/Asia/Africa). Two windows in July and November, round-robin format between pools. First match: Uruguay vs Georgia at Estadio Charrúa.
+        </p>
+        <p class="why">First regular, monetised competition for tier-2 nations — a cornerstone of the new calendar.</p>
+        <span class="read-more">Read filing</span>
+      </a>
+
+      <!-- 4. Argentina vs Australia -->
+      <a class="news-card span-4 reveal" data-delay="3" href="https://www.americasrugbynews.com/2025/11/26/__trashed/" target="_blank" rel="noopener noreferrer">
+        <div class="head">
+          <span class="src">AMERICAS RUGBY NEWS</span>
+          <span class="date">29.08 + 05.09 2026</span>
+        </div>
+        <span class="cat"><span class="pill">SIX NATIONS / RC</span><span class="country">AR / AU</span></span>
+        <h3>Los Pumas to defend the Puma Trophy in two-Test series vs Australia</h3>
+        <p class="summary">
+          Argentina will host the Wallabies on 29 August and 5 September. Los Pumas will also face South Africa in a separate window. No matches against the All Blacks confirmed for this season.
+        </p>
+        <p class="why">Argentina's international calendar tightens — a major filling opportunity ahead of the RWC.</p>
+        <span class="read-more">Read filing</span>
+      </a>
+
+      <!-- 5. World Rugby × IMG -->
+      <a class="news-card span-4 reveal" data-delay="4" href="https://www.world.rugby/news/1043791/world-rugby-and-img-announce-strategic-media-rights-partnership-to-further-accelerate-us-and-global-growth" target="_blank" rel="noopener noreferrer">
+        <div class="head">
+          <span class="src">WORLD RUGBY</span>
+          <span class="date">APR–MAY 2026</span>
+        </div>
+        <span class="cat"><span class="pill">WORLD RUGBY / RULES</span><span class="country">GLOBAL · USA</span></span>
+        <h3>World Rugby signs partnership with IMG to accelerate global and U.S. growth</h3>
+        <p class="summary">
+          Long-term media rights agreement. IMG will advise World Rugby on market and distribution strategy, with a focus on the U.S., heading toward the 2031 (M) and 2033 (W) World Cups in the United States.
+        </p>
+        <p class="why">A deep bet to land rugby in the world's largest media market.</p>
+        <span class="read-more">Read filing</span>
+      </a>
+
+      <!-- 6. Six Nations 2026 — France retain title -->
+      <a class="news-card span-4 reveal" data-delay="5" href="https://www.sixnationsrugby.com/en/m6n/news/france-v-england-report-highlights-six-nations-rugby-2026" target="_blank" rel="noopener noreferrer">
+        <div class="head">
+          <span class="src">SIX NATIONS · CROSS-REF ESPN</span>
+          <span class="date">14 MAR 2026</span>
+        </div>
+        <span class="cat"><span class="pill">SIX NATIONS / RC</span><span class="country">FR / EN</span></span>
+        <h3>France retain the 2026 Six Nations with a dramatic 48-46 over England</h3>
+        <p class="summary">
+          At the Stade de France, Thomas Ramos kicked a last-minute penalty to win both the match and the championship. Les Bleus won 4 of 5; their only loss came against Scotland. Wales returned to winning ways after 3 years (31-17 vs Italy).
+        </p>
+        <p class="why">Second consecutive French title — clear dominance heading into RWC 2027 in Australia.</p>
+        <span class="read-more">Read filing</span>
+      </a>
+
+      <!-- 7. Furbank to Harlequins / Martin to Saracens -->
+      <a class="news-card span-6 reveal" href="https://www.planetrugby.com/news/prem-rugby-ins-and-outs-every-confirmed-signing-and-departure-ahead-of-2026-27-season" target="_blank" rel="noopener noreferrer">
+        <div class="head">
+          <span class="src">PLANET RUGBY</span>
+          <span class="date">MAY 2026</span>
+        </div>
+        <span class="cat"><span class="pill">TRANSFERS / MARKET</span><span class="country">EN · PREMIERSHIP</span></span>
+        <h3>George Furbank signs for Harlequins; George Martin moves to Saracens</h3>
+        <p class="summary">
+          Two England internationals confirm club switches for the 2026/27 summer. Furbank leaves Northampton — a club that also announced 14 mass departures. Saracens continue their rebuild.
+        </p>
+        <p class="why">Reshuffle of the Premiership top 6 in a key window before the World Cup.</p>
+        <span class="read-more">Read filing</span>
+      </a>
+
+      <!-- 8. Eddie Hearn signs Pollock & Russell -->
+      <a class="news-card span-6 reveal" data-delay="1" href="https://www.ruck.co.uk/eddie-hearn-closes-in-on-four-more-superstar-rugby-signings/" target="_blank" rel="noopener noreferrer">
+        <div class="head">
+          <span class="src">RUCK.CO.UK</span>
+          <span class="date">MAY 2026</span>
+        </div>
+        <span class="cat"><span class="pill">TRANSFERS / MARKET</span><span class="country">EN / SC</span></span>
+        <h3>Eddie Hearn (Matchroom) signs Henry Pollock and Finn Russell — enters rugby</h3>
+        <p class="summary">
+          The boxing promoter expands Matchroom Talent Agency into rugby with two top names. More signings expected — rugby is professionalising off the field, with talent representation in a boxing / NFL mould.
+        </p>
+        <p class="why">Paradigm shift in how the professional player's personal brand is managed.</p>
+        <span class="read-more">Read filing</span>
+      </a>
+
+    </div>
+
+    <!-- KEY TRENDS -->
+    <aside class="trends reveal">
+      <div>
+        <span class="tag">// Key trends</span>
+        <h3>Five threads <span class="it">repeating</span> this week.</h3>
+      </div>
+      <ul>
+        <li><span class="num">01</span><span><strong>International calendar in reform</strong> — Nations Cup launches, Rugby Championship absent, AB tour in SA. The south is reorganising the entire season.</span></li>
+        <li><span class="num">02</span><span><strong>Commercialisation of rugby</strong> — IMG takes over global rights, Eddie Hearn signs marquee names. The industry is professionalising off the field.</span></li>
+        <li><span class="num">03</span><span><strong>Premiership in transition</strong> — Northampton releases 14 players, Saracens rebuilds, Harlequins reinforces. Record turnover in a single window.</span></li>
+        <li><span class="num">04</span><span><strong>Women's Six Nations breaks records</strong> — 194,466 spectators across 3 rounds, already surpassing the 188,128 from the full 2024 tournament.</span></li>
+        <li><span class="num">05</span><span><strong>All Blacks repositioning depth</strong> — Dan Carter warns about fly-half stocks ahead of RWC 2027 (Australia). A very large squad planned for SA.</span></li>
+      </ul>
+    </aside>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+<footer class="site">
+  <div class="container">
+
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="brand">
+          <div class="brand-mark">H</div>
+          <div class="brand-text">
+            <span class="name">The H Connection</span>
+            <span class="meta">EST. 2022 · BUENOS AIRES</span>
+          </div>
+        </a>
+        <p class="pitch">
+          A rugby apparel atelier indexing the unions of the world, one country at a time. Embroidered, never printed. Repaired for life.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Catalogue</h4>
+        <ul>
+          <li><a href="#">Argentina</a></li>
+          <li><a href="#">England</a></li>
+          <li><a href="#">France</a></li>
+          <li><a href="#">Ireland</a></li>
+          <li><a href="#">Scotland</a></li>
+          <li><a href="#">Wales</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <ul>
+          <li><a href="#">T-Shirts</a></li>
+          <li><a href="#">Premium Polos</a></li>
+          <li><a href="#">Hoodies</a></li>
+          <li><a href="#">Beanies</a></li>
+          <li><a href="#">Embroidered</a></li>
+          <li><a href="#">Archive</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Atelier</h4>
+        <ul>
+          <li><a href="#">Heritage</a></li>
+          <li><a href="#">Repair Programme</a></li>
+          <li><a href="#">Fabric Index</a></li>
+          <li><a href="#">Sizing Card</a></li>
+          <li><a href="#">Sustainability</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Filing</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Stockists</a></li>
+          <li><a href="#">Wholesale</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-logo" aria-hidden="true">
+      <img class="brand-logo" src="logo%202.png" alt="The H Connection logotype" />
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 H/Connection — All filings reserved</span>
+      <span class="center"><span class="reg">[</span> ARCHIVE 04.62 — REV 12 <span class="reg">]</span></span>
+      <span class="right">Buenos Aires &nbsp;//&nbsp; Dublin &nbsp;//&nbsp; Cardiff</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ============================================================
+     Scroll reveal — IntersectionObserver only
+  ============================================================ */
+  (function () {
+    const els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(el => el.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    els.forEach(el => io.observe(el));
+  })();
+
+  /* ============================================================
+     Magnetic-ish CTA hover (transform via rAF, not React state)
+  ============================================================ */
+  (function () {
+    const ctas = document.querySelectorAll('.hero-cta');
+    ctas.forEach(btn => {
+      let raf = null;
+      btn.addEventListener('mousemove', (e) => {
+        const r = btn.getBoundingClientRect();
+        const x = (e.clientX - (r.left + r.width / 2)) * 0.12;
+        const y = (e.clientY - (r.top + r.height / 2)) * 0.12;
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          btn.style.transform = `translate3d(${x}px, ${y - 1}px, 0)`;
+        });
+      });
+      btn.addEventListener('mouseleave', () => {
+        if (raf) cancelAnimationFrame(raf);
+        btn.style.transform = '';
+      });
+    });
+  })();
+
+  /* ============================================================
+     Fixture & tile click — placeholder behaviour for unlinked items
+  ============================================================ */
+  document.querySelectorAll('.tile, .fixture').forEach(t => {
+    t.addEventListener('click', (e) => {
+      const href = t.getAttribute('href');
+      // allow real links (anything that isn't "#" or empty)
+      if (!href || href === '#') e.preventDefault();
+    });
+  });
+
+  /* ============================================================
+     Hero video — mute/unmute toggle + autoplay safety
+  ============================================================ */
+  (function () {
+    const video = document.getElementById('hero-video');
+    const btn = document.getElementById('muteBtn');
+    if (!video || !btn) return;
+
+    const ICON_MUTED = '<svg viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4Z"/><line x1="22" y1="9" x2="16" y2="15"/><line x1="16" y1="9" x2="22" y2="15"/></svg>';
+    const ICON_ON    = '<svg viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4Z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>';
+
+    // Some browsers require an explicit play() after setting muted
+    const tryPlay = () => video.play().catch((err) => {
+      console.warn('[hero-video] autoplay blocked:', err && err.message);
+    });
+    video.addEventListener('canplay', tryPlay, { once: true });
+    video.addEventListener('loadeddata', tryPlay, { once: true });
+    video.addEventListener('error', () => {
+      const e = video.error;
+      console.error('[hero-video] media error', e && { code: e.code, message: e.message });
+    });
+    tryPlay();
+
+    btn.addEventListener('click', () => {
+      video.muted = !video.muted;
+      btn.setAttribute('aria-pressed', String(video.muted));
+      btn.innerHTML = video.muted ? ICON_MUTED : ICON_ON;
+      if (!video.muted) tryPlay();
+    });
+
+    // Pause when out of view to save bandwidth/CPU
+    if ('IntersectionObserver' in window) {
+      const vio = new IntersectionObserver((entries) => {
+        entries.forEach(en => {
+          if (en.isIntersecting) tryPlay();
+          else video.pause();
+        });
+      }, { threshold: 0.25 });
+      vio.observe(video);
+    }
+
+    // Timecode HH:MM:SS:FF (24 fps illusion)
+    const tc = document.getElementById('timecode');
+    if (tc) {
+      const pad = (n, w = 2) => String(n).padStart(w, '0');
+      video.addEventListener('timeupdate', () => {
+        const t = video.currentTime;
+        const h = Math.floor(t / 3600);
+        const m = Math.floor((t % 3600) / 60);
+        const s = Math.floor(t % 60);
+        const f = Math.floor((t % 1) * 24);
+        tc.textContent = `${pad(h)}:${pad(m)}:${pad(s)}:${pad(f)}`;
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

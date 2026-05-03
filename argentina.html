@@ -1,0 +1,3025 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="tactical">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="description" content="THE H CONNECTION — Argentina catalogue. Los Pumas — embroidered crest, organic cotton, premium piqué polos and heavy-blend hoodies. Cut and sewn in Buenos Aires." />
+<title>Argentina — THE H CONNECTION / Country Catalogue 01</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&display=swap" rel="stylesheet" />
+
+<style>
+  /* ============================================================
+     DESIGN TOKENS — same system as index, extended for country pages
+  ============================================================ */
+  :root {
+    --bg: #0A0A0A;
+    --bg-elev: #111111;
+    --bg-tint: #161616;
+    --bg-paper: #F4F4F0;
+    --ink: #EAEAEA;
+    --ink-mute: #8A8A8A;
+    --ink-faint: #4A4A4A;
+    --hairline: rgba(234, 234, 234, 0.08);
+    --hairline-strong: rgba(234, 234, 234, 0.16);
+    --hazard: #E61919;
+    --phosphor: #4AF626;
+    --argentina-blue: #75AADB; /* used very sparingly */
+
+    --font-display: "Archivo Black", "Inter Tight", sans-serif;
+    --font-body: "Space Grotesk", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+    --font-serif: "Fraunces", "Times New Roman", serif;
+
+    --ease: cubic-bezier(0.32, 0.72, 0, 1);
+    --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+
+    --grid: clamp(16px, 2vw, 32px);
+    --maxw: 1480px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *::selection { background: var(--hazard); color: var(--ink); }
+
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    min-height: 100dvh;
+  }
+
+  img, svg { display: block; max-width: 100%; height: auto; }
+  a { color: inherit; text-decoration: none; }
+  button { background: none; border: none; color: inherit; cursor: pointer; font: inherit; }
+
+  /* Overlays */
+  .scanlines, .noise {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 90;
+  }
+  .scanlines {
+    background: repeating-linear-gradient(
+      0deg, transparent 0, transparent 2px,
+      rgba(0,0,0,0.18) 2px, rgba(0,0,0,0.18) 3px
+    );
+    mix-blend-mode: multiply;
+    opacity: 0.5;
+  }
+  .noise {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/></svg>");
+    opacity: 0.06;
+    mix-blend-mode: overlay;
+  }
+
+  .container {
+    width: 100%;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding-inline: var(--grid);
+  }
+  .mono { font-family: var(--font-mono); letter-spacing: 0.04em; }
+  .display { font-family: var(--font-display); letter-spacing: -0.04em; line-height: 0.85; text-transform: uppercase; }
+  .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-mute);
+  }
+
+  .reveal { opacity: 0; transform: translate3d(0, 24px, 0); transition: opacity 1s var(--ease-soft), transform 1s var(--ease-soft); }
+  .reveal.in { opacity: 1; transform: translate3d(0, 0, 0); }
+  .reveal[data-delay="1"] { transition-delay: 80ms; }
+  .reveal[data-delay="2"] { transition-delay: 160ms; }
+  .reveal[data-delay="3"] { transition-delay: 240ms; }
+  .reveal[data-delay="4"] { transition-delay: 320ms; }
+  .reveal[data-delay="5"] { transition-delay: 400ms; }
+  .reveal[data-delay="6"] { transition-delay: 480ms; }
+
+  .brand-logo {
+    display: block;
+    height: auto;
+    user-select: none;
+    -webkit-user-drag: none;
+    mix-blend-mode: screen;
+    filter: brightness(1.15) contrast(1.05);
+  }
+  .goalposts {
+    display: inline-block;
+    width: 0.92em;
+    height: 1.55em;
+    vertical-align: -0.46em;
+    margin: 0 0.12em 0 0.1em;
+    color: currentColor;
+    position: relative;
+  }
+  .goalposts svg { display: block; height: 100%; width: 100%; fill: currentColor; }
+  .goalposts.hazard { color: var(--hazard); }
+
+  /* ============================================================
+     TELEMETRY TICKER (same as index, country-specific copy)
+  ============================================================ */
+  .telemetry-bar {
+    position: relative;
+    z-index: 80;
+    background: var(--bg);
+    border-bottom: 1px solid var(--hairline);
+    overflow: hidden;
+    height: 32px;
+    display: flex;
+    align-items: center;
+  }
+  .telemetry-bar .track {
+    display: flex;
+    gap: 64px;
+    white-space: nowrap;
+    animation: ticker 56s linear infinite;
+    will-change: transform;
+  }
+  .telemetry-bar .item {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-mute);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .telemetry-bar .item .dot { width: 6px; height: 6px; background: var(--phosphor); box-shadow: 0 0 8px rgba(74,246,38,0.6); animation: pulse 1.4s ease-in-out infinite; }
+  .telemetry-bar .item .dot.hz { background: var(--hazard); box-shadow: 0 0 8px rgba(230,25,25,0.6); }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.85); }
+  }
+
+  /* ============================================================
+     NAV (same as index)
+  ============================================================ */
+  nav.primary {
+    position: sticky; top: 0; z-index: 70;
+    background: rgba(10, 10, 10, 0.86);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid var(--hairline);
+  }
+  nav.primary .row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    height: 72px;
+    gap: 32px;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-mark {
+    width: 36px; height: 36px;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-display);
+    font-size: 22px; line-height: 1;
+    position: relative;
+  }
+  .brand-mark::after {
+    content: "®";
+    position: absolute; top: -6px; right: -10px;
+    font-size: 9px; color: var(--ink);
+    font-family: var(--font-mono);
+  }
+  .brand-text { display: flex; flex-direction: column; line-height: 1; gap: 3px; }
+  .brand-text .name { font-family: var(--font-display); font-size: 13px; letter-spacing: -0.02em; text-transform: uppercase; }
+  .brand-text .meta { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--ink-mute); }
+  .nav-links {
+    display: flex; gap: 36px; justify-content: center;
+    font-family: var(--font-mono); font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.16em;
+  }
+  .nav-links a { position: relative; padding: 4px 0; color: var(--ink-mute); transition: color 0.4s var(--ease); }
+  .nav-links a::before { content: "["; margin-right: 6px; color: var(--ink-faint); transition: color 0.4s var(--ease); }
+  .nav-links a::after { content: "]"; margin-left: 6px; color: var(--ink-faint); transition: color 0.4s var(--ease); }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::before, .nav-links a:hover::after { color: var(--hazard); }
+  .nav-links a.active { color: var(--ink); }
+  .nav-links a.active::before, .nav-links a.active::after { color: var(--hazard); }
+  .nav-actions { display: flex; gap: 12px; align-items: center; }
+  .icon-btn {
+    width: 40px; height: 40px;
+    border: 1px solid var(--hairline-strong);
+    display: grid; place-items: center;
+    transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  }
+  .icon-btn:hover { border-color: var(--ink); background: rgba(234, 234, 234, 0.04); }
+  .icon-btn svg { width: 16px; height: 16px; stroke: var(--ink); stroke-width: 1.5; fill: none; }
+  .cart-btn { position: relative; }
+  .cart-btn .count {
+    position: absolute; top: -6px; right: -6px;
+    background: var(--hazard); color: var(--ink);
+    width: 18px; height: 18px;
+    font-family: var(--font-mono); font-size: 10px;
+    display: grid; place-items: center;
+  }
+
+  /* ============================================================
+     BREADCRUMB
+  ============================================================ */
+  .breadcrumb {
+    border-bottom: 1px solid var(--hairline);
+    padding: 14px 0;
+  }
+  .breadcrumb-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .breadcrumb-row a { color: var(--ink-mute); transition: color 0.3s var(--ease); }
+  .breadcrumb-row a:hover { color: var(--ink); }
+  .breadcrumb-row .sep { color: var(--ink-faint); }
+  .breadcrumb-row .here { color: var(--hazard); }
+
+  /* ============================================================
+     COUNTRY HERO
+  ============================================================ */
+  .country-hero {
+    position: relative;
+    padding: 72px 0 100px;
+    border-bottom: 1px solid var(--hairline);
+    overflow: hidden;
+  }
+  .country-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(60% 80% at 80% 30%, rgba(117, 170, 219, 0.08), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .ch-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 0.9fr;
+    gap: 64px;
+    align-items: end;
+    position: relative;
+    z-index: 1;
+  }
+  .ch-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-bottom: 48px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .ch-meta .group { display: flex; flex-direction: column; gap: 4px; }
+  .ch-meta .group .key { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; color: var(--ink-faint); text-transform: uppercase; }
+  .ch-meta .group .val { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--ink); text-transform: uppercase; }
+  .ch-meta .group .val.hz { color: var(--hazard); }
+
+  .country-name {
+    font-family: var(--font-display);
+    font-size: clamp(80px, 16vw, 280px);
+    line-height: 0.84;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .country-name .it {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    text-transform: lowercase;
+    letter-spacing: -0.02em;
+    color: var(--hazard);
+    font-size: 0.36em;
+    display: block;
+    margin-top: 8px;
+    line-height: 1;
+  }
+
+  .ch-tagline {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(20px, 1.8vw, 28px);
+    line-height: 1.35;
+    color: var(--ink-mute);
+    max-width: 36ch;
+    margin-bottom: 32px;
+  }
+  .ch-tagline em { color: var(--ink); font-style: normal; font-family: var(--font-display); font-size: 0.84em; letter-spacing: -0.01em; }
+
+  .ch-stat-row {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    padding-top: 24px;
+    border-top: 1px solid var(--hairline);
+  }
+  .ch-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .ch-stat .num { font-family: var(--font-display); font-size: clamp(28px, 2.4vw, 36px); letter-spacing: -0.02em; line-height: 1; }
+  .ch-stat .lbl { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-mute); }
+
+  .ch-visual {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background: var(--bg-elev);
+  }
+  .ch-visual img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.6) contrast(1.08) brightness(0.92);
+    transition: filter 1.4s var(--ease-soft), transform 8s var(--ease-soft);
+  }
+  .ch-visual:hover img { filter: grayscale(0) contrast(1.04); transform: scale(1.04); }
+  .ch-visual::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,10,10,0) 50%, rgba(10,10,10,0.85) 100%);
+  }
+  .ch-visual .corners {
+    position: absolute; inset: 14px;
+    border: 1px dashed var(--hairline-strong);
+    pointer-events: none;
+  }
+  .ch-visual .corner {
+    position: absolute; width: 22px; height: 22px;
+    border: 1px solid var(--hazard);
+    z-index: 3;
+  }
+  .ch-visual .corner.tl { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+  .ch-visual .corner.br { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+  .ch-visual .caption {
+    position: absolute;
+    bottom: 18px; left: 18px; right: 18px;
+    z-index: 3;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    display: flex; justify-content: space-between;
+  }
+  .ch-visual .caption .dot { width: 6px; height: 6px; background: var(--hazard); display: inline-block; margin-right: 8px; vertical-align: middle; animation: pulse 1.4s ease-in-out infinite; }
+
+  /* ============================================================
+     EDITORIAL INTRO
+  ============================================================ */
+  .editorial {
+    padding: clamp(80px, 12vw, 160px) 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .editorial-grid {
+    display: grid;
+    grid-template-columns: 0.4fr 1.6fr 0.4fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .editorial-grid .col-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    line-height: 1.6;
+  }
+  .editorial-grid .col-meta .num { color: var(--hazard); display: block; font-size: 14px; margin-bottom: 12px; }
+  .editorial-text {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(22px, 2.6vw, 36px);
+    line-height: 1.28;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .editorial-text strong { font-style: italic; font-weight: 300; color: var(--hazard); }
+  .editorial-text mark { background: none; color: var(--ink); border-bottom: 1px solid var(--hazard); padding-bottom: 2px; }
+
+  /* ============================================================
+     LOOKBOOK — bento with model imagery
+  ============================================================ */
+  .lookbook {
+    padding: clamp(80px, 10vw, 140px) 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .section-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    margin-bottom: 56px;
+    align-items: end;
+  }
+  .section-head .left { display: flex; flex-direction: column; gap: 16px; }
+  .section-head .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-mute);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-head .eyebrow::before {
+    content: "";
+    width: 32px; height: 1px; background: var(--hazard);
+  }
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 6vw, 84px);
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+  .section-head h2 .it {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    text-transform: lowercase;
+    color: var(--hazard);
+  }
+  .section-head .right {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-mute);
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  .look-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1px;
+    background: var(--hairline);
+  }
+  .look-tile {
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+  }
+  .look-tile.span-5 { grid-column: span 5; }
+  .look-tile.span-4 { grid-column: span 4; }
+  .look-tile.span-3 { grid-column: span 3; }
+  .look-tile.span-7 { grid-column: span 7; aspect-ratio: 4/3; }
+  .look-tile.span-12 { grid-column: span 12; aspect-ratio: 21/9; }
+
+  .look-tile img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.4) contrast(1.05) brightness(0.95);
+    transition: filter 1.4s var(--ease-soft), transform 8s var(--ease-soft);
+  }
+  .look-tile:hover img { filter: grayscale(0) contrast(1.02); transform: scale(1.04); }
+  .look-tile.product { background: var(--bg-elev); }
+  .look-tile.product img {
+    object-fit: contain;
+    padding: 12% 14%;
+    filter: grayscale(0.1) contrast(1.04) brightness(0.96);
+  }
+  .look-tile.product:hover img { transform: scale(1.06); filter: grayscale(0) contrast(1); }
+  .look-tile.product::before {
+    content: "";
+    position: absolute;
+    inset: 18px;
+    border: 1px dashed var(--hairline);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .look-tile.product .corner {
+    position: absolute;
+    width: 16px; height: 16px;
+    border: 1px solid var(--hazard);
+    z-index: 3;
+  }
+  .look-tile.product .corner.tl { top: 12px; left: 12px; border-right: none; border-bottom: none; }
+  .look-tile.product .corner.br { bottom: 12px; right: 12px; border-left: none; border-top: none; }
+  .look-tile.product .ref {
+    position: absolute;
+    top: 18px; right: 18px;
+    z-index: 3;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--hazard);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-align: right;
+    line-height: 1.6;
+  }
+  .look-tile .meta {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 18px 20px 16px;
+    z-index: 3;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: linear-gradient(180deg, transparent 0, rgba(10,10,10,0.85) 100%);
+    display: flex;
+    justify-content: space-between;
+  }
+  .look-tile .meta .name { color: var(--ink); }
+  .look-tile .meta .product { color: var(--ink-mute); }
+
+  /* ============================================================
+     CATALOGUE — filter bar + product grid
+  ============================================================ */
+  .catalogue {
+    padding: clamp(80px, 10vw, 140px) 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 16px 0;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    margin-bottom: 56px;
+    align-items: center;
+  }
+  .filter-bar .lbl {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-right: 16px;
+  }
+  .filter-btn {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    border: 1px solid var(--hairline-strong);
+    color: var(--ink-mute);
+    transition: color 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease);
+    cursor: pointer;
+  }
+  .filter-btn:hover { color: var(--ink); border-color: var(--ink); }
+  .filter-btn.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .filter-btn .count { color: var(--ink-faint); margin-left: 8px; font-size: 10px; }
+  .filter-btn.active .count { color: var(--bg); opacity: 0.6; }
+  .filter-bar .right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--hairline);
+  }
+  .product-card {
+    background: var(--bg);
+    position: relative;
+    cursor: pointer;
+    transition: background 0.4s var(--ease);
+    display: flex;
+    flex-direction: column;
+  }
+  .product-card.hidden { display: none; }
+  .product-card:hover { background: var(--bg-tint); }
+  .product-image {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background: var(--bg-elev);
+  }
+  .product-image img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    padding: 14% 14%;
+    transition: transform 0.6s var(--ease-soft), opacity 0.5s var(--ease);
+  }
+  .product-image .swap {
+    opacity: 0;
+  }
+  .product-card:hover .product-image .front { opacity: 0; }
+  .product-card:hover .product-image .swap { opacity: 1; }
+  .product-image .badge {
+    position: absolute;
+    top: 14px; left: 14px;
+    z-index: 3;
+    padding: 4px 8px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: rgba(10,10,10,0.7);
+    border: 1px solid var(--hairline-strong);
+  }
+  .product-image .badge.hz { color: var(--hazard); border-color: var(--hazard); }
+  .product-image .quick {
+    position: absolute;
+    bottom: 14px; right: 14px;
+    z-index: 3;
+    width: 36px; height: 36px;
+    background: rgba(10,10,10,0.7);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--hairline-strong);
+    color: var(--ink);
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), border-color 0.3s var(--ease);
+  }
+  .product-card:hover .product-image .quick { opacity: 1; transform: translateY(0); }
+  .product-image .quick:hover { border-color: var(--hazard); }
+  .product-image .quick svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 1.5; fill: none; }
+
+  .product-info {
+    padding: 18px 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-top: 1px solid var(--hairline);
+  }
+  .product-info .meta-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .product-info .meta-row .sku { color: var(--hazard); }
+  .product-info .name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .product-info .colour {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--ink-mute);
+    margin-top: -2px;
+  }
+  .product-info .price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 10px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--hairline-strong);
+  }
+  .product-info .price {
+    font-family: var(--font-display);
+    font-size: 18px;
+    letter-spacing: -0.02em;
+  }
+  .product-info .swatches {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .product-info .swatch {
+    width: 14px; height: 14px;
+    border: 1px solid var(--hairline-strong);
+    cursor: pointer;
+    transition: transform 0.2s var(--ease), border-color 0.2s var(--ease);
+  }
+  .product-info .swatch:hover { transform: scale(1.15); border-color: var(--ink); }
+
+  .add-bar {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0;
+    border: 1px solid var(--hairline-strong);
+    transition: border-color 0.3s var(--ease);
+  }
+  .add-bar:hover { border-color: var(--ink); }
+  .add-bar .size {
+    background: transparent;
+    border: none;
+    color: var(--ink);
+    padding: 12px 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+  }
+  .add-bar .add {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 0 18px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: background 0.3s var(--ease), color 0.3s var(--ease);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .add-bar .add:hover { background: var(--hazard); color: var(--ink); }
+  .add-bar .add svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 1.6; fill: none; }
+  .add-bar .add.added { background: var(--phosphor); color: var(--bg); }
+
+  /* ============================================================
+     FEATURED DROP / SPEC SHEET
+  ============================================================ */
+  .drop {
+    padding: clamp(80px, 10vw, 140px) 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .drop-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 64px;
+    align-items: stretch;
+  }
+  .drop-visual {
+    position: relative;
+    background: var(--bg-elev);
+    aspect-ratio: 4/5;
+    overflow: hidden;
+  }
+  .drop-visual img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    padding: 8% 12%;
+    transition: transform 0.8s var(--ease-soft);
+  }
+  .drop-visual:hover img { transform: scale(1.05); }
+  .drop-visual .corners {
+    position: absolute; inset: 16px;
+    pointer-events: none;
+    border: 1px dashed var(--hairline-strong);
+  }
+  .drop-visual .corners::before, .drop-visual .corners::after,
+  .drop-visual .corners > .tr, .drop-visual .corners > .bl {
+    content: ""; position: absolute;
+    width: 14px; height: 14px;
+    border: 1px solid var(--hazard);
+  }
+  .drop-visual .corners::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+  .drop-visual .corners::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+  .drop-visual .corners .tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+  .drop-visual .corners .bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+  .drop-visual .ref {
+    position: absolute; top: 24px; right: 24px;
+    font-family: var(--font-mono);
+    font-size: 10px; color: var(--hazard);
+    letter-spacing: 0.16em; text-transform: uppercase;
+    line-height: 1.6; text-align: right;
+  }
+  .drop-visual .axis {
+    position: absolute; bottom: 16px; left: 16px;
+    font-family: var(--font-mono);
+    font-size: 10px; color: var(--ink-faint);
+    letter-spacing: 0.16em; text-transform: uppercase;
+  }
+
+  .drop-spec { display: flex; flex-direction: column; justify-content: space-between; gap: 32px; padding: 8px 0; }
+  .drop-spec .head { display: flex; flex-direction: column; gap: 14px; }
+  .drop-spec .id {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--hazard);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .drop-spec .id::before { content: "//"; color: var(--ink-faint); }
+  .drop-spec h3 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4.6vw, 68px);
+    line-height: 0.86; letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+  .drop-spec h3 .it {
+    font-family: var(--font-serif);
+    font-style: italic; font-weight: 300;
+    letter-spacing: -0.02em; text-transform: lowercase;
+    color: var(--ink-mute);
+  }
+  .drop-spec .pitch {
+    font-family: var(--font-serif);
+    font-weight: 300; font-size: 17px;
+    line-height: 1.55; color: var(--ink-mute);
+    max-width: 44ch;
+  }
+  .spec-table {
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .spec-row {
+    display: grid;
+    grid-template-columns: 0.8fr 2fr auto;
+    gap: 24px; padding: 14px 0;
+    border-top: 1px dashed var(--hairline);
+    align-items: baseline;
+  }
+  .spec-row:first-child { border-top: none; }
+  .spec-row .key { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--ink-mute); }
+  .spec-row .val { font-family: var(--font-mono); font-size: 12px; color: var(--ink); letter-spacing: 0.04em; }
+  .spec-row .unit { font-family: var(--font-mono); font-size: 10px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.16em; }
+
+  .drop-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .price-block { display: flex; flex-direction: column; gap: 4px; padding-right: 24px; border-right: 1px solid var(--hairline); margin-right: 4px; }
+  .price-block .price { font-family: var(--font-display); font-size: 28px; letter-spacing: -0.02em; }
+  .price-block .meta { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--ink-mute); }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px 14px 22px;
+    background: var(--ink);
+    color: var(--bg);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    width: max-content;
+    transition: transform 0.3s var(--ease);
+  }
+  .hero-cta:hover { transform: translateY(-1px); }
+  .hero-cta:active { transform: translateY(0) scale(0.98); }
+  .hero-cta .arrow {
+    width: 28px; height: 28px;
+    background: var(--bg); color: var(--ink);
+    display: grid; place-items: center;
+    transition: transform 0.4s var(--ease);
+  }
+  .hero-cta:hover .arrow { transform: translate(2px, -2px); }
+  .hero-cta .arrow svg { width: 12px; height: 12px; stroke: var(--ink); stroke-width: 2; fill: none; }
+
+  /* ============================================================
+     CREST DETAIL
+  ============================================================ */
+  .crest {
+    padding: clamp(80px, 12vw, 160px) 0;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--bg);
+  }
+  .crest-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .crest-text { display: flex; flex-direction: column; gap: 24px; max-width: 50ch; }
+  .crest-text .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .crest-text .eyebrow::before { content: ""; width: 32px; height: 1px; background: var(--hazard); }
+  .crest-text h2 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4.6vw, 68px);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+  .crest-text h2 .it { font-family: var(--font-serif); font-style: italic; font-weight: 300; text-transform: lowercase; letter-spacing: -0.02em; color: var(--hazard); }
+  .crest-text p { font-size: 16px; line-height: 1.7; color: var(--ink-mute); max-width: 50ch; }
+  .crest-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 12px;
+    padding-top: 24px;
+    border-top: 1px solid var(--hairline);
+  }
+  .crest-stats .item .num { font-family: var(--font-display); font-size: 28px; letter-spacing: -0.02em; line-height: 1; }
+  .crest-stats .item .lbl { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-mute); margin-top: 6px; display: block; }
+
+  .crest-zoom {
+    position: relative;
+    aspect-ratio: 1/1;
+    background: var(--bg-elev);
+    overflow: hidden;
+  }
+  .crest-zoom img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    padding: 8%;
+    transition: transform 1.4s var(--ease-soft);
+  }
+  .crest-zoom:hover img { transform: scale(1.06); }
+  .crest-zoom .ring {
+    position: absolute;
+    inset: 24px;
+    border: 1px dashed var(--hairline-strong);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .crest-zoom .arc {
+    position: absolute;
+    inset: 4px;
+    pointer-events: none;
+  }
+  .crest-zoom .stamp {
+    position: absolute;
+    bottom: 20px; left: 20px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--hazard);
+    border: 1px solid var(--hazard);
+    padding: 6px 10px;
+  }
+
+  /* ============================================================
+     HERITAGE
+  ============================================================ */
+  .heritage {
+    padding: clamp(100px, 14vw, 180px) 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .heritage-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .heritage-text { display: flex; flex-direction: column; gap: 32px; max-width: 56ch; }
+  .heritage-text .quote {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(28px, 3vw, 44px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .heritage-text .quote::before {
+    content: "“"; display: block;
+    font-size: 80px; line-height: 0.5;
+    color: var(--hazard); margin-bottom: 16px;
+  }
+  .heritage-text p {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink-mute);
+    max-width: 52ch;
+  }
+  .heritage-text .signoff {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink-mute);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-top: 24px;
+    border-top: 1px solid var(--hairline);
+    flex-wrap: wrap;
+  }
+  .heritage-text .signoff .who { color: var(--ink); }
+  .heritage-visual {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background: var(--bg-elev);
+  }
+  .heritage-visual img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.85) contrast(1.1);
+    transition: filter 1.4s var(--ease-soft);
+  }
+  .heritage-visual:hover img { filter: grayscale(0.4) contrast(1.04); }
+  .heritage-visual::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.4) 0, rgba(0,0,0,0.4) 1px, transparent 1px, transparent 4px);
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  .heritage-visual .stamp {
+    position: absolute;
+    top: 24px; left: 24px;
+    z-index: 3;
+    border: 1px solid var(--hazard);
+    color: var(--hazard);
+    padding: 6px 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .heritage-visual .caption {
+    position: absolute;
+    bottom: 24px; left: 24px; right: 24px;
+    z-index: 3;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ============================================================
+     CARE / SIZE GUIDE
+  ============================================================ */
+  .care {
+    padding: clamp(80px, 10vw, 140px) 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .care-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--hairline);
+    border-top: 1px solid var(--hairline-strong);
+    border-bottom: 1px solid var(--hairline-strong);
+  }
+  .care-block {
+    background: var(--bg);
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .care-block .num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; color: var(--hazard); }
+  .care-block .title {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 2.4vw, 36px);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+  .care-table { margin-top: 8px; }
+  .care-table .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 8px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--hairline);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+  .care-table .row:first-child { border-top: none; }
+  .care-table .row.head { font-size: 10px; letter-spacing: 0.18em; color: var(--ink-faint); text-transform: uppercase; }
+  .care-table .cell { color: var(--ink); text-align: center; }
+  .care-table .cell.lbl { color: var(--ink-mute); text-align: left; text-transform: uppercase; letter-spacing: 0.16em; font-size: 10px; }
+  .care-list { list-style: none; display: flex; flex-direction: column; gap: 12px; padding-top: 8px; }
+  .care-list li {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 16px;
+    padding: 10px 0;
+    border-top: 1px dashed var(--hairline);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+  }
+  .care-list li:first-child { border-top: none; }
+  .care-list li .ix { color: var(--hazard); }
+  .care-list li .unit { color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.18em; font-size: 10px; }
+
+  /* ============================================================
+     CONTINUE BROWSING
+  ============================================================ */
+  .continue {
+    padding: clamp(80px, 10vw, 140px) 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .continue-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--hairline);
+    margin-top: 56px;
+  }
+  .continue-tile {
+    background: var(--bg);
+    aspect-ratio: 4/5;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .continue-tile img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.85) contrast(1.05) brightness(0.7);
+    transition: filter 1.4s var(--ease-soft), transform 6s var(--ease-soft);
+  }
+  .continue-tile:hover img { filter: grayscale(0) contrast(1) brightness(0.85); transform: scale(1.06); }
+  .continue-tile::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,10,10,0.2) 0%, rgba(10,10,10,0.85) 100%);
+    z-index: 1;
+  }
+  .continue-tile .info {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--ink);
+  }
+  .continue-tile .top {
+    display: flex; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--ink-mute);
+  }
+  .continue-tile .name {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 3.6vw, 56px);
+    line-height: 0.88;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+  .continue-tile .name .sub {
+    display: block;
+    font-family: var(--font-serif);
+    font-style: italic; font-weight: 300;
+    text-transform: lowercase;
+    letter-spacing: 0;
+    font-size: 0.36em;
+    color: var(--ink-mute);
+    margin-top: 8px;
+  }
+  .continue-tile .arrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: transform 0.5s var(--ease);
+    align-self: flex-end;
+    color: var(--hazard);
+  }
+  .continue-tile:hover .arrow { transform: translate(4px, -4px); }
+
+  /* ============================================================
+     NEWSROOM — The Journal / weekly editorial wire
+  ============================================================ */
+  .newsroom {
+    padding: clamp(80px, 10vw, 140px) 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .newsroom .exec {
+    margin-top: 56px;
+    padding: 36px 40px;
+    border: 1px solid var(--hairline-strong);
+    background: var(--bg-elev);
+    display: grid;
+    grid-template-columns: 0.4fr 1.6fr 0.4fr;
+    gap: 40px;
+    align-items: start;
+    position: relative;
+  }
+  .newsroom .exec::before, .newsroom .exec::after,
+  .newsroom .exec .tr, .newsroom .exec .bl {
+    content: "";
+    position: absolute;
+    width: 14px; height: 14px;
+    border: 1px solid var(--hazard);
+  }
+  .newsroom .exec::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+  .newsroom .exec::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+  .newsroom .exec .tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+  .newsroom .exec .bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+  .newsroom .exec .meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    line-height: 1.7;
+  }
+  .newsroom .exec .meta .num { color: var(--hazard); display: block; font-size: 14px; margin-bottom: 12px; }
+  .newsroom .exec .text {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(20px, 1.8vw, 26px);
+    line-height: 1.4;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .newsroom .exec .text strong { font-style: italic; font-weight: 300; color: var(--hazard); }
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1px;
+    background: var(--hairline);
+    margin-top: 56px;
+  }
+  .news-card {
+    background: var(--bg);
+    padding: 28px 30px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: background 0.4s var(--ease);
+    cursor: pointer;
+    position: relative;
+  }
+  .news-card:hover { background: var(--bg-tint); }
+  .news-card.span-12 { grid-column: span 12; }
+  .news-card.span-8 { grid-column: span 8; }
+  .news-card.span-6 { grid-column: span 6; }
+  .news-card.span-4 { grid-column: span 4; }
+
+  .news-card .head {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--hairline-strong);
+  }
+  .news-card .head .src { color: var(--hazard); }
+  .news-card .head .date { color: var(--ink-faint); }
+  .news-card .cat {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .news-card .cat .pill {
+    display: inline-block;
+    padding: 4px 8px;
+    border: 1px solid var(--hairline-strong);
+    margin-right: 6px;
+    color: var(--ink);
+  }
+  .news-card .cat .country { color: var(--hazard); margin-left: 6px; }
+
+  .news-card h3 {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 1.8vw, 28px);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+  }
+  .news-card.span-8 h3, .news-card.span-12 h3 {
+    font-size: clamp(28px, 2.6vw, 44px);
+    line-height: 0.95;
+  }
+  .news-card .summary {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-mute);
+    max-width: 60ch;
+  }
+  .news-card .why {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink);
+    padding-top: 12px;
+    border-top: 1px dashed var(--hairline-strong);
+    max-width: 60ch;
+  }
+  .news-card .why::before { content: "// Por qué importa — "; color: var(--hazard); font-style: normal; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; margin-right: 6px; }
+  .news-card .read-more {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    align-self: flex-start;
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 14px;
+    transition: color 0.3s var(--ease);
+  }
+  .news-card .read-more::after {
+    content: "↗";
+    transition: transform 0.4s var(--ease);
+  }
+  .news-card:hover .read-more { color: var(--hazard); }
+  .news-card:hover .read-more::after { transform: translate(3px, -3px); }
+
+  /* TRENDS — closing block */
+  .trends {
+    margin-top: 1px;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 48px 40px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 56px;
+    align-items: start;
+  }
+  .trends .tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--hazard);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .trends .tag::before { content: ""; width: 32px; height: 1px; background: var(--hazard); }
+  .trends h3 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3vw, 48px);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin-top: 16px;
+  }
+  .trends h3 .it { font-family: var(--font-serif); font-style: italic; font-weight: 300; text-transform: lowercase; letter-spacing: -0.02em; color: var(--hazard); }
+  .trends ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .trends ul li {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 18px;
+    padding: 14px 0;
+    border-top: 1px solid rgba(10,10,10,0.12);
+    align-items: baseline;
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.45;
+  }
+  .trends ul li:first-child { border-top: none; }
+  .trends ul li .num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; color: var(--hazard); }
+  .trends ul li strong { font-family: var(--font-display); font-size: 0.95em; letter-spacing: -0.01em; text-transform: uppercase; color: var(--bg); }
+
+  @media (max-width: 1024px) {
+    .news-card.span-8, .news-card.span-6, .news-card.span-4 { grid-column: span 12; }
+    .newsroom .exec { grid-template-columns: 1fr; gap: 24px; }
+    .trends { grid-template-columns: 1fr; gap: 24px; padding: 32px 24px; }
+  }
+
+  /* ============================================================
+     NEWSLETTER (compact version)
+  ============================================================ */
+  .newsletter {
+    padding: clamp(80px, 10vw, 140px) 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .newsletter-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .newsletter h2 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4.4vw, 64px);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+  .newsletter h2 .it { font-family: var(--font-serif); font-style: italic; font-weight: 300; text-transform: lowercase; letter-spacing: -0.02em; color: var(--hazard); }
+  .newsletter .lede { margin-top: 24px; font-family: var(--font-serif); font-weight: 300; font-size: 17px; line-height: 1.55; color: var(--ink-mute); max-width: 42ch; }
+  .nl-form { display: flex; flex-direction: column; gap: 16px; }
+  .nl-form label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mute); }
+  .nl-form .row { display: grid; grid-template-columns: 1fr auto; gap: 0; border: 1px solid var(--hairline-strong); }
+  .nl-form input { background: transparent; border: none; color: var(--ink); padding: 18px 20px; font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.04em; outline: none; width: 100%; }
+  .nl-form input::placeholder { color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.16em; font-size: 12px; }
+  .nl-form .row:focus-within { border-color: var(--hazard); }
+  .nl-form button.submit { background: var(--ink); color: var(--bg); padding: 0 28px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; transition: background 0.3s var(--ease), color 0.3s var(--ease); display: flex; align-items: center; gap: 10px; }
+  .nl-form button.submit:hover { background: var(--hazard); color: var(--ink); }
+  .nl-form .legal { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); line-height: 1.7; }
+  .nl-form .legal a { color: var(--ink); border-bottom: 1px solid var(--hairline-strong); }
+
+  /* ============================================================
+     FOOTER (same as index)
+  ============================================================ */
+  footer.site { padding: 64px 0 32px; background: var(--bg); }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 64px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .footer-brand { display: flex; flex-direction: column; gap: 24px; max-width: 36ch; }
+  .footer-brand .pitch { font-family: var(--font-serif); font-weight: 300; font-style: italic; font-size: 16px; line-height: 1.5; color: var(--ink-mute); }
+  .footer-col h4 { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 20px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a { font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-mute); transition: color 0.3s var(--ease); }
+  .footer-col a:hover { color: var(--hazard); }
+  .footer-bottom {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-faint);
+  }
+  .footer-bottom .center { text-align: center; }
+  .footer-bottom .right { text-align: right; }
+  .footer-bottom .reg { color: var(--hazard); }
+  .footer-logo {
+    margin: 0 0 32px;
+    padding: 24px 0 8px;
+    border-top: 1px solid var(--hairline);
+    overflow: hidden;
+  }
+  .footer-logo img { width: 100%; height: auto; display: block; }
+
+  /* ============================================================
+     LIGHTBOX — product zoom + multi-angle gallery
+  ============================================================ */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s var(--ease), visibility 0.4s var(--ease);
+  }
+  .lightbox.open { visibility: visible; opacity: 1; }
+  .lb-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(20px) saturate(120%);
+    -webkit-backdrop-filter: blur(20px) saturate(120%);
+    cursor: pointer;
+  }
+  .lb-frame {
+    position: absolute;
+    inset: 32px;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    grid-template-rows: 1fr;
+    gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline-strong);
+    overflow: hidden;
+    transform: scale(0.96) translateY(8px);
+    transition: transform 0.5s var(--ease-soft);
+  }
+  .lightbox.open .lb-frame { transform: scale(1) translateY(0); }
+  .lb-stage {
+    position: relative;
+    background: var(--bg-elev);
+    overflow: hidden;
+  }
+  .lb-stage img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    padding: 4% 6%;
+    transition: opacity 0.3s var(--ease);
+  }
+  .lb-stage img.fading { opacity: 0; }
+  .lb-stage .crosshairs {
+    position: absolute;
+    inset: 24px;
+    border: 1px dashed var(--hairline);
+    pointer-events: none;
+  }
+  .lb-stage .corner {
+    position: absolute;
+    width: 18px; height: 18px;
+    border: 1px solid var(--hazard);
+    pointer-events: none;
+  }
+  .lb-stage .corner.tl { top: 16px; left: 16px; border-right: none; border-bottom: none; }
+  .lb-stage .corner.tr { top: 16px; right: 16px; border-left: none; border-bottom: none; }
+  .lb-stage .corner.bl { bottom: 16px; left: 16px; border-right: none; border-top: none; }
+  .lb-stage .corner.br { bottom: 16px; right: 16px; border-left: none; border-top: none; }
+  .lb-stage .frame-id {
+    position: absolute;
+    top: 24px; left: 24px;
+    z-index: 5;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    line-height: 1.6;
+  }
+  .lb-stage .frame-id .num { color: var(--hazard); display: block; }
+  .lb-stage .zoom-tag {
+    position: absolute;
+    bottom: 24px; right: 24px;
+    z-index: 5;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--hazard);
+    border: 1px solid var(--hazard);
+    padding: 6px 10px;
+  }
+
+  .lb-nav {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    z-index: 6;
+    width: 48px; height: 48px;
+    background: rgba(10,10,10,0.7);
+    border: 1px solid var(--hairline-strong);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--ink);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  }
+  .lb-nav:hover { border-color: var(--hazard); background: rgba(10,10,10,0.9); }
+  .lb-nav.prev { left: 24px; }
+  .lb-nav.next { right: 24px; }
+  .lb-nav svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.6; fill: none; }
+  .lb-nav[disabled] { opacity: 0.25; cursor: not-allowed; }
+
+  .lb-side {
+    background: var(--bg);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow-y: auto;
+  }
+  .lb-side .head { display: flex; flex-direction: column; gap: 10px; padding-bottom: 20px; border-bottom: 1px solid var(--hairline); }
+  .lb-side .sku {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--hazard);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .lb-side .sku::before { content: "//"; color: var(--ink-faint); }
+  .lb-side .name {
+    font-family: var(--font-display);
+    font-size: 26px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .lb-side .stock {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .lb-side .stock .dot { width: 6px; height: 6px; background: var(--phosphor); animation: pulse 1.4s ease-in-out infinite; }
+  .lb-side .stock .dot.low { background: var(--hazard); }
+
+  .lb-side .price {
+    font-family: var(--font-display);
+    font-size: 32px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .lb-side .vat {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 4px;
+  }
+
+  .lb-side .lbl {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+
+  .lb-thumbs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+  .lb-thumb {
+    aspect-ratio: 1/1;
+    background: var(--bg-elev);
+    border: 1px solid transparent;
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.3s var(--ease), opacity 0.3s var(--ease);
+    opacity: 0.6;
+  }
+  .lb-thumb:hover { opacity: 1; border-color: var(--hairline-strong); }
+  .lb-thumb.active { opacity: 1; border-color: var(--hazard); }
+  .lb-thumb img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    padding: 8%;
+  }
+
+  .lb-side .swatches { display: flex; gap: 8px; flex-wrap: wrap; }
+  .lb-side .swatch-lg {
+    width: 28px; height: 28px;
+    border: 1px solid var(--hairline-strong);
+    cursor: pointer;
+    transition: transform 0.2s var(--ease), border-color 0.2s var(--ease);
+  }
+  .lb-side .swatch-lg:hover { transform: scale(1.12); border-color: var(--ink); }
+  .lb-side .swatch-lg.active { border-color: var(--hazard); transform: scale(1.12); }
+
+  .lb-side .sizes { display: flex; gap: 6px; flex-wrap: wrap; }
+  .lb-side .size-pill {
+    padding: 10px 14px;
+    border: 1px solid var(--hairline-strong);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  }
+  .lb-side .size-pill:hover { border-color: var(--ink); }
+  .lb-side .size-pill.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+  .lb-side .add {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 18px 22px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: background 0.3s var(--ease), color 0.3s var(--ease);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: auto;
+    width: 100%;
+  }
+  .lb-side .add:hover { background: var(--hazard); color: var(--ink); }
+  .lb-side .add svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 1.6; fill: none; }
+  .lb-side .add.added { background: var(--phosphor); color: var(--bg); }
+
+  .lb-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    z-index: 12;
+    width: 40px; height: 40px;
+    background: rgba(10,10,10,0.8);
+    border: 1px solid var(--hairline-strong);
+    color: var(--ink);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  }
+  .lb-close:hover { border-color: var(--hazard); background: var(--hazard); color: var(--ink); }
+  .lb-close svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.6; fill: none; }
+
+  .lb-counter {
+    position: absolute;
+    bottom: 16px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: rgba(10,10,10,0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 6px 10px;
+    border: 1px solid var(--hairline-strong);
+  }
+
+  /* product card image cursor: zoom */
+  .product-image { cursor: zoom-in; }
+  .product-card .quick { cursor: pointer; }
+
+  @media (max-width: 1024px) {
+    .lb-frame { inset: 16px; grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
+    .lb-side { padding: 20px 16px; max-height: 45vh; }
+    .lb-thumbs { grid-template-columns: repeat(6, 1fr); }
+    .lb-nav { width: 40px; height: 40px; }
+    .lb-nav.prev { left: 12px; }
+    .lb-nav.next { right: 12px; }
+  }
+  @media (max-width: 560px) {
+    .lb-frame { inset: 0; border: none; }
+    .lb-stage { min-height: 60vh; }
+    .lb-side .name { font-size: 22px; }
+    .lb-side .price { font-size: 26px; }
+  }
+
+  /* ============================================================
+     FLOATING CART BAR (bottom on cart additions)
+  ============================================================ */
+  .cart-toast {
+    position: fixed;
+    bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    z-index: 100;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 16px 24px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 1px solid var(--bg);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    transition: transform 0.5s var(--ease);
+  }
+  .cart-toast.show { transform: translateX(-50%) translateY(0); }
+  .cart-toast .check {
+    width: 16px; height: 16px;
+    background: var(--phosphor);
+    color: var(--bg);
+    display: grid; place-items: center;
+    font-weight: bold;
+  }
+
+  /* ============================================================
+     RESPONSIVE
+  ============================================================ */
+  @media (max-width: 1180px) {
+    .product-grid { grid-template-columns: repeat(3, 1fr); }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 900px) {
+    .ch-grid, .editorial-grid, .drop-grid, .crest-grid, .heritage-grid, .newsletter-grid { grid-template-columns: 1fr; gap: 48px; }
+    .ch-meta { grid-template-columns: repeat(2, 1fr); }
+    .product-grid, .continue-grid, .care-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .look-grid { display: flex; flex-direction: column; }
+    .look-tile.span-5, .look-tile.span-4, .look-tile.span-3, .look-tile.span-7, .look-tile.span-12 { grid-column: unset; aspect-ratio: 3/4; width: 100%; }
+  }
+  @media (max-width: 560px) {
+    :root { --grid: 16px; }
+    .telemetry-bar { height: 28px; }
+    nav.primary .row { height: 64px; gap: 16px; }
+    .brand-text { display: none; }
+    .product-grid, .care-grid, .continue-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { grid-template-columns: 1fr; }
+    .footer-bottom .center, .footer-bottom .right { text-align: left; }
+    .ch-meta { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scanlines"></div>
+<div class="noise"></div>
+
+<!-- TELEMETRY -->
+<div class="telemetry-bar" role="banner">
+  <div class="track">
+    <span class="item"><span class="dot"></span>ARGENTINA INDEX — DROP 12 LIVE</span>
+    <span class="item">CUT &amp; SEWN — BUENOS AIRES / 34.5° S / 58.4° W</span>
+    <span class="item"><span class="dot hz"></span>184 PCS REMAINING — POLO N°10 NV</span>
+    <span class="item">VAMOS LOS PUMAS — CARDIFF / 16.05.26</span>
+    <span class="item">EU SHIPPING 48H · UK 72H · GLOBAL 5–8D</span>
+    <span class="item"><span class="dot"></span>FREE EU SHIPPING / ORDERS &gt; €120</span>
+    <!-- duplicate for seamless loop -->
+    <span class="item"><span class="dot"></span>ARGENTINA INDEX — DROP 12 LIVE</span>
+    <span class="item">CUT &amp; SEWN — BUENOS AIRES / 34.5° S / 58.4° W</span>
+    <span class="item"><span class="dot hz"></span>184 PCS REMAINING — POLO N°10 NV</span>
+    <span class="item">VAMOS LOS PUMAS — CARDIFF / 16.05.26</span>
+    <span class="item">EU SHIPPING 48H · UK 72H · GLOBAL 5–8D</span>
+    <span class="item"><span class="dot"></span>FREE EU SHIPPING / ORDERS &gt; €120</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="primary" aria-label="Primary">
+  <div class="container">
+    <div class="row">
+      <a href="index.html" class="brand">
+        <div class="brand-mark">H</div>
+        <div class="brand-text">
+          <span class="name">The H Connection</span>
+          <span class="meta">EST. 2022 · BUENOS AIRES</span>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html#collections" class="active">Collections</a>
+        <a href="index.html#drop">Shop</a>
+        <a href="index.html#heritage">Heritage</a>
+        <a href="index.html#fixtures">Fixtures</a>
+        <a href="index.html#journal">Journal</a>
+      </div>
+      <div class="nav-actions">
+        <button class="icon-btn" aria-label="Search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <button class="icon-btn" aria-label="Account">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <button class="icon-btn cart-btn" aria-label="Cart">
+          <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="count" id="cartCount">02</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="container">
+    <div class="breadcrumb-row">
+      <a href="index.html">H/Connection</a>
+      <span class="sep">//</span>
+      <a href="index.html#collections">Catalogue</a>
+      <span class="sep">//</span>
+      <a href="index.html#collections">Country</a>
+      <span class="sep">//</span>
+      <span class="here">AR — Argentina</span>
+    </div>
+  </div>
+</div>
+
+<!-- COUNTRY HERO -->
+<section class="country-hero">
+  <div class="container">
+
+    <div class="ch-meta reveal">
+      <div class="group"><span class="key">Index</span><span class="val">N° 01 — Argentina</span></div>
+      <div class="group"><span class="key">Coordinates</span><span class="val">34.5° S / 58.4° W</span></div>
+      <div class="group"><span class="key">Atelier</span><span class="val">Buenos Aires</span></div>
+      <div class="group"><span class="key">Status</span><span class="val hz">DROP 12 LIVE — 184 PCS</span></div>
+    </div>
+
+    <div class="ch-grid">
+      <div>
+        <h1 class="country-name reveal">
+          Argentina
+          <span class="it">— Los Pumas, on file</span>
+        </h1>
+
+        <p class="ch-tagline reveal" data-delay="1">
+          A <em>fourteen-piece catalogue</em> for the union that turns up. Embroidered Pumas crests on organic cotton, premium piqué polos, and heavy-blend hoodies — built in Buenos Aires.
+        </p>
+
+        <div class="ch-stat-row reveal" data-delay="2">
+          <div class="ch-stat"><span class="num">14</span><span class="lbl">Pieces filed</span></div>
+          <div class="ch-stat"><span class="num">220</span><span class="lbl">GSM piqué</span></div>
+          <div class="ch-stat"><span class="num">12.4K</span><span class="lbl">Stitch count</span></div>
+          <div class="ch-stat"><span class="num">04.62</span><span class="lbl">Revision</span></div>
+        </div>
+      </div>
+
+      <figure class="ch-visual reveal" data-delay="2">
+        <img src="Argentina/el-festejo-de-los-pumas-tras-la-victoria-ante-J4LTT5AWFBHQXJW6DDP65HSWYE.jpg" alt="Los Pumas celebrating victory" loading="lazy" />
+        <span class="corners"></span>
+        <span class="corner tl"></span>
+        <span class="corner br"></span>
+        <figcaption class="caption">
+          <span><span class="dot"></span>FIELD CAPTURE / VAMOS</span>
+          <span>FRAME 04/12</span>
+        </figcaption>
+      </figure>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDITORIAL -->
+<section class="editorial">
+  <div class="container">
+    <div class="editorial-grid">
+      <div class="col-meta reveal">
+        <span class="num">01 / 04</span>
+        Editorial<br/>fragment<br/>Filed 04.62
+      </div>
+      <p class="editorial-text reveal" data-delay="1">
+        Buenos Aires has always known how to <strong>show up for a match</strong>. From the colectivos packed at dawn to the asados that follow at midnight, this catalogue documents the wardrobe of <mark>that fourteen-hour ritual</mark> — the white tee in the morning, the navy polo at the stadium, the indigo hoodie on the way home.
+      </p>
+      <div class="col-meta reveal" data-delay="2" style="text-align:right">
+        <span class="num">END</span>
+        Vol. AR<br/>San Isidro<br/>04.62
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOOKBOOK -->
+<section class="lookbook">
+  <div class="container">
+    <header class="section-head">
+      <div class="left reveal">
+        <span class="eyebrow">02 / Lookbook — Spring 26</span>
+        <h2>Polo N°10, <span class="it">on the body.</span></h2>
+      </div>
+      <div class="right reveal" data-delay="1">
+        Studio capture — H/Atelier<br/>
+        Talent: Mateo Bardini · 6 ft 1<br/>
+        <span style="color:var(--hazard)">Six frames, one polo.</span>
+      </div>
+    </header>
+
+    <div class="look-grid">
+      <figure class="look-tile span-7 reveal">
+        <img src="Argentina/Modelos/9fc6f5c5-8d1b-425e-bfde-1d5687dac3e1.png" alt="Model wearing Premium Polo N°10 Navy — seated editorial" loading="lazy" />
+        <figcaption class="meta">
+          <span class="name">FRAME 01 / STUDIO 04</span>
+          <span class="product">— Polo N°10 / Navy</span>
+        </figcaption>
+      </figure>
+
+      <figure class="look-tile span-5 reveal" data-delay="1">
+        <img src="Argentina/Modelos/bce2433c-de1e-4f66-9370-09fd23bb3474.png" alt="Model wearing Premium Polo N°10 — chest and crest detail" loading="lazy" />
+        <figcaption class="meta">
+          <span class="name">FRAME 02 / CREST IN WEAR</span>
+          <span class="product">— Polo N°10 / Navy</span>
+        </figcaption>
+      </figure>
+
+      <figure class="look-tile span-4 reveal" data-delay="2">
+        <img src="Argentina/Modelos/d49f42e6-516f-4ee7-b5a8-c3585b01d2ee.png" alt="Model wearing Premium Polo N°10 — full body walking" loading="lazy" />
+        <figcaption class="meta">
+          <span class="name">FRAME 03 / IN MOTION</span>
+          <span class="product">— Polo N°10 / Navy</span>
+        </figcaption>
+      </figure>
+
+      <figure class="look-tile span-4 reveal" data-delay="3">
+        <img src="Argentina/Modelos/75f597c4-b5ad-4cae-9522-adb89336d6f8.png" alt="Model wearing Premium Polo N°10 — full body back view" loading="lazy" />
+        <figcaption class="meta">
+          <span class="name">FRAME 04 / REVERSE</span>
+          <span class="product">— Polo N°10 / Navy</span>
+        </figcaption>
+      </figure>
+
+      <figure class="look-tile span-4 reveal" data-delay="4">
+        <img src="Argentina/Modelos/4b104bb7-1192-4525-bb43-91b5a7eff49b.png" alt="Model wearing Premium Polo N°10 — seated on the floor" loading="lazy" />
+        <figcaption class="meta">
+          <span class="name">FRAME 05 / OFF DUTY</span>
+          <span class="product">— Polo N°10 / Navy</span>
+        </figcaption>
+      </figure>
+
+      <figure class="look-tile span-12 reveal" data-delay="5" style="aspect-ratio: 21/9">
+        <img src="Argentina/0209deceeb77343b8994ca3818a34b03.jpeg" alt="Los Pumas players celebrating in their official light blue and white kit" loading="lazy" style="object-position: center 30%" />
+        <figcaption class="meta">
+          <span class="name">FRAME 06 / FIELD CAPTURE — LOS PUMAS</span>
+          <span class="product">— Post-match · the union, on file</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- CATALOGUE -->
+<section class="catalogue" id="catalogue">
+  <div class="container">
+    <header class="section-head">
+      <div class="left reveal">
+        <span class="eyebrow">03 / All Articles — 10 SKUs</span>
+        <h2>The catalogue, <span class="it">in full.</span></h2>
+      </div>
+      <div class="right reveal" data-delay="1">
+        Each garment ships in 48–72h<br/>
+        <span style="color:var(--hazard)">Lifetime repair included</span>
+      </div>
+    </header>
+
+    <div class="filter-bar reveal" role="tablist" aria-label="Filter products">
+      <span class="lbl">// Filter</span>
+      <button class="filter-btn active" data-filter="all">All <span class="count">10</span></button>
+      <button class="filter-btn" data-filter="tee">T-Shirts <span class="count">03</span></button>
+      <button class="filter-btn" data-filter="polo">Premium Polos <span class="count">04</span></button>
+      <button class="filter-btn" data-filter="hoodie">Hoodies <span class="count">03</span></button>
+      <span class="right">Sort: <span style="color:var(--ink)">FILED — NEWEST FIRST</span></span>
+    </div>
+
+    <div class="product-grid" id="productGrid">
+
+      <!-- Tee — White -->
+      <article class="product-card" data-cat="tee" data-sku="AR-TS-01-WT"
+        data-name="T-Shirt N°01 — White"
+        data-price="€48,40"
+        data-angles="Argentina/Ropa%20Arg/unisex-organic-cotton-t-shirt-white-front-2-6649ec8799b0b.png|Argentina/Ropa%20Arg/unisex-organic-cotton-t-shirt-white-front-6649ec8796d18.png|Argentina/unisex-organic-cotton-t-shirt-white-front-6649ec87943e5.png|Argentina/unisex-organic-cotton-t-shirt-white-front-6649ec87957ff.png|Argentina/unisex-organic-cotton-t-shirt-white-front-6649ec8798383.png|Argentina/unisex-organic-cotton-t-shirt-white-front-664f86553e39e.png">
+        <div class="product-image">
+          <img class="front" src="Argentina/Ropa%20Arg/unisex-organic-cotton-t-shirt-white-front-2-6649ec8799b0b.png" alt="Argentina T-Shirt N°01 — White, front" loading="lazy" />
+          <img class="swap" src="Argentina/Ropa%20Arg/unisex-organic-cotton-t-shirt-white-front-6649ec8796d18.png" alt="Argentina T-Shirt N°01 — White, alt angle" loading="lazy" />
+          <span class="badge hz">N°01 / 38 PCS</span>
+          <button class="quick" aria-label="Quick view"><svg viewBox="0 0 24 24"><path d="M3 12s4-7 9-7 9 7 9 7-4 7-9 7-9-7-9-7Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">AR-TS-01-WT</span><span>UNISEX · ORGANIC</span></div>
+          <h3 class="name">T-Shirt N°01</h3>
+          <span class="colour">— White, organic cotton</span>
+          <div class="price-row">
+            <span class="price">€48,40</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#FFFFFF"></span>
+              <span class="swatch" style="background:#1F2940"></span>
+              <span class="swatch" style="background:#C9B79D"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Size">
+              <option>SIZE</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="T-Shirt N°01 — White">Add <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Tee — French Navy -->
+      <article class="product-card" data-cat="tee" data-sku="AR-TS-01-NV"
+        data-name="T-Shirt N°01 — French Navy"
+        data-price="€48,40"
+        data-angles="Argentina/Ropa%20Arg/unisex-organic-cotton-t-shirt-french-navy-front-664f86553b0e7.png|Argentina/unisex-organic-cotton-t-shirt-french-navy-front-664f86553a2ff.png">
+        <div class="product-image">
+          <img class="front" src="Argentina/Ropa%20Arg/unisex-organic-cotton-t-shirt-french-navy-front-664f86553b0e7.png" alt="Argentina T-Shirt N°01 — French Navy, front" loading="lazy" />
+          <img class="swap" src="Argentina/unisex-organic-cotton-t-shirt-french-navy-front-664f86553a2ff.png" alt="Argentina T-Shirt N°01 — French Navy, alt angle" loading="lazy" />
+          <span class="badge">N°01 / 24 PCS</span>
+          <button class="quick" aria-label="Quick view"><svg viewBox="0 0 24 24"><path d="M3 12s4-7 9-7 9 7 9 7-4 7-9 7-9-7-9-7Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">AR-TS-01-NV</span><span>UNISEX · ORGANIC</span></div>
+          <h3 class="name">T-Shirt N°01</h3>
+          <span class="colour">— French Navy, organic cotton</span>
+          <div class="price-row">
+            <span class="price">€48,40</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#1F2940"></span>
+              <span class="swatch" style="background:#FFFFFF"></span>
+              <span class="swatch" style="background:#C9B79D"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Size">
+              <option>SIZE</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="T-Shirt N°01 — French Navy">Add <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Tee — Desert Dust -->
+      <article class="product-card" data-cat="tee" data-sku="AR-TS-01-DD"
+        data-name="T-Shirt N°01 — Desert Dust"
+        data-price="€48,40"
+        data-angles="Argentina/Ropa%20Arg/unisex-organic-cotton-t-shirt-desert-dust-front-6649ec8792c01.png|Argentina/unisex-organic-cotton-t-shirt-desert-dust-front-6649ec879126d.png|Argentina/unisex-organic-cotton-t-shirt-desert-dust-front-6649ec87924d2.png|Argentina/unisex-organic-cotton-t-shirt-desert-dust-front-2-6649ec8793bdf.png|Argentina/unisex-organic-cotton-t-shirt-desert-dust-front-6649ec879330f.png">
+        <div class="product-image">
+          <img class="front" src="Argentina/Ropa%20Arg/unisex-organic-cotton-t-shirt-desert-dust-front-6649ec8792c01.png" alt="Argentina T-Shirt N°01 — Desert Dust, front" loading="lazy" />
+          <img class="swap" src="Argentina/unisex-organic-cotton-t-shirt-desert-dust-front-6649ec87924d2.png" alt="Argentina T-Shirt N°01 — Desert Dust, alt angle" loading="lazy" />
+          <span class="badge">N°01 / 18 PCS</span>
+          <button class="quick" aria-label="Quick view"><svg viewBox="0 0 24 24"><path d="M3 12s4-7 9-7 9 7 9 7-4 7-9 7-9-7-9-7Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">AR-TS-01-DD</span><span>UNISEX · ORGANIC</span></div>
+          <h3 class="name">T-Shirt N°01</h3>
+          <span class="colour">— Desert Dust, organic cotton</span>
+          <div class="price-row">
+            <span class="price">€48,40</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#C9B79D"></span>
+              <span class="swatch" style="background:#FFFFFF"></span>
+              <span class="swatch" style="background:#1F2940"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Size">
+              <option>SIZE</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="T-Shirt N°01 — Desert Dust">Add <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Polo — Black -->
+      <article class="product-card" data-cat="polo" data-sku="AR-PL-10-BK"
+        data-name="Premium Polo N°10 — Black"
+        data-price="€78,40"
+        data-angles="Argentina/Ropa%20Arg/premium-polo-shirt-black-front-664a01a177881.png|Argentina/Polos/premium-polo-shirt-black-front-664a01a177edd.png|Argentina/Polos/premium-polo-shirt-black-front-664a01a177f89.png|Argentina/Polos/premium-polo-shirt-black-left-front-664a01a17825d.png|Argentina/Polos/premium-polo-shirt-black-right-front-664a01a178123.png|Argentina/Polos/premium-polo-shirt-black-zoomed-in-664a01a178038.png|Argentina/premium-polo-shirt-black-zoomed-in-664f8c393e176.png">
+        <div class="product-image">
+          <img class="front" src="Argentina/Ropa%20Arg/premium-polo-shirt-black-front-664a01a177881.png" alt="Argentina Premium Polo N°10 — Black, front" loading="lazy" />
+          <img class="swap" src="Argentina/Polos/premium-polo-shirt-black-zoomed-in-664a01a178038.png" alt="Argentina Premium Polo N°10 — Black, zoomed crest" loading="lazy" />
+          <span class="badge">N°10 / 26 PCS</span>
+          <button class="quick" aria-label="Quick view"><svg viewBox="0 0 24 24"><path d="M3 12s4-7 9-7 9 7 9 7-4 7-9 7-9-7-9-7Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">AR-PL-10-BK</span><span>PIQUÉ · 220 GSM</span></div>
+          <h3 class="name">Premium Polo N°10</h3>
+          <span class="colour">— Black, embroidered Pumas</span>
+          <div class="price-row">
+            <span class="price">€78,40</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#0E0E10"></span>
+              <span class="swatch" style="background:#1F2940"></span>
+              <span class="swatch" style="background:#7A8086"></span>
+              <span class="swatch" style="background:#A2A6A8"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Size">
+              <option>SIZE</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="Premium Polo N°10 — Black">Add <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Polo — French Navy -->
+      <article class="product-card" data-cat="polo" data-sku="AR-PL-10-NV"
+        data-name="Premium Polo N°10 — French Navy"
+        data-price="€78,40"
+        data-angles="Argentina/Ropa%20Arg/premium-polo-shirt-navy-front-664a01a1784dc.png|Argentina/Polos/premium-polo-shirt-navy-front-664a01a178397.png|Argentina/Polos/premium-polo-shirt-navy-front-664a01a178614.png|Argentina/Polos/premium-polo-shirt-navy-left-front-664a01a178d03.png|Argentina/Polos/premium-polo-shirt-navy-right-front-664a01a178ac7.png|Argentina/Polos/premium-polo-shirt-navy-zoomed-in-664a01a17887a.png|Argentina/premium-polo-shirt-navy-zoomed-in-664f8c393ee1c.png|Argentina/Modelos/9fc6f5c5-8d1b-425e-bfde-1d5687dac3e1.png|Argentina/Modelos/bce2433c-de1e-4f66-9370-09fd23bb3474.png|Argentina/Modelos/d49f42e6-516f-4ee7-b5a8-c3585b01d2ee.png">
+        <div class="product-image">
+          <img class="front" src="Argentina/Ropa%20Arg/premium-polo-shirt-navy-front-664a01a1784dc.png" alt="Argentina Premium Polo N°10 — Navy, front" loading="lazy" />
+          <img class="swap" src="Argentina/Polos/premium-polo-shirt-navy-zoomed-in-664a01a17887a.png" alt="Argentina Premium Polo N°10 — Navy, zoomed crest" loading="lazy" />
+          <span class="badge hz">N°10 / 184 PCS</span>
+          <button class="quick" aria-label="Quick view"><svg viewBox="0 0 24 24"><path d="M3 12s4-7 9-7 9 7 9 7-4 7-9 7-9-7-9-7Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">AR-PL-10-NV</span><span>PIQUÉ · 220 GSM</span></div>
+          <h3 class="name">Premium Polo N°10</h3>
+          <span class="colour">— French Navy, embroidered Pumas</span>
+          <div class="price-row">
+            <span class="price">€78,40</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#1F2940"></span>
+              <span class="swatch" style="background:#0E0E10"></span>
+              <span class="swatch" style="background:#7A8086"></span>
+              <span class="swatch" style="background:#A2A6A8"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Size">
+              <option>SIZE</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="Premium Polo N°10 — Navy">Add <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Polo — Steel Grey -->
+      <article class="product-card" data-cat="polo" data-sku="AR-PL-10-SG"
+        data-name="Premium Polo N°10 — Steel Grey"
+        data-price="€78,40"
+        data-angles="Argentina/Ropa%20Arg/premium-polo-shirt-steel-grey-front-664a01a179250.png|Argentina/Polos/premium-polo-shirt-steel-grey-front-664a01a178f1f.png|Argentina/Polos/premium-polo-shirt-steel-grey-front-664a01a179577.png|Argentina/Polos/premium-polo-shirt-steel-grey-left-front-664a01a179df3.png|Argentina/Polos/premium-polo-shirt-steel-grey-right-front-664a01a179bf2.png|Argentina/Polos/premium-polo-shirt-steel-grey-zoomed-in-664a01a179900.png|Argentina/premium-polo-shirt-steel-grey-front-664f8c393f06c.png|Argentina/premium-polo-shirt-steel-grey-zoomed-in-664f8c393f415.png">
+        <div class="product-image">
+          <img class="front" src="Argentina/Ropa%20Arg/premium-polo-shirt-steel-grey-front-664a01a179250.png" alt="Argentina Premium Polo N°10 — Steel Grey, front" loading="lazy" />
+          <img class="swap" src="Argentina/Polos/premium-polo-shirt-steel-grey-zoomed-in-664a01a179900.png" alt="Argentina Premium Polo N°10 — Steel Grey, zoomed crest" loading="lazy" />
+          <span class="badge">N°10 / 14 PCS</span>
+          <button class="quick" aria-label="Quick view"><svg viewBox="0 0 24 24"><path d="M3 12s4-7 9-7 9 7 9 7-4 7-9 7-9-7-9-7Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">AR-PL-10-SG</span><span>PIQUÉ · 220 GSM</span></div>
+          <h3 class="name">Premium Polo N°10</h3>
+          <span class="colour">— Steel Grey, embroidered Pumas</span>
+          <div class="price-row">
+            <span class="price">€78,40</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#7A8086"></span>
+              <span class="swatch" style="background:#0E0E10"></span>
+              <span class="swatch" style="background:#1F2940"></span>
+              <span class="swatch" style="background:#A2A6A8"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Size">
+              <option>SIZE</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="Premium Polo N°10 — Steel Grey">Add <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Polo — Cool Heather -->
+      <article class="product-card" data-cat="polo" data-sku="AR-PL-10-CH"
+        data-name="Premium Polo N°10 — Cool Heather"
+        data-price="€78,40"
+        data-angles="Argentina/premium-polo-shirt-cool-heather-zoomed-in-664f8c393f7a2.png">
+        <div class="product-image">
+          <img class="front" src="Argentina/premium-polo-shirt-cool-heather-zoomed-in-664f8c393f7a2.png" alt="Argentina Premium Polo N°10 — Cool Heather, zoomed crest" loading="lazy" />
+          <img class="swap" src="Argentina/premium-polo-shirt-cool-heather-zoomed-in-664f8c393f7a2.png" alt="Argentina Premium Polo N°10 — Cool Heather, alt" loading="lazy" />
+          <span class="badge">N°10 / 09 PCS</span>
+          <button class="quick" aria-label="Quick view"><svg viewBox="0 0 24 24"><path d="M3 12s4-7 9-7 9 7 9 7-4 7-9 7-9-7-9-7Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">AR-PL-10-CH</span><span>PIQUÉ · 220 GSM</span></div>
+          <h3 class="name">Premium Polo N°10</h3>
+          <span class="colour">— Cool Heather, embroidered Pumas</span>
+          <div class="price-row">
+            <span class="price">€78,40</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#A2A6A8"></span>
+              <span class="swatch" style="background:#0E0E10"></span>
+              <span class="swatch" style="background:#1F2940"></span>
+              <span class="swatch" style="background:#7A8086"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Size">
+              <option>SIZE</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="Premium Polo N°10 — Cool Heather">Add <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Hoodie — Navy -->
+      <article class="product-card" data-cat="hoodie" data-sku="AR-HD-22-NV"
+        data-name="Hoodie N°22 — Navy"
+        data-price="€112,80"
+        data-angles="Argentina/Hoodies/unisex-heavy-blend-hoodie-navy-front-664f86c140499.png|Argentina/Hoodies/unisex-heavy-blend-hoodie-navy-zoomed-in-664f86c140fb2.png|Argentina/Hoodies/unisex-heavy-blend-hoodie-navy-zoomed-in-664f86c1415b0.png">
+        <div class="product-image">
+          <img class="front" src="Argentina/Hoodies/unisex-heavy-blend-hoodie-navy-front-664f86c140499.png" alt="Argentina Hoodie N°22 — Navy, front" loading="lazy" />
+          <img class="swap" src="Argentina/Hoodies/unisex-heavy-blend-hoodie-navy-zoomed-in-664f86c140fb2.png" alt="Argentina Hoodie N°22 — Navy, zoomed crest" loading="lazy" />
+          <span class="badge">N°22 / 12 PCS</span>
+          <button class="quick" aria-label="Quick view"><svg viewBox="0 0 24 24"><path d="M3 12s4-7 9-7 9 7 9 7-4 7-9 7-9-7-9-7Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">AR-HD-22-NV</span><span>HEAVY-BLEND · 320 GSM</span></div>
+          <h3 class="name">Hoodie N°22</h3>
+          <span class="colour">— Navy, embroidered Pumas</span>
+          <div class="price-row">
+            <span class="price">€112,80</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#1F2940"></span>
+              <span class="swatch" style="background:#3949AB"></span>
+              <span class="swatch" style="background:#1A237E"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Size">
+              <option>SIZE</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="Hoodie N°22 — Navy">Add <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Hoodie — Indigo Blue -->
+      <article class="product-card" data-cat="hoodie" data-sku="AR-HD-22-IN"
+        data-name="Hoodie N°22 — Indigo Blue"
+        data-price="€112,80"
+        data-angles="Argentina/Hoodies/unisex-heavy-blend-hoodie-indigo-blue-front-664f86c14c9e9.png|Argentina/Hoodies/unisex-heavy-blend-hoodie-indigo-blue-front-664f86c157401.png|Argentina/Hoodies/unisex-heavy-blend-hoodie-indigo-blue-zoomed-in-664f86c15fefc.png|Argentina/Hoodies/unisex-heavy-blend-hoodie-indigo-blue-zoomed-in-664f86c167822.png">
+        <div class="product-image">
+          <img class="front" src="Argentina/Hoodies/unisex-heavy-blend-hoodie-indigo-blue-front-664f86c14c9e9.png" alt="Argentina Hoodie N°22 — Indigo Blue, front" loading="lazy" />
+          <img class="swap" src="Argentina/Hoodies/unisex-heavy-blend-hoodie-indigo-blue-zoomed-in-664f86c15fefc.png" alt="Argentina Hoodie N°22 — Indigo Blue, zoomed crest" loading="lazy" />
+          <span class="badge">N°22 / 16 PCS</span>
+          <button class="quick" aria-label="Quick view"><svg viewBox="0 0 24 24"><path d="M3 12s4-7 9-7 9 7 9 7-4 7-9 7-9-7-9-7Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">AR-HD-22-IN</span><span>HEAVY-BLEND · 320 GSM</span></div>
+          <h3 class="name">Hoodie N°22</h3>
+          <span class="colour">— Indigo Blue, embroidered Pumas</span>
+          <div class="price-row">
+            <span class="price">€112,80</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#3949AB"></span>
+              <span class="swatch" style="background:#1F2940"></span>
+              <span class="swatch" style="background:#1A237E"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Size">
+              <option>SIZE</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="Hoodie N°22 — Indigo Blue">Add <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Hoodie — Royal Blue -->
+      <article class="product-card" data-cat="hoodie" data-sku="AR-HD-22-RY"
+        data-name="Hoodie N°22 — Royal Blue"
+        data-price="€112,80"
+        data-angles="Argentina/Hoodies/unisex-heavy-blend-hoodie-royal-front-664f86c141bb8.png|Argentina/Hoodies/unisex-heavy-blend-hoodie-royal-front-664f86c142f12.png|Argentina/Hoodies/unisex-heavy-blend-hoodie-royal-front-664f86c1461f5.png|Argentina/Hoodies/unisex-heavy-blend-hoodie-royal-zoomed-in-664f86c1473b5.png|Argentina/Hoodies/unisex-heavy-blend-hoodie-royal-zoomed-in-664f86c14b799.png">
+        <div class="product-image">
+          <img class="front" src="Argentina/Hoodies/unisex-heavy-blend-hoodie-royal-front-664f86c141bb8.png" alt="Argentina Hoodie N°22 — Royal Blue, front" loading="lazy" />
+          <img class="swap" src="Argentina/Hoodies/unisex-heavy-blend-hoodie-royal-zoomed-in-664f86c1473b5.png" alt="Argentina Hoodie N°22 — Royal Blue, zoomed crest" loading="lazy" />
+          <span class="badge hz">N°22 / 06 PCS</span>
+          <button class="quick" aria-label="Quick view"><svg viewBox="0 0 24 24"><path d="M3 12s4-7 9-7 9 7 9 7-4 7-9 7-9-7-9-7Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">AR-HD-22-RY</span><span>HEAVY-BLEND · 320 GSM</span></div>
+          <h3 class="name">Hoodie N°22</h3>
+          <span class="colour">— Royal Blue, embroidered Pumas</span>
+          <div class="price-row">
+            <span class="price">€112,80</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#1A237E"></span>
+              <span class="swatch" style="background:#1F2940"></span>
+              <span class="swatch" style="background:#3949AB"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Size">
+              <option>SIZE</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="Hoodie N°22 — Royal Blue">Add <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED DROP -->
+<section class="drop">
+  <div class="container">
+    <header class="section-head reveal">
+      <div class="left">
+        <span class="eyebrow">04 / Featured Drop</span>
+        <h2>Polo N°10 <span class="it">— in detail.</span></h2>
+      </div>
+      <div class="right">
+        SKU AR-PL-10-NV<br/>
+        Limited to <span style="color:var(--hazard)">184 units</span>
+      </div>
+    </header>
+
+    <div class="drop-grid">
+      <div class="drop-visual reveal">
+        <span class="corners"><span class="tr"></span><span class="bl"></span></span>
+        <span class="ref">REF 10/A<br/>FRONT VIEW<br/>1:1.25</span>
+        <img src="Argentina/premium-polo-shirt-navy-front-664f8c393e963.png" alt="Argentina premium polo navy front, embroidered Pumas crest" />
+        <span class="axis">+ Y / + X — UNIT D-01 / TILE 04</span>
+      </div>
+
+      <div class="drop-spec reveal" data-delay="1">
+        <div class="head">
+          <span class="id">SKU AR-PL-10-NV · DROP 12</span>
+          <h3>Premium Polo<br/>— <span class="it">Pumas crest</span></h3>
+          <p class="pitch">
+            A polo for the day after the match. Heavy-gauge piqué cotton, embroidered Pumas crest at the heart, mother-of-pearl placket buttons, tonal taping at the back of the neck. Cut and sewn in Buenos Aires.
+          </p>
+        </div>
+
+        <div class="spec-table">
+          <div class="spec-row"><span class="key">Material</span><span class="val">220 GSM organic piqué cotton</span><span class="unit">GOTS</span></div>
+          <div class="spec-row"><span class="key">Crest</span><span class="val">Embroidered, 6 thread colours</span><span class="unit">12.4 KST</span></div>
+          <div class="spec-row"><span class="key">Origin</span><span class="val">Cut &amp; sewn — Buenos Aires</span><span class="unit">AR / 34.5°S</span></div>
+          <div class="spec-row"><span class="key">Buttons</span><span class="val">Mother-of-pearl, three-button placket</span><span class="unit">N° 24L</span></div>
+          <div class="spec-row"><span class="key">Colour</span><span class="val">French Navy / White contrast taping</span><span class="unit">PMS 533C</span></div>
+          <div class="spec-row"><span class="key">Fit</span><span class="val">Regular — true to size</span><span class="unit">XS / S / M / L / XL / XXL</span></div>
+          <div class="spec-row"><span class="key">Care</span><span class="val">30°C wash, hang dry, no bleach</span><span class="unit">EN ISO 3758</span></div>
+        </div>
+
+        <div class="drop-actions">
+          <div class="price-block">
+            <span class="price">€78,40</span>
+            <span class="meta">VAT INCL · INTL. SHIPS €9</span>
+          </div>
+          <a href="#catalogue" class="hero-cta">
+            Configure &amp; Add
+            <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREST DETAIL -->
+<section class="crest">
+  <div class="container">
+    <div class="crest-grid">
+      <div class="crest-text reveal">
+        <span class="eyebrow">05 / The Crest</span>
+        <h2>The Pumas, <span class="it">in 12,400 stitches.</span></h2>
+        <p>
+          Every Argentina garment carries an embroidered Pumas crest at the heart — never printed, never sublimated. The crest is rendered in six thread colours on a Tajima TMEZ machine, with a satin under-stitch on the reverse so the inside finishes as cleanly as the outside.
+        </p>
+        <p>
+          Each crest takes between 14 and 18 minutes to complete. The serial number sewn into the inner seam guarantees lifetime repair — torn collars, frayed hems, missing buttons. Send the garment to the atelier; it returns mended, no charge.
+        </p>
+        <div class="crest-stats">
+          <div class="item"><span class="num">12.4K</span><span class="lbl">Stitch count</span></div>
+          <div class="item"><span class="num">06</span><span class="lbl">Thread colours</span></div>
+          <div class="item"><span class="num">17m</span><span class="lbl">Per crest</span></div>
+        </div>
+      </div>
+
+      <figure class="crest-zoom reveal" data-delay="1">
+        <span class="ring"></span>
+        <img src="Argentina/Polos/premium-polo-shirt-navy-zoomed-in-664a01a17887a.png" alt="Embroidered Pumas crest detail — navy polo zoomed in" loading="lazy" />
+        <span class="stamp">CREST DETAIL · 1:4</span>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- HERITAGE -->
+<section class="heritage">
+  <div class="container">
+    <div class="heritage-grid">
+      <div class="heritage-text reveal">
+        <span class="label" style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-mute);">Heritage / Filed 2007</span>
+        <p class="quote">
+          We are not the favourites. We never have been. <em>That is the point.</em>
+        </p>
+        <p>
+          Los Pumas have spent a century playing with their backs to the wall — outscored, outfunded, outnumbered. They have answered every time with a song, a hand on the chest, and a refusal to leave the field early. This catalogue is for that posture.
+        </p>
+        <p>
+          The 2007 Rugby World Cup, the 2022 win in New Zealand, the 2023 semi-final in Marseille — they were not about results. They were about <strong>showing up dressed for it</strong>. We make the wardrobe of that ritual.
+        </p>
+        <div class="signoff">
+          <span>Filed by</span>
+          <span class="who">Hugo Etcheverry · Founder</span>
+          <span>—</span>
+          <span>SAN ISIDRO · 04.62</span>
+        </div>
+      </div>
+
+      <figure class="heritage-visual reveal" data-delay="1">
+        <span class="stamp">VAMOS · 2022</span>
+        <img src="Argentina/el-festejo-de-los-pumas-tras-la-victoria-ante-J4LTT5AWFBHQXJW6DDP65HSWYE.jpg" alt="Los Pumas celebrating victory against the All Blacks" loading="lazy" />
+        <figcaption class="caption">
+          <span>LOS PUMAS · CHRISTCHURCH</span>
+          <span>FRAME 12/12</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- CARE / SIZE GUIDE -->
+<section class="care">
+  <div class="container">
+    <header class="section-head">
+      <div class="left reveal">
+        <span class="eyebrow">06 / Build Standard</span>
+        <h2>Sizing &amp; care, <span class="it">to the millimetre.</span></h2>
+      </div>
+      <div class="right reveal" data-delay="1">
+        Measurements taken flat<br/>
+        <span style="color:var(--hazard)">European cut · true to size</span>
+      </div>
+    </header>
+
+    <div class="care-grid">
+      <div class="care-block reveal">
+        <span class="num">N° 06.1</span>
+        <h3 class="title">Size Card<br/><span style="color:var(--ink-mute);font-family:var(--font-serif);font-style:italic;font-weight:300;text-transform:lowercase;font-size:0.7em">— measurements in cm</span></h3>
+        <div class="care-table">
+          <div class="row head">
+            <span class="cell lbl">Size</span><span class="cell">XS</span><span class="cell">S</span><span class="cell">M</span><span class="cell">L</span><span class="cell">XL</span>
+          </div>
+          <div class="row">
+            <span class="cell lbl">Chest</span><span class="cell">96</span><span class="cell">100</span><span class="cell">104</span><span class="cell">108</span><span class="cell">112</span>
+          </div>
+          <div class="row">
+            <span class="cell lbl">Length</span><span class="cell">68</span><span class="cell">70</span><span class="cell">72</span><span class="cell">74</span><span class="cell">76</span>
+          </div>
+          <div class="row">
+            <span class="cell lbl">Sleeve</span><span class="cell">19</span><span class="cell">20</span><span class="cell">21</span><span class="cell">22</span><span class="cell">23</span>
+          </div>
+          <div class="row">
+            <span class="cell lbl">Shoulder</span><span class="cell">42</span><span class="cell">44</span><span class="cell">46</span><span class="cell">48</span><span class="cell">50</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="care-block reveal" data-delay="1">
+        <span class="num">N° 06.2</span>
+        <h3 class="title">Care Index<br/><span style="color:var(--ink-mute);font-family:var(--font-serif);font-style:italic;font-weight:300;text-transform:lowercase;font-size:0.7em">— per EN ISO 3758</span></h3>
+        <ul class="care-list">
+          <li><span class="ix">01</span><span>Machine wash cold, max 30°C, gentle cycle</span><span class="unit">EN 30°</span></li>
+          <li><span class="ix">02</span><span>Wash inside out — protect the embroidery</span><span class="unit">RECOMMENDED</span></li>
+          <li><span class="ix">03</span><span>Do not bleach. Avoid optical brighteners</span><span class="unit">NCl</span></li>
+          <li><span class="ix">04</span><span>Hang to dry. No tumble dryer</span><span class="unit">DRIP DRY</span></li>
+          <li><span class="ix">05</span><span>Iron on reverse, max 110°C, no steam on crest</span><span class="unit">110°C</span></li>
+          <li><span class="ix">06</span><span>Lifetime repair included — return to atelier</span><span class="unit">FREE</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTINUE BROWSING -->
+<section class="continue">
+  <div class="container">
+    <header class="section-head">
+      <div class="left reveal">
+        <span class="eyebrow">07 / Continue Browsing</span>
+        <h2>Other unions, <span class="it">on file.</span></h2>
+      </div>
+      <div class="right reveal" data-delay="1">
+        14 country indexes live<br/>
+        <span style="color:var(--hazard)">+5 in development</span>
+      </div>
+    </header>
+
+    <div class="continue-grid">
+      <a href="index.html#collections" class="continue-tile reveal">
+        <img src="generated/newzealand.png" alt="New Zealand fjord — Milford Sound" loading="lazy" />
+        <div class="info">
+          <div class="top"><span>NZ / 174° E</span><span>15 PIECES</span></div>
+          <div class="name">New Zealand<span class="sub">aotearoa — silver fern, obsidian black</span></div>
+          <div class="arrow">VIEW INDEX →</div>
+        </div>
+      </a>
+      <a href="index.html#collections" class="continue-tile reveal" data-delay="1">
+        <img src="Springboks-and-Tonga-players-huddle-Alamy.jpg" alt="Springboks and Tonga players in huddle" loading="lazy" />
+        <div class="info">
+          <div class="top"><span>ZA / 22° E</span><span>06 PIECES</span></div>
+          <div class="name">South Africa<span class="sub">springbok green, RSA gold</span></div>
+          <div class="arrow">VIEW INDEX →</div>
+        </div>
+      </a>
+      <a href="index.html#collections" class="continue-tile reveal" data-delay="2">
+        <img src="generated/australia.png" alt="Red kangaroos in the Australian outback" loading="lazy" />
+        <div class="info">
+          <div class="top"><span>AU / 144° E</span><span>13 PIECES</span></div>
+          <div class="name">Australia<span class="sub">wallabies — gold weave</span></div>
+          <div class="arrow">VIEW INDEX →</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="container">
+    <div class="newsletter-grid">
+      <div class="reveal">
+        <span class="label" style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-mute);">08 / Editorial Drop</span>
+        <h2 style="margin-top:16px">Filed monthly. <span class="it">Sent on Sundays.</span></h2>
+        <p class="lede">
+          One short editorial per month — the union, the materials, the matches. No promotions, no noise. Sent the morning after match day.
+        </p>
+      </div>
+      <form class="nl-form reveal" data-delay="1" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('button').textContent='FILED ✓';">
+        <label for="nl-email">// Filing address</label>
+        <div class="row">
+          <input id="nl-email" type="email" required placeholder="hcconnection@gmail.com" />
+          <button class="submit" type="submit">
+            File
+            <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+        <p class="legal">
+          Filed under archive 04.62. We hold one (1) email address. Read our <a href="#">privacy filing</a>.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand">
+          <div class="brand-mark">H</div>
+          <div class="brand-text">
+            <span class="name">The H Connection</span>
+            <span class="meta">EST. 2022 · BUENOS AIRES</span>
+          </div>
+        </a>
+        <p class="pitch">
+          A rugby apparel atelier indexing the unions of the world, one country at a time. Embroidered, never printed. Repaired for life.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4>Catalogue</h4>
+        <ul>
+          <li><a href="argentina.html">Argentina</a></li>
+          <li><a href="index.html#collections">England</a></li>
+          <li><a href="index.html#collections">France</a></li>
+          <li><a href="index.html#collections">Ireland</a></li>
+          <li><a href="index.html#collections">New Zealand</a></li>
+          <li><a href="index.html#collections">All countries →</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <ul>
+          <li><a href="#catalogue">T-Shirts</a></li>
+          <li><a href="#catalogue">Premium Polos</a></li>
+          <li><a href="#catalogue">Hoodies</a></li>
+          <li><a href="#">Beanies</a></li>
+          <li><a href="#">Embroidered</a></li>
+          <li><a href="#">Archive</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Atelier</h4>
+        <ul>
+          <li><a href="index.html#heritage">Heritage</a></li>
+          <li><a href="#">Repair Programme</a></li>
+          <li><a href="#">Fabric Index</a></li>
+          <li><a href="#care">Sizing Card</a></li>
+          <li><a href="#">Sustainability</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Filing</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Stockists</a></li>
+          <li><a href="#">Wholesale</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-logo" aria-hidden="true">
+      <img class="brand-logo" src="logo%202.png" alt="The H Connection logotype" />
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 H/Connection — All filings reserved</span>
+      <span class="center"><span class="reg">[</span> AR / ARCHIVE 04.62 — REV 12 <span class="reg">]</span></span>
+      <span class="right">Buenos Aires // Dublin // Cardiff</span>
+    </div>
+  </div>
+</footer>
+
+<!-- LIGHTBOX MODAL -->
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Product detail viewer">
+  <div class="lb-backdrop" data-lb-close></div>
+  <div class="lb-frame">
+    <div class="lb-stage">
+      <div class="frame-id"><span class="num" id="lbFrameNum">FRAME 01 / 06</span><span id="lbFrameSku">SKU AR-PL-10-NV</span></div>
+      <span class="crosshairs"></span>
+      <span class="corner tl"></span>
+      <span class="corner tr"></span>
+      <span class="corner bl"></span>
+      <span class="corner br"></span>
+      <img id="lbImage" src="" alt="" />
+      <span class="zoom-tag">ZOOM · 1:1</span>
+      <button class="lb-nav prev" id="lbPrev" aria-label="Previous angle">
+        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="lb-nav next" id="lbNext" aria-label="Next angle">
+        <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <span class="lb-counter" id="lbCounter">01 / 06</span>
+      <button class="lb-close" data-lb-close aria-label="Close viewer">
+        <svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+      </button>
+    </div>
+
+    <aside class="lb-side">
+      <div class="head">
+        <span class="sku" id="lbSku">SKU AR-PL-10-NV · DROP 12</span>
+        <h3 class="name" id="lbName">Premium Polo N°10 — Navy</h3>
+        <span class="stock" id="lbStock"><span class="dot"></span><span id="lbStockText">184 pcs in stock — ships 48h</span></span>
+      </div>
+
+      <div>
+        <div class="lbl">// Price</div>
+        <div class="price" id="lbPrice">€78,40</div>
+        <div class="vat">VAT incl · International ships €9</div>
+      </div>
+
+      <div>
+        <div class="lbl">// Frames — <span id="lbThumbsCount">06</span></div>
+        <div class="lb-thumbs" id="lbThumbs"></div>
+      </div>
+
+      <div>
+        <div class="lbl">// Colour</div>
+        <div class="swatches" id="lbSwatches">
+          <span class="swatch-lg active" style="background:#1F2940" title="French Navy"></span>
+          <span class="swatch-lg" style="background:#0E0E10" title="Black"></span>
+          <span class="swatch-lg" style="background:#7A8086" title="Steel Grey"></span>
+          <span class="swatch-lg" style="background:#A2A6A8" title="Cool Heather"></span>
+        </div>
+      </div>
+
+      <div>
+        <div class="lbl">// Size — true to size</div>
+        <div class="sizes" id="lbSizes">
+          <button class="size-pill" data-size="XS">XS</button>
+          <button class="size-pill" data-size="S">S</button>
+          <button class="size-pill active" data-size="M">M</button>
+          <button class="size-pill" data-size="L">L</button>
+          <button class="size-pill" data-size="XL">XL</button>
+          <button class="size-pill" data-size="XXL">XXL</button>
+        </div>
+      </div>
+
+      <button class="add" id="lbAdd">
+        Add to Cart
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </aside>
+  </div>
+</div>
+
+<!-- CART TOAST -->
+<div class="cart-toast" id="cartToast" role="status" aria-live="polite">
+  <span class="check">✓</span>
+  <span id="toastText">Filed to cart — Polo N°10</span>
+</div>
+
+<script>
+  /* Reveal */
+  (function () {
+    const els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('in')); return; }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    els.forEach(el => io.observe(el));
+  })();
+
+  /* Magnetic CTA */
+  (function () {
+    const ctas = document.querySelectorAll('.hero-cta');
+    ctas.forEach(btn => {
+      let raf = null;
+      btn.addEventListener('mousemove', (e) => {
+        const r = btn.getBoundingClientRect();
+        const x = (e.clientX - (r.left + r.width / 2)) * 0.12;
+        const y = (e.clientY - (r.top + r.height / 2)) * 0.12;
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => { btn.style.transform = `translate3d(${x}px, ${y - 1}px, 0)`; });
+      });
+      btn.addEventListener('mouseleave', () => { if (raf) cancelAnimationFrame(raf); btn.style.transform = ''; });
+    });
+  })();
+
+  /* Filter buttons */
+  (function () {
+    const buttons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.product-card');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        cards.forEach(card => {
+          const show = (f === 'all') || (card.dataset.cat === f);
+          card.classList.toggle('hidden', !show);
+        });
+      });
+    });
+  })();
+
+  /* Add to cart (inline cards) */
+  let __cartCount = 2;
+  function bumpCart(name, size) {
+    __cartCount += 1;
+    const cartCount = document.getElementById('cartCount');
+    cartCount.textContent = String(__cartCount).padStart(2, '0');
+    const toast = document.getElementById('cartToast');
+    const toastText = document.getElementById('toastText');
+    toastText.textContent = `Filed to cart — ${name}${size ? ' / ' + size : ''}`;
+    toast.classList.add('show');
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+  }
+  (function () {
+    document.querySelectorAll('.product-card .add').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const name = btn.dataset.name || 'Item';
+        const sizeSel = btn.parentElement.querySelector('.size');
+        if (sizeSel.value === 'SIZE') { sizeSel.focus(); return; }
+        const orig = btn.innerHTML;
+        btn.classList.add('added');
+        btn.innerHTML = 'FILED ✓';
+        setTimeout(() => { btn.classList.remove('added'); btn.innerHTML = orig; }, 1500);
+        bumpCart(name, sizeSel.value);
+      });
+    });
+    // prevent card-level zoom when interacting with size selector / swatches
+    document.querySelectorAll('.product-card .size, .product-card .swatch, .product-card select').forEach(el => {
+      el.addEventListener('click', (e) => e.stopPropagation());
+    });
+  })();
+
+  /* ========================================================
+     LIGHTBOX — product zoom with multi-angle gallery
+  ========================================================= */
+  (function () {
+    const lb        = document.getElementById('lightbox');
+    const lbImage   = document.getElementById('lbImage');
+    const lbThumbs  = document.getElementById('lbThumbs');
+    const lbThumbsCount = document.getElementById('lbThumbsCount');
+    const lbPrev    = document.getElementById('lbPrev');
+    const lbNext    = document.getElementById('lbNext');
+    const lbCounter = document.getElementById('lbCounter');
+    const lbFrameNum = document.getElementById('lbFrameNum');
+    const lbFrameSku = document.getElementById('lbFrameSku');
+    const lbSku     = document.getElementById('lbSku');
+    const lbName    = document.getElementById('lbName');
+    const lbPrice   = document.getElementById('lbPrice');
+    const lbStockText = document.getElementById('lbStockText');
+    const lbAdd     = document.getElementById('lbAdd');
+    const lbSizes   = document.getElementById('lbSizes');
+
+    let state = { sku: '', name: '', price: '', angles: [], idx: 0, size: 'M' };
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function render() {
+      const { angles, idx, sku, name, price } = state;
+      // crossfade image
+      lbImage.classList.add('fading');
+      setTimeout(() => {
+        lbImage.src = angles[idx];
+        lbImage.alt = `${name} — frame ${idx + 1} of ${angles.length}`;
+        lbImage.classList.remove('fading');
+      }, 180);
+      lbCounter.textContent = `${pad(idx + 1)} / ${pad(angles.length)}`;
+      lbFrameNum.textContent = `FRAME ${pad(idx + 1)} / ${pad(angles.length)}`;
+      lbFrameSku.textContent = sku;
+      lbSku.textContent = `${sku} · DROP 12`;
+      lbName.textContent = name;
+      lbPrice.textContent = price;
+      lbThumbsCount.textContent = pad(angles.length);
+      // disable nav at bounds (we wrap, so leave enabled — but show low-opacity if only 1 image)
+      const single = angles.length <= 1;
+      lbPrev.toggleAttribute('disabled', single);
+      lbNext.toggleAttribute('disabled', single);
+      // mark active thumb
+      [...lbThumbs.children].forEach((t, i) => t.classList.toggle('active', i === idx));
+    }
+
+    function buildThumbs() {
+      lbThumbs.innerHTML = '';
+      state.angles.forEach((src, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'lb-thumb';
+        btn.setAttribute('aria-label', `View frame ${i + 1}`);
+        const img = document.createElement('img');
+        img.src = src;
+        img.loading = 'lazy';
+        img.alt = '';
+        btn.appendChild(img);
+        btn.addEventListener('click', () => { state.idx = i; render(); });
+        lbThumbs.appendChild(btn);
+      });
+    }
+
+    function open(card) {
+      const anglesAttr = card.dataset.angles || '';
+      const angles = anglesAttr.split('|').map(s => s.trim()).filter(Boolean);
+      // if no angles defined, fall back to the front + swap images on the card
+      let resolved = angles;
+      if (resolved.length === 0) {
+        const imgs = card.querySelectorAll('.product-image img');
+        resolved = [...imgs].map(i => i.getAttribute('src'));
+      }
+      state = {
+        sku: card.dataset.sku || 'SKU',
+        name: card.dataset.name || (card.querySelector('.name')?.textContent || 'Item'),
+        price: card.dataset.price || (card.querySelector('.price')?.textContent || ''),
+        angles: resolved,
+        idx: 0,
+        size: 'M',
+      };
+      // stock text from the badge
+      const badge = card.querySelector('.badge');
+      if (badge) {
+        const txt = badge.textContent.trim();
+        const match = txt.match(/(\d+)\s*PCS/);
+        if (match) {
+          const qty = parseInt(match[1], 10);
+          lbStockText.textContent = `${qty} pcs in stock — ships 48h`;
+          const dot = document.querySelector('#lbStock .dot');
+          if (dot) dot.classList.toggle('low', qty <= 12);
+        }
+      }
+      buildThumbs();
+      render();
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    function navigate(delta) {
+      if (state.angles.length <= 1) return;
+      state.idx = (state.idx + delta + state.angles.length) % state.angles.length;
+      render();
+    }
+
+    // bind product card image + quick view
+    document.querySelectorAll('.product-card').forEach(card => {
+      const img = card.querySelector('.product-image');
+      const quick = card.querySelector('.quick');
+      img.addEventListener('click', (e) => {
+        if (e.target.closest('.quick')) return;
+        open(card);
+      });
+      if (quick) quick.addEventListener('click', (e) => { e.stopPropagation(); open(card); });
+    });
+
+    // close handlers
+    lb.querySelectorAll('[data-lb-close]').forEach(el => el.addEventListener('click', close));
+    lbPrev.addEventListener('click', () => navigate(-1));
+    lbNext.addEventListener('click', () => navigate(1));
+
+    // size pills
+    lbSizes.querySelectorAll('.size-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        lbSizes.querySelectorAll('.size-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        state.size = pill.dataset.size;
+      });
+    });
+
+    // add-to-cart from lightbox
+    lbAdd.addEventListener('click', () => {
+      bumpCart(state.name, state.size);
+      const orig = lbAdd.innerHTML;
+      lbAdd.classList.add('added');
+      lbAdd.innerHTML = 'FILED ✓';
+      setTimeout(() => { lbAdd.classList.remove('added'); lbAdd.innerHTML = orig; }, 1500);
+    });
+
+    // keyboard
+    document.addEventListener('keydown', (e) => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
+    });
+  })();
+</script>
+
+</body>
+</html>
