@@ -18,8 +18,10 @@ Ireland/*
 Francia/*
 !Francia/img-3551-64fbd76db8dd0730081948.jpg
 
-England/*
-!England/GettyImages-878946488.webp
+# England: expuesta para england.html
+England/Screenshot_1.png
+England/cartel coll.png
+England/flag 2.png
 
 Scotland/*
 !Scotland/20603606-scaled.jpg
@@ -64,7 +66,6 @@ pug ireland blanco.png
 pug ireland.png
 england 1.png
 england 2.png
-england blanco.png
 france.png
 france 2.png
 wales.png
