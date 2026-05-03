@@ -5,7 +5,7 @@
 *.avif
 
 # ─── Carpetas completamente no utilizadas ─────────────────────
-Wales/
+# Wales: exposed for wales.html (full folder in use)
 Maquetas/
 textures/
 entrar a ionos/
@@ -64,8 +64,7 @@ pug ireland.png
 england 1.png
 england 2.png
 # france.png et france 2.png utilisés pour france.html
-wales.png
-wales blanco.png
+# wales.png and wales blanco.png used for wales.html
 # iRELAND.png and iRELAND BLANCO.png used for ireland.html
 Argentina Blanco.png
 Argentina Blanco  Bordado.png
