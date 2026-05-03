@@ -12,8 +12,7 @@ entrar a ionos/
 vid pres 2/
 
 # ─── Carpetas de países: excluir todo, conservar solo la imagen usada ─
-Ireland/*
-!Ireland/IMG_0431.jpg
+# Ireland: exposed for ireland.html (full folder in use)
 
 # Francia: exposée pour france.html (tout le dossier est utilisé)
 
@@ -68,8 +67,7 @@ england 2.png
 # france.png et france 2.png utilisés pour france.html
 wales.png
 wales blanco.png
-iRELAND.png
-iRELAND BLANCO.png
+# iRELAND.png and iRELAND BLANCO.png used for ireland.html
 Argentina Blanco.png
 Argentina Blanco  Bordado.png
 Argentina.png
