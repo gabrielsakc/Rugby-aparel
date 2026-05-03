@@ -15,8 +15,7 @@ vid pres 2/
 Ireland/*
 !Ireland/IMG_0431.jpg
 
-Francia/*
-!Francia/img-3551-64fbd76db8dd0730081948.jpg
+# Francia: exposée pour france.html (tout le dossier est utilisé)
 
 # England: expuesta para england.html
 England/Screenshot_1.png
@@ -66,8 +65,7 @@ pug ireland blanco.png
 pug ireland.png
 england 1.png
 england 2.png
-france.png
-france 2.png
+# france.png et france 2.png utilisés pour france.html
 wales.png
 wales blanco.png
 iRELAND.png

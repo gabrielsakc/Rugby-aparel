@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="tactical">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="description" content="THE H CONNECTION — Catalogue France. Le Coq Gaulois — brodé, jamais imprimé. Coton biologique, polos piqué premium, sweats à capuche." />
+<title>France — THE H CONNECTION / Catalogue Pays 03</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #0A0A0A;
+    --bg-elev: #111111;
+    --bg-tint: #161616;
+    --bg-paper: #F4F4F0;
+    --ink: #EAEAEA;
+    --ink-mute: #8A8A8A;
+    --ink-faint: #4A4A4A;
+    --hairline: rgba(234,234,234,0.08);
+    --hairline-strong: rgba(234,234,234,0.16);
+    --hazard: #E61919;
+    --phosphor: #4AF626;
+    --france-blue: #002395;
+
+    --font-display: "Archivo Black","Inter Tight",sans-serif;
+    --font-body: "Space Grotesk",system-ui,sans-serif;
+    --font-mono: "JetBrains Mono",ui-monospace,monospace;
+    --font-serif: "Fraunces","Times New Roman",serif;
+
+    --ease: cubic-bezier(0.32,0.72,0,1);
+    --ease-soft: cubic-bezier(0.16,1,0.3,1);
+    --grid: clamp(16px,2vw,32px);
+    --maxw: 1480px;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  *::selection{ background:var(--hazard); color:var(--ink); }
+  html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:var(--font-body); font-size:15px; line-height:1.5;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    overflow-x:hidden; min-height:100dvh;
+  }
+  img,svg{ display:block; max-width:100%; height:auto; }
+  a{ color:inherit; text-decoration:none; }
+  button{ background:none; border:none; color:inherit; cursor:pointer; font:inherit; }
+
+  .scanlines,.noise{ position:fixed; inset:0; pointer-events:none; z-index:90; }
+  .scanlines{
+    background:repeating-linear-gradient(0deg,transparent 0,transparent 2px,rgba(0,0,0,0.18) 2px,rgba(0,0,0,0.18) 3px);
+    mix-blend-mode:multiply; opacity:0.5;
+  }
+  .noise{
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/></svg>");
+    opacity:0.06; mix-blend-mode:overlay;
+  }
+
+  .container{ width:100%; max-width:var(--maxw); margin:0 auto; padding-inline:var(--grid); }
+  .reveal{ opacity:0; transform:translate3d(0,24px,0); transition:opacity 1s var(--ease-soft),transform 1s var(--ease-soft); }
+  .reveal.in{ opacity:1; transform:translate3d(0,0,0); }
+  .reveal[data-delay="1"]{ transition-delay:80ms; }
+  .reveal[data-delay="2"]{ transition-delay:160ms; }
+  .reveal[data-delay="3"]{ transition-delay:240ms; }
+
+  /* TICKER */
+  .telemetry-bar{
+    position:relative; z-index:80; background:var(--bg);
+    border-bottom:1px solid var(--hairline); overflow:hidden;
+    height:32px; display:flex; align-items:center;
+  }
+  .telemetry-bar .track{
+    display:flex; gap:64px; white-space:nowrap;
+    animation:ticker 56s linear infinite; will-change:transform;
+  }
+  .telemetry-bar .item{
+    font-family:var(--font-mono); font-size:11px;
+    text-transform:uppercase; letter-spacing:0.16em;
+    color:var(--ink-mute); display:inline-flex; align-items:center; gap:12px;
+  }
+  .telemetry-bar .dot{ width:6px; height:6px; background:var(--phosphor); box-shadow:0 0 8px rgba(74,246,38,0.6); animation:pulse 1.4s ease-in-out infinite; }
+  .telemetry-bar .dot.hz{ background:var(--hazard); box-shadow:0 0 8px rgba(230,25,25,0.6); }
+  @keyframes ticker{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  @keyframes pulse{ 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.45;transform:scale(0.85)} }
+
+  /* NAV */
+  nav.primary{
+    position:sticky; top:0; z-index:70;
+    background:rgba(10,10,10,0.86);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid var(--hairline);
+  }
+  nav.primary .row{
+    display:grid; grid-template-columns:auto 1fr auto;
+    align-items:center; height:100px; gap:32px;
+  }
+  .brand{ display:flex; align-items:center; gap:14px; }
+  .brand-mark{ display:none; }
+  .brand-text{ display:none; }
+  .brand-logo-nav{ height:90px; width:auto; display:block; filter:brightness(1.05); }
+  .nav-links{
+    display:flex; gap:36px; justify-content:center;
+    font-family:var(--font-mono); font-size:12px;
+    text-transform:uppercase; letter-spacing:0.16em;
+  }
+  .nav-links a{ position:relative; padding:4px 0; color:var(--ink-mute); transition:color 0.4s var(--ease); }
+  .nav-links a::before{ content:"["; margin-right:6px; color:var(--ink-faint); transition:color 0.4s var(--ease); }
+  .nav-links a::after{ content:"]"; margin-left:6px; color:var(--ink-faint); transition:color 0.4s var(--ease); }
+  .nav-links a:hover{ color:var(--ink); }
+  .nav-links a:hover::before,.nav-links a:hover::after{ color:var(--hazard); }
+  .nav-links a.active{ color:var(--ink); }
+  .nav-links a.active::before,.nav-links a.active::after{ color:var(--hazard); }
+  .nav-actions{ display:flex; gap:12px; align-items:center; }
+  .icon-btn{
+    width:40px; height:40px; border:1px solid var(--hairline-strong);
+    display:grid; place-items:center;
+    transition:border-color 0.3s var(--ease),background 0.3s var(--ease);
+  }
+  .icon-btn:hover{ border-color:var(--ink); background:rgba(234,234,234,0.04); }
+  .icon-btn svg{ width:16px; height:16px; stroke:var(--ink); stroke-width:1.5; fill:none; }
+  .cart-btn{ position:relative; }
+  .cart-btn .count{
+    position:absolute; top:-6px; right:-6px;
+    background:var(--hazard); color:var(--ink);
+    width:18px; height:18px;
+    font-family:var(--font-mono); font-size:10px;
+    display:grid; place-items:center;
+  }
+
+  /* BREADCRUMB */
+  .breadcrumb{ border-bottom:1px solid var(--hairline); padding:14px 0; }
+  .breadcrumb-row{
+    display:flex; align-items:center; gap:14px;
+    font-family:var(--font-mono); font-size:11px;
+    letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-mute);
+  }
+  .breadcrumb-row a{ color:var(--ink-mute); transition:color 0.3s var(--ease); }
+  .breadcrumb-row a:hover{ color:var(--ink); }
+  .breadcrumb-row .sep{ color:var(--ink-faint); }
+  .breadcrumb-row .here{ color:var(--hazard); }
+
+  /* COUNTRY HERO */
+  .country-hero{
+    position:relative; padding:72px 0 100px;
+    border-bottom:1px solid var(--hairline); overflow:hidden;
+  }
+  .country-hero::before{
+    content:""; position:absolute; inset:0;
+    background:radial-gradient(60% 80% at 80% 30%,rgba(0,35,149,0.12),transparent 70%);
+    pointer-events:none; z-index:0;
+  }
+  .ch-grid{
+    display:grid; grid-template-columns:1.3fr 0.9fr;
+    gap:64px; align-items:end; position:relative; z-index:1;
+  }
+  .ch-meta{
+    display:grid; grid-template-columns:repeat(4,1fr);
+    gap:24px; margin-bottom:48px; padding-bottom:24px;
+    border-bottom:1px solid var(--hairline);
+  }
+  .ch-meta .group{ display:flex; flex-direction:column; gap:4px; }
+  .ch-meta .group .key{ font-family:var(--font-mono); font-size:10px; letter-spacing:0.2em; color:var(--ink-faint); text-transform:uppercase; }
+  .ch-meta .group .val{ font-family:var(--font-mono); font-size:12px; letter-spacing:0.08em; color:var(--ink); text-transform:uppercase; }
+  .ch-meta .group .val.hz{ color:var(--hazard); }
+  .country-name{
+    font-family:var(--font-display);
+    font-size:clamp(80px,16vw,280px);
+    line-height:0.84; letter-spacing:-0.05em; text-transform:uppercase;
+    margin-bottom:24px;
+  }
+  .country-name .it{
+    font-family:var(--font-serif); font-style:italic; font-weight:300;
+    text-transform:lowercase; letter-spacing:-0.02em;
+    color:var(--hazard); font-size:0.36em;
+    display:block; margin-top:8px; line-height:1;
+  }
+  .ch-tagline{
+    font-family:var(--font-serif); font-weight:300; font-style:italic;
+    font-size:clamp(20px,1.8vw,28px); line-height:1.35;
+    color:var(--ink-mute); max-width:36ch; margin-bottom:32px;
+  }
+  .ch-tagline em{ color:var(--ink); font-style:normal; font-family:var(--font-display); font-size:0.84em; letter-spacing:-0.01em; }
+  .ch-stat-row{ display:flex; gap:32px; flex-wrap:wrap; padding-top:24px; border-top:1px solid var(--hairline); }
+  .ch-stat{ display:flex; flex-direction:column; gap:4px; }
+  .ch-stat .num{ font-family:var(--font-display); font-size:clamp(28px,2.4vw,36px); letter-spacing:-0.02em; line-height:1; }
+  .ch-stat .lbl{ font-family:var(--font-mono); font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-mute); }
+  .ch-visual{ position:relative; aspect-ratio:4/5; overflow:hidden; background:var(--bg-elev); }
+  .ch-visual img{ width:100%; height:100%; object-fit:cover; filter:grayscale(0.6) contrast(1.08) brightness(0.92); transition:filter 1.4s var(--ease-soft),transform 8s var(--ease-soft); }
+  .ch-visual:hover img{ filter:grayscale(0) contrast(1.04); transform:scale(1.04); }
+  .ch-visual::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(10,10,10,0) 50%,rgba(10,10,10,0.85) 100%); }
+  .ch-visual .corners{ position:absolute; inset:14px; border:1px dashed var(--hairline-strong); pointer-events:none; }
+  .ch-visual .corner{ position:absolute; width:22px; height:22px; border:1px solid var(--hazard); z-index:3; }
+  .ch-visual .corner.tl{ top:8px; left:8px; border-right:none; border-bottom:none; }
+  .ch-visual .corner.br{ bottom:8px; right:8px; border-left:none; border-top:none; }
+  .ch-visual .caption{ position:absolute; bottom:18px; left:18px; right:18px; z-index:3; font-family:var(--font-mono); font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink); display:flex; justify-content:space-between; }
+  .ch-visual .caption .dot{ width:6px; height:6px; background:var(--hazard); display:inline-block; margin-right:8px; vertical-align:middle; animation:pulse 1.4s ease-in-out infinite; }
+
+  /* EDITORIAL */
+  .editorial{ padding:clamp(80px,12vw,160px) 0; border-bottom:1px solid var(--hairline); }
+  .editorial-grid{ display:grid; grid-template-columns:0.4fr 1.6fr 0.4fr; gap:48px; align-items:start; }
+  .editorial-grid .col-meta{ font-family:var(--font-mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-mute); line-height:1.6; }
+  .editorial-grid .col-meta .num{ color:var(--hazard); display:block; font-size:14px; margin-bottom:12px; }
+  .editorial-text{ font-family:var(--font-serif); font-weight:300; font-size:clamp(22px,2.6vw,36px); line-height:1.28; letter-spacing:-0.01em; color:var(--ink); }
+  .editorial-text strong{ font-style:italic; font-weight:300; color:var(--hazard); }
+  .editorial-text mark{ background:none; color:var(--ink); border-bottom:1px solid var(--hazard); padding-bottom:2px; }
+
+  /* LOOKBOOK */
+  .lookbook{ padding:clamp(80px,10vw,140px) 0; border-bottom:1px solid var(--hairline); }
+  .section-head{ display:grid; grid-template-columns:1fr auto; gap:32px; margin-bottom:56px; align-items:end; }
+  .section-head .left{ display:flex; flex-direction:column; gap:16px; }
+  .section-head .eyebrow{ font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.22em; color:var(--ink-mute); display:flex; align-items:center; gap:12px; }
+  .section-head .eyebrow::before{ content:""; width:32px; height:1px; background:var(--hazard); }
+  .section-head h2{ font-family:var(--font-display); font-size:clamp(40px,6vw,84px); line-height:0.88; letter-spacing:-0.04em; text-transform:uppercase; }
+  .section-head h2 .it{ font-family:var(--font-serif); font-style:italic; font-weight:300; letter-spacing:-0.02em; text-transform:lowercase; color:var(--hazard); }
+  .section-head .right{ font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.16em; color:var(--ink-mute); text-align:right; line-height:1.7; }
+
+  .look-grid{ display:grid; grid-template-columns:repeat(12,1fr); gap:1px; background:var(--hairline); }
+  .look-tile{ background:var(--bg); position:relative; overflow:hidden; aspect-ratio:3/4; }
+  .look-tile.span-5{ grid-column:span 5; }
+  .look-tile.span-4{ grid-column:span 4; }
+  .look-tile.span-3{ grid-column:span 3; }
+  .look-tile.span-7{ grid-column:span 7; aspect-ratio:4/3; }
+  .look-tile.span-12{ grid-column:span 12; aspect-ratio:21/9; }
+  .look-tile img{ width:100%; height:100%; object-fit:cover; filter:grayscale(0.4) contrast(1.05) brightness(0.95); transition:filter 1.4s var(--ease-soft),transform 8s var(--ease-soft); }
+  .look-tile:hover img{ filter:grayscale(0) contrast(1.02); transform:scale(1.04); }
+  .look-tile.product{ background:var(--bg-elev); }
+  .look-tile.product img{ object-fit:contain; padding:12% 14%; filter:grayscale(0.1) contrast(1.04) brightness(0.96); }
+  .look-tile.product:hover img{ transform:scale(1.06); filter:grayscale(0) contrast(1); }
+  .look-tile.product::before{ content:""; position:absolute; inset:18px; border:1px dashed var(--hairline); pointer-events:none; z-index:2; }
+  .look-tile.product .corner{ position:absolute; width:16px; height:16px; border:1px solid var(--hazard); z-index:3; }
+  .look-tile.product .corner.tl{ top:12px; left:12px; border-right:none; border-bottom:none; }
+  .look-tile.product .corner.br{ bottom:12px; right:12px; border-left:none; border-top:none; }
+  .look-tile.product .ref{ position:absolute; top:18px; right:18px; z-index:3; font-family:var(--font-mono); font-size:9px; color:var(--hazard); letter-spacing:0.2em; text-transform:uppercase; text-align:right; line-height:1.6; }
+  .look-tile .meta{ position:absolute; bottom:0; left:0; right:0; padding:18px 20px 16px; z-index:3; font-family:var(--font-mono); font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink); background:linear-gradient(180deg,transparent 0,rgba(10,10,10,0.85) 100%); display:flex; justify-content:space-between; }
+
+  /* CATALOGUE */
+  .catalogue{ padding:clamp(80px,10vw,140px) 0; border-bottom:1px solid var(--hairline); }
+  .filter-bar{ display:flex; gap:8px; flex-wrap:wrap; padding:16px 0; border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); margin-bottom:56px; align-items:center; }
+  .filter-bar .lbl{ font-family:var(--font-mono); font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-faint); margin-right:16px; }
+  .filter-btn{ font-family:var(--font-mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; padding:10px 16px; border:1px solid var(--hairline-strong); color:var(--ink-mute); transition:color 0.3s var(--ease),border-color 0.3s var(--ease),background 0.3s var(--ease); cursor:pointer; }
+  .filter-btn:hover{ color:var(--ink); border-color:var(--ink); }
+  .filter-btn.active{ background:var(--ink); color:var(--bg); border-color:var(--ink); }
+  .filter-btn .count{ color:var(--ink-faint); margin-left:8px; font-size:10px; }
+  .filter-btn.active .count{ color:var(--bg); opacity:0.6; }
+  .filter-bar .right{ margin-left:auto; display:flex; align-items:center; gap:12px; font-family:var(--font-mono); font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-mute); }
+  .product-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--hairline); }
+  .product-card{ background:var(--bg); position:relative; cursor:pointer; transition:background 0.4s var(--ease); display:flex; flex-direction:column; }
+  .product-card.hidden{ display:none; }
+  .product-card:hover{ background:var(--bg-tint); }
+  .product-image{ position:relative; aspect-ratio:4/5; overflow:hidden; background:var(--bg-elev); }
+  .product-image img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; padding:14% 14%; transition:transform 0.6s var(--ease-soft),opacity 0.5s var(--ease); }
+  .product-image .swap{ opacity:0; }
+  .product-card:hover .product-image .front{ opacity:0; }
+  .product-card:hover .product-image .swap{ opacity:1; }
+  .product-image .badge{ position:absolute; top:14px; left:14px; z-index:3; padding:4px 8px; font-family:var(--font-mono); font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink); background:rgba(10,10,10,0.7); border:1px solid var(--hairline-strong); }
+  .product-image .badge.hz{ color:var(--hazard); border-color:var(--hazard); }
+  .product-image .quick{ position:absolute; bottom:14px; right:14px; z-index:3; width:36px; height:36px; background:rgba(10,10,10,0.7); backdrop-filter:blur(8px); border:1px solid var(--hairline-strong); color:var(--ink); display:grid; place-items:center; opacity:0; transform:translateY(8px); transition:opacity 0.3s var(--ease),transform 0.3s var(--ease),border-color 0.3s var(--ease); }
+  .product-card:hover .product-image .quick{ opacity:1; transform:translateY(0); }
+  .product-image .quick:hover{ border-color:var(--hazard); }
+  .product-image .quick svg{ width:14px; height:14px; stroke:currentColor; stroke-width:1.5; fill:none; }
+  .product-info{ padding:18px 20px 22px; display:flex; flex-direction:column; gap:8px; border-top:1px solid var(--hairline); }
+  .product-info .meta-row{ display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-mute); }
+  .product-info .meta-row .sku{ color:var(--hazard); }
+  .product-info .name{ font-family:var(--font-display); font-size:18px; line-height:1; letter-spacing:-0.02em; text-transform:uppercase; margin-top:4px; }
+  .product-info .colour{ font-family:var(--font-serif); font-style:italic; font-weight:300; font-size:14px; color:var(--ink-mute); margin-top:-2px; }
+  .product-info .price-row{ display:flex; justify-content:space-between; align-items:baseline; margin-top:10px; padding-top:12px; border-top:1px dashed var(--hairline-strong); }
+  .product-info .price{ font-family:var(--font-display); font-size:18px; letter-spacing:-0.02em; }
+  .product-info .swatches{ display:flex; gap:6px; align-items:center; }
+  .product-info .swatch{ width:14px; height:14px; border:1px solid var(--hairline-strong); cursor:pointer; transition:transform 0.2s var(--ease),border-color 0.2s var(--ease); }
+  .product-info .swatch:hover{ transform:scale(1.15); border-color:var(--ink); }
+  .add-bar{ margin-top:14px; display:grid; grid-template-columns:1fr auto; gap:0; border:1px solid var(--hairline-strong); transition:border-color 0.3s var(--ease); }
+  .add-bar:hover{ border-color:var(--ink); }
+  .add-bar .size{ background:transparent; border:none; color:var(--ink); padding:12px 14px; font-family:var(--font-mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; outline:none; appearance:none; cursor:pointer; }
+  .add-bar .add{ background:var(--ink); color:var(--bg); padding:0 18px; font-family:var(--font-mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; transition:background 0.3s var(--ease),color 0.3s var(--ease); display:flex; align-items:center; gap:8px; }
+  .add-bar .add:hover{ background:var(--hazard); color:var(--ink); }
+  .add-bar .add svg{ width:12px; height:12px; stroke:currentColor; stroke-width:1.6; fill:none; }
+
+  /* FEATURED DROP */
+  .drop{ padding:clamp(80px,10vw,140px) 0; border-bottom:1px solid var(--hairline); }
+  .drop-grid{ display:grid; grid-template-columns:1.2fr 1fr; gap:64px; align-items:stretch; }
+  .drop-visual{ position:relative; background:var(--bg-elev); aspect-ratio:4/5; overflow:hidden; }
+  .drop-visual img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; padding:8% 12%; transition:transform 0.8s var(--ease-soft); }
+  .drop-visual:hover img{ transform:scale(1.05); }
+  .drop-visual .corners{ position:absolute; inset:16px; pointer-events:none; border:1px dashed var(--hairline-strong); }
+  .drop-visual .corners::before,.drop-visual .corners::after,.drop-visual .corners>.tr,.drop-visual .corners>.bl{ content:""; position:absolute; width:14px; height:14px; border:1px solid var(--hazard); }
+  .drop-visual .corners::before{ top:-1px; left:-1px; border-right:none; border-bottom:none; }
+  .drop-visual .corners::after{ bottom:-1px; right:-1px; border-left:none; border-top:none; }
+  .drop-visual .corners .tr{ top:-1px; right:-1px; border-left:none; border-bottom:none; }
+  .drop-visual .corners .bl{ bottom:-1px; left:-1px; border-right:none; border-top:none; }
+  .drop-visual .ref{ position:absolute; top:24px; right:24px; font-family:var(--font-mono); font-size:10px; color:var(--hazard); letter-spacing:0.16em; text-transform:uppercase; line-height:1.6; text-align:right; }
+  .drop-visual .axis{ position:absolute; bottom:16px; left:16px; font-family:var(--font-mono); font-size:10px; color:var(--ink-faint); letter-spacing:0.16em; text-transform:uppercase; }
+  .drop-spec{ display:flex; flex-direction:column; justify-content:space-between; gap:32px; padding:8px 0; }
+  .drop-spec .head{ display:flex; flex-direction:column; gap:14px; }
+  .drop-spec .id{ font-family:var(--font-mono); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--hazard); display:flex; align-items:center; gap:12px; }
+  .drop-spec .id::before{ content:"//"; color:var(--ink-faint); }
+  .drop-spec h3{ font-family:var(--font-display); font-size:clamp(36px,4.6vw,68px); line-height:0.86; letter-spacing:-0.04em; text-transform:uppercase; }
+  .drop-spec h3 .it{ font-family:var(--font-serif); font-style:italic; font-weight:300; letter-spacing:-0.02em; text-transform:lowercase; color:var(--ink-mute); }
+  .drop-spec .pitch{ font-family:var(--font-serif); font-weight:300; font-size:17px; line-height:1.55; color:var(--ink-mute); max-width:44ch; }
+  .spec-table{ border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); }
+  .spec-row{ display:grid; grid-template-columns:0.8fr 2fr auto; gap:24px; padding:14px 0; border-top:1px dashed var(--hairline); align-items:baseline; }
+  .spec-row:first-child{ border-top:none; }
+  .spec-row .key{ font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.18em; color:var(--ink-mute); }
+  .spec-row .val{ font-family:var(--font-mono); font-size:12px; color:var(--ink); letter-spacing:0.04em; }
+  .spec-row .unit{ font-family:var(--font-mono); font-size:10px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.16em; }
+  .drop-actions{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+  .price-block{ display:flex; flex-direction:column; gap:4px; padding-right:24px; border-right:1px solid var(--hairline); margin-right:4px; }
+  .price-block .price{ font-family:var(--font-display); font-size:28px; letter-spacing:-0.02em; }
+  .price-block .meta{ font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.18em; color:var(--ink-mute); }
+  .hero-cta{ display:inline-flex; align-items:center; gap:14px; padding:14px 18px 14px 22px; background:var(--ink); color:var(--bg); font-family:var(--font-mono); font-size:12px; letter-spacing:0.18em; text-transform:uppercase; font-weight:500; width:max-content; transition:transform 0.3s var(--ease); }
+  .hero-cta:hover{ transform:translateY(-1px); }
+  .hero-cta .arrow{ width:28px; height:28px; background:var(--bg); color:var(--ink); display:grid; place-items:center; transition:transform 0.4s var(--ease); }
+  .hero-cta:hover .arrow{ transform:translate(2px,-2px); }
+  .hero-cta .arrow svg{ width:12px; height:12px; stroke:var(--ink); stroke-width:2; fill:none; }
+
+  /* CREST */
+  .crest{ padding:clamp(80px,12vw,160px) 0; border-bottom:1px solid var(--hairline); }
+  .crest-grid{ display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+  .crest-text{ display:flex; flex-direction:column; gap:24px; max-width:50ch; }
+  .crest-text .eyebrow{ font-family:var(--font-mono); font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:var(--ink-mute); display:flex; align-items:center; gap:12px; }
+  .crest-text .eyebrow::before{ content:""; width:32px; height:1px; background:var(--hazard); }
+  .crest-text h2{ font-family:var(--font-display); font-size:clamp(36px,4.6vw,68px); line-height:0.9; letter-spacing:-0.04em; text-transform:uppercase; }
+  .crest-text h2 .it{ font-family:var(--font-serif); font-style:italic; font-weight:300; text-transform:lowercase; letter-spacing:-0.02em; color:var(--hazard); }
+  .crest-text p{ font-size:16px; line-height:1.7; color:var(--ink-mute); max-width:50ch; }
+  .crest-stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:12px; padding-top:24px; border-top:1px solid var(--hairline); }
+  .crest-stats .item .num{ font-family:var(--font-display); font-size:28px; letter-spacing:-0.02em; line-height:1; }
+  .crest-stats .item .lbl{ font-family:var(--font-mono); font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-mute); margin-top:6px; display:block; }
+  .crest-zoom{ position:relative; aspect-ratio:1/1; background:var(--bg-elev); overflow:hidden; }
+  .crest-zoom img{ width:100%; height:100%; object-fit:contain; padding:8%; transition:transform 1.4s var(--ease-soft); }
+  .crest-zoom:hover img{ transform:scale(1.06); }
+  .crest-zoom .ring{ position:absolute; inset:24px; border:1px dashed var(--hairline-strong); border-radius:50%; pointer-events:none; }
+  .crest-zoom .stamp{ position:absolute; bottom:20px; left:20px; font-family:var(--font-mono); font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--hazard); border:1px solid var(--hazard); padding:6px 10px; }
+
+  /* HERITAGE */
+  .heritage{ padding:clamp(100px,14vw,180px) 0; border-bottom:1px solid var(--hairline); }
+  .heritage-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:80px; align-items:center; }
+  .heritage-text{ display:flex; flex-direction:column; gap:32px; max-width:56ch; }
+  .heritage-text .quote{ font-family:var(--font-serif); font-weight:300; font-size:clamp(28px,3vw,44px); line-height:1.2; letter-spacing:-0.02em; color:var(--ink); }
+  .heritage-text .quote::before{ content:"\201C"; display:block; font-size:80px; line-height:0.5; color:var(--hazard); margin-bottom:16px; }
+  .heritage-text p{ font-family:var(--font-body); font-size:16px; line-height:1.7; color:var(--ink-mute); max-width:52ch; }
+  .heritage-text .signoff{ font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.2em; color:var(--ink-mute); display:flex; align-items:center; gap:16px; padding-top:24px; border-top:1px solid var(--hairline); flex-wrap:wrap; }
+  .heritage-text .signoff .who{ color:var(--ink); }
+  .heritage-visual{ position:relative; aspect-ratio:4/5; overflow:hidden; background:var(--bg-elev); }
+  .heritage-visual img{ width:100%; height:100%; object-fit:cover; filter:grayscale(0.85) contrast(1.1); transition:filter 1.4s var(--ease-soft); }
+  .heritage-visual:hover img{ filter:grayscale(0.4) contrast(1.04); }
+  .heritage-visual::after{ content:""; position:absolute; inset:0; background:repeating-linear-gradient(0deg,rgba(0,0,0,0.4) 0,rgba(0,0,0,0.4) 1px,transparent 1px,transparent 4px); pointer-events:none; opacity:0.5; }
+  .heritage-visual .stamp{ position:absolute; top:24px; left:24px; z-index:3; border:1px solid var(--hazard); color:var(--hazard); padding:6px 10px; font-family:var(--font-mono); font-size:10px; letter-spacing:0.2em; text-transform:uppercase; }
+  .heritage-visual .caption{ position:absolute; bottom:24px; left:24px; right:24px; z-index:3; font-family:var(--font-mono); font-size:10px; color:var(--ink); letter-spacing:0.16em; text-transform:uppercase; display:flex; justify-content:space-between; }
+
+  /* CARE */
+  .care{ padding:clamp(80px,10vw,140px) 0; border-bottom:1px solid var(--hairline); }
+  .care-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--hairline); border-top:1px solid var(--hairline-strong); border-bottom:1px solid var(--hairline-strong); }
+  .care-block{ background:var(--bg); padding:36px 32px; display:flex; flex-direction:column; gap:16px; }
+  .care-block .num{ font-family:var(--font-mono); font-size:11px; letter-spacing:0.2em; color:var(--hazard); }
+  .care-block .title{ font-family:var(--font-display); font-size:clamp(24px,2.4vw,36px); line-height:0.92; letter-spacing:-0.03em; text-transform:uppercase; }
+  .care-table{ margin-top:8px; }
+  .care-table .row{ display:grid; grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr; gap:8px; padding:12px 0; border-top:1px dashed var(--hairline); font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em; }
+  .care-table .row:first-child{ border-top:none; }
+  .care-table .row.head{ font-size:10px; letter-spacing:0.18em; color:var(--ink-faint); text-transform:uppercase; }
+  .care-table .cell{ color:var(--ink); text-align:center; }
+  .care-table .cell.lbl{ color:var(--ink-mute); text-align:left; text-transform:uppercase; letter-spacing:0.16em; font-size:10px; }
+  .care-list{ list-style:none; display:flex; flex-direction:column; gap:12px; padding-top:8px; }
+  .care-list li{ display:grid; grid-template-columns:auto 1fr auto; gap:16px; padding:10px 0; border-top:1px dashed var(--hairline); font-family:var(--font-mono); font-size:11px; letter-spacing:0.06em; color:var(--ink); }
+  .care-list li:first-child{ border-top:none; }
+  .care-list li .ix{ color:var(--hazard); }
+  .care-list li .unit{ color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.18em; font-size:10px; }
+
+  /* STADE DE FRANCE */
+  .si{ padding:clamp(100px,14vw,180px) 0; border-bottom:1px solid var(--hairline); }
+  .si-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:80px; align-items:center; }
+  .si-text{ display:flex; flex-direction:column; gap:28px; }
+  .si-text .eyebrow{ font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.22em; color:var(--ink-mute); display:flex; align-items:center; gap:12px; }
+  .si-text .eyebrow::before{ content:""; width:32px; height:1px; background:var(--hazard); }
+  .si-text h2{ font-family:var(--font-display); font-size:clamp(32px,5vw,64px); line-height:0.88; letter-spacing:-0.04em; text-transform:uppercase; }
+  .si-text h2 .it{ font-family:var(--font-serif); font-style:italic; font-weight:300; text-transform:lowercase; letter-spacing:-0.02em; color:var(--hazard); }
+  .si-text p{ font-family:var(--font-body); font-size:15px; line-height:1.7; color:var(--ink-mute); max-width:52ch; }
+  .si-stats{ display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--hairline-strong); padding-top:28px; }
+  .si-stats .item{ display:flex; flex-direction:column; gap:6px; border-right:1px solid var(--hairline); padding-right:20px; }
+  .si-stats .item:last-child{ border-right:none; padding-right:0; }
+  .si-stats .item:not(:first-child){ padding-left:20px; }
+  .si-stats .num{ font-family:var(--font-display); font-size:clamp(28px,4vw,48px); line-height:1; letter-spacing:-0.04em; }
+  .si-stats .lbl{ font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.18em; color:var(--ink-faint); }
+  .si-logo{ position:relative; background:var(--bg-elev); display:flex; align-items:center; justify-content:center; padding:clamp(48px,8%,80px); aspect-ratio:4/5; }
+  .si-logo::before,.si-logo::after{ content:""; position:absolute; width:18px; height:18px; border:1px solid var(--hazard); }
+  .si-logo::before{ top:16px; left:16px; border-right:none; border-bottom:none; }
+  .si-logo::after{ bottom:16px; right:16px; border-left:none; border-top:none; }
+  .si-logo img{ width:100%; max-width:280px; opacity:0.9; transition:opacity 0.4s; filter:brightness(1.1) contrast(1.05); }
+  .si-logo:hover img{ opacity:1; }
+  .si-logo .stamp{ position:absolute; bottom:28px; left:28px; font-family:var(--font-mono); font-size:10px; color:var(--ink-faint); letter-spacing:0.18em; text-transform:uppercase; }
+
+  /* CONTINUE */
+  .continue{ padding:clamp(80px,10vw,140px) 0; border-bottom:1px solid var(--hairline); }
+  .continue-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--hairline); }
+  .continue-tile{ position:relative; overflow:hidden; aspect-ratio:4/5; background:var(--bg-elev); display:block; cursor:pointer; }
+  .continue-tile img{ width:100%; height:100%; object-fit:cover; filter:grayscale(0.7) contrast(1.06) brightness(0.8); transition:filter 1.4s var(--ease-soft),transform 8s var(--ease-soft); }
+  .continue-tile:hover img{ filter:grayscale(0) contrast(1.02) brightness(0.9); transform:scale(1.04); }
+  .continue-tile .info{ position:absolute; inset:0; padding:24px; display:flex; flex-direction:column; justify-content:flex-end; background:linear-gradient(180deg,transparent 40%,rgba(10,10,10,0.9) 100%); }
+  .continue-tile .info .top{ display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-mute); margin-bottom:12px; }
+  .continue-tile .info .name{ font-family:var(--font-display); font-size:clamp(22px,2.8vw,36px); line-height:0.9; letter-spacing:-0.02em; text-transform:uppercase; margin-bottom:8px; }
+  .continue-tile .info .name .sub{ font-family:var(--font-mono); font-size:10px; letter-spacing:0.12em; color:var(--ink-mute); display:block; margin-top:6px; text-transform:uppercase; font-weight:400; }
+  .continue-tile .info .arrow{ font-family:var(--font-mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--hazard); margin-top:14px; }
+
+  /* NEWSLETTER */
+  .newsletter{ padding:clamp(80px,10vw,140px) 0; border-bottom:1px solid var(--hairline); }
+  .newsletter-grid{ display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+  .newsletter h2{ font-family:var(--font-display); font-size:clamp(36px,5vw,72px); line-height:0.88; letter-spacing:-0.04em; text-transform:uppercase; }
+  .newsletter h2 .it{ font-family:var(--font-serif); font-style:italic; font-weight:300; text-transform:lowercase; color:var(--hazard); }
+  .newsletter p{ font-size:15px; line-height:1.7; color:var(--ink-mute); margin-top:16px; max-width:44ch; }
+  .nl-form{ display:grid; grid-template-columns:1fr auto; border:1px solid var(--hairline-strong); transition:border-color 0.3s; }
+  .nl-form:focus-within{ border-color:var(--hazard); }
+  .nl-form input{ background:transparent; border:none; color:var(--ink); padding:16px 20px; font-family:var(--font-mono); font-size:12px; letter-spacing:0.16em; text-transform:uppercase; outline:none; width:100%; }
+  .nl-form input::placeholder{ color:var(--ink-faint); }
+  .nl-form button{ background:var(--ink); color:var(--bg); padding:0 24px; font-family:var(--font-mono); font-size:12px; letter-spacing:0.18em; text-transform:uppercase; border:none; cursor:pointer; transition:background 0.3s; white-space:nowrap; }
+  .nl-form button:hover{ background:var(--hazard); color:var(--ink); }
+
+  /* FOOTER */
+  footer{ padding:clamp(64px,8vw,120px) 0 40px; border-top:1px solid var(--hairline); }
+  .footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:48px; margin-bottom:80px; }
+  .footer-brand .pitch{ font-family:var(--font-body); font-size:14px; color:var(--ink-mute); line-height:1.7; margin-top:20px; max-width:28ch; }
+  .footer-col h4{ font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.2em; color:var(--ink-faint); margin-bottom:20px; }
+  .footer-col ul{ list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .footer-col ul li a{ font-family:var(--font-body); font-size:14px; color:var(--ink-mute); transition:color 0.3s var(--ease); }
+  .footer-col ul li a:hover{ color:var(--ink); }
+  .footer-bottom{ display:flex; justify-content:space-between; align-items:center; padding-top:32px; border-top:1px solid var(--hairline); font-family:var(--font-mono); font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-faint); flex-wrap:wrap; gap:12px; }
+  .footer-mega{ font-family:var(--font-display); font-size:clamp(48px,10vw,160px); line-height:0.88; letter-spacing:-0.04em; text-transform:uppercase; color:var(--hairline-strong); margin-bottom:40px; overflow:hidden; white-space:nowrap; }
+
+  /* RESPONSIVE */
+  @media(max-width:1024px){
+    .ch-grid,.editorial-grid,.drop-grid,.crest-grid,.heritage-grid,.si-grid,.newsletter-grid{ grid-template-columns:1fr; gap:48px; }
+    .product-grid{ grid-template-columns:repeat(2,1fr); }
+    .continue-grid{ grid-template-columns:1fr 1fr; }
+    .footer-grid{ grid-template-columns:1fr 1fr; }
+    .look-tile.span-7{ grid-column:span 12; }
+    .look-tile.span-5{ grid-column:span 12; aspect-ratio:3/2; }
+  }
+  @media(max-width:640px){
+    .nav-links{ display:none; }
+    nav.primary .row{ height:72px; gap:16px; }
+    .brand-logo-nav{ height:60px; }
+    .ch-meta{ grid-template-columns:repeat(2,1fr); }
+    .product-grid{ grid-template-columns:1fr 1fr; }
+    .continue-grid{ grid-template-columns:1fr; }
+    .footer-grid{ grid-template-columns:1fr; }
+    .section-head{ grid-template-columns:1fr; gap:16px; }
+    .section-head .right{ text-align:left; }
+    .care-grid{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scanlines" aria-hidden="true"></div>
+<div class="noise" aria-hidden="true"></div>
+
+<!-- TICKER -->
+<div class="telemetry-bar" aria-hidden="true">
+  <div class="track">
+    <span class="item"><span class="dot"></span>10 PCS CLASSÉS — CATALOGUE FRANCE 03</span>
+    <span class="item">FR-TS-01-BK · COTON BIOLOGIQUE · 180 GSM</span>
+    <span class="item"><span class="dot hz"></span>83 PCS RESTANTS — POLO MARINE</span>
+    <span class="item">LE COQ GAULOIS · 8,640 POINTS D'AIGUILLE · TAJIMA TMEZ</span>
+    <span class="item">STADE DE FRANCE · SAINT-DENIS · 48.9°N</span>
+    <span class="item">EN ISO 3758 · GOTS CERTIFIÉ</span>
+    <span class="item">LIVRAISON MONDIALE · INTL. €9</span>
+    <span class="item">DROP 13 · SAM · MAI 03 · 2026</span>
+    <span class="item"><span class="dot"></span>10 PCS CLASSÉS — CATALOGUE FRANCE 03</span>
+    <span class="item">FR-TS-01-BK · COTON BIOLOGIQUE · 180 GSM</span>
+    <span class="item"><span class="dot hz"></span>83 PCS RESTANTS — POLO MARINE</span>
+    <span class="item">LE COQ GAULOIS · 8,640 POINTS D'AIGUILLE · TAJIMA TMEZ</span>
+    <span class="item">STADE DE FRANCE · SAINT-DENIS · 48.9°N</span>
+    <span class="item">EN ISO 3758 · GOTS CERTIFIÉ</span>
+    <span class="item">LIVRAISON MONDIALE · INTL. €9</span>
+    <span class="item">DROP 13 · SAM · MAI 03 · 2026</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="primary" aria-label="Navigation principale">
+  <div class="container">
+    <div class="row">
+      <a href="index.html" class="brand" aria-label="The H Connection — accueil">
+        <img class="brand-logo-nav" src="LOGO V1.2.png" alt="The H Connection" />
+      </a>
+      <div class="nav-links">
+        <a href="index.html#collections">Collections</a>
+        <a href="#catalogue" class="active">Boutique</a>
+        <a href="#heritage">Héritage</a>
+        <a href="index.html#fixtures">Fixtures</a>
+        <a href="index.html#journal">Journal</a>
+      </div>
+      <div class="nav-actions">
+        <button class="icon-btn" aria-label="Rechercher">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <button class="icon-btn" aria-label="Compte">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <button class="icon-btn cart-btn" aria-label="Panier">
+          <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="count">02</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="container">
+    <div class="breadcrumb-row">
+      <a href="index.html">H/Connection</a>
+      <span class="sep">/</span>
+      <a href="index.html#collections">Collections</a>
+      <span class="sep">/</span>
+      <span class="here">France</span>
+    </div>
+  </div>
+</div>
+
+<!-- COUNTRY HERO -->
+<section class="country-hero">
+  <div class="container">
+    <div class="ch-meta">
+      <div class="group">
+        <span class="key">Union</span>
+        <span class="val">Fédération Française</span>
+      </div>
+      <div class="group">
+        <span class="key">Catalogue</span>
+        <span class="val">03 / Classé</span>
+      </div>
+      <div class="group">
+        <span class="key">Pièces</span>
+        <span class="val hz">10 SKUs</span>
+      </div>
+      <div class="group">
+        <span class="key">Drop</span>
+        <span class="val">13 · Printemps 2026</span>
+      </div>
+    </div>
+
+    <div class="ch-grid">
+      <div>
+        <h1 class="country-name reveal">
+          France
+          <span class="it">— le coq, brodé.</span>
+        </h1>
+
+        <p class="ch-tagline reveal" data-delay="1">
+          Un <em>catalogue dix pièces</em> pour l'union qui a réinventé ce jeu. Le Coq Gaulois brodé sur coton biologique, polos piqué premium, sweats à capuche grande masse — conçus pour durer du Stade de France jusqu'au bout du monde.
+        </p>
+
+        <div class="ch-stat-row reveal" data-delay="2">
+          <div class="ch-stat"><span class="num">10</span><span class="lbl">Pièces classées</span></div>
+          <div class="ch-stat"><span class="num">220</span><span class="lbl">GSM piqué</span></div>
+          <div class="ch-stat"><span class="num">8.6K</span><span class="lbl">Points d'aiguille</span></div>
+          <div class="ch-stat"><span class="num">04.62</span><span class="lbl">Révision</span></div>
+        </div>
+      </div>
+
+      <figure class="ch-visual reveal" data-delay="2">
+        <img src="Francia/img-3551-64fbd76db8dd0730081948.jpg" alt="Les Bleus — terrain de rugby, France" loading="lazy" />
+        <span class="corners"></span>
+        <span class="corner tl"></span>
+        <span class="corner br"></span>
+        <figcaption class="caption">
+          <span><span class="dot"></span>SAINT-DENIS · 48.9°N</span>
+          <span>CADRE 01/12</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- EDITORIAL -->
+<section class="editorial">
+  <div class="container">
+    <div class="editorial-grid">
+      <div class="col-meta reveal">
+        <span class="num">01</span>
+        FR / 48.9°N<br/>
+        CLASSÉ 2026<br/>
+        CAT. 03
+      </div>
+      <p class="editorial-text reveal" data-delay="1">
+        Le maillot français n'est pas un vêtement. C'est une transmission — envoyée du Stade de France à chaque terrain où quelqu'un s'est aligné et <strong>a refusé de reculer.</strong> Nous ne faisons pas de répliques. Nous fabriquons la garde-robe de ce refus.
+      </p>
+      <div class="col-meta reveal" data-delay="2" style="text-align:right">
+        DROP 13<br/>
+        10 PIÈCES<br/>
+        EN ROTATION
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOOKBOOK -->
+<section class="lookbook">
+  <div class="container">
+    <header class="section-head reveal">
+      <div class="left">
+        <span class="eyebrow">02 / Lookbook — Printemps 26</span>
+        <h2>Le Coq, <span class="it">sur le corps.</span></h2>
+      </div>
+      <div class="right reveal" data-delay="1">
+        FR / 48.9°N<br/>
+        <span style="color:var(--hazard)">Printemps / Été 26</span>
+      </div>
+    </header>
+
+    <div class="look-grid">
+      <div class="look-tile span-7 reveal">
+        <img src="Francia/img-3551-64fbd76db8dd0730081948.jpg" alt="Les Bleus — capture terrain, France" loading="lazy" />
+        <div class="meta">
+          <span class="name">Stade de France · Saint-Denis</span>
+          <span class="product">Capture terrain / Printemps 26</span>
+        </div>
+      </div>
+      <div class="look-tile product span-5 reveal" data-delay="1">
+        <span class="corner tl"></span>
+        <span class="corner br"></span>
+        <span class="ref">FR-PL-10-NV<br/>VUE FACE</span>
+        <img src="Francia/Polos/premium-polo-shirt-navy-front-6649f3437fa8d.png" alt="Polo Premium France N°10 — Marine, face" loading="lazy" />
+        <div class="meta">
+          <span class="name">— Polo N°10 / Marine</span>
+        </div>
+      </div>
+      <div class="look-tile product span-4 reveal">
+        <span class="corner tl"></span>
+        <span class="corner br"></span>
+        <span class="ref">FR-TS-01-BK<br/>VUE FACE</span>
+        <img src="Francia/unisex-organic-cotton-t-shirt-black-front-2-6649e29dd4a6d.png" alt="T-Shirt France N°01 — Noir, face" loading="lazy" />
+        <div class="meta">
+          <span class="name">— T-Shirt N°01 / Noir</span>
+        </div>
+      </div>
+      <div class="look-tile product span-4 reveal" data-delay="1">
+        <span class="corner tl"></span>
+        <span class="corner br"></span>
+        <span class="ref">FR-HD-22-NV<br/>VUE FACE</span>
+        <img src="Francia/Hoodies/unisex-essential-eco-hoodie-french-navy-front-6649f6e9a86d2.png" alt="Hoodie France N°22 — Marine, face" loading="lazy" />
+        <div class="meta">
+          <span class="name">— Hoodie N°22 / Marine</span>
+        </div>
+      </div>
+      <div class="look-tile product span-4 reveal" data-delay="2">
+        <span class="corner tl"></span>
+        <span class="corner br"></span>
+        <span class="ref">FR-PL-10-RD<br/>VUE FACE</span>
+        <img src="Francia/Polos/premium-polo-shirt-red-front-6649f3437f12b.png" alt="Polo Premium France N°10 — Rouge, face" loading="lazy" />
+        <div class="meta">
+          <span class="name">— Polo N°10 / Rouge</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATALOGUE -->
+<section class="catalogue" id="catalogue">
+  <div class="container">
+    <header class="section-head">
+      <div class="left reveal">
+        <span class="eyebrow">03 / Tous les articles — 10 SKUs</span>
+        <h2>France <span class="it">— index complet.</span></h2>
+      </div>
+      <div class="right reveal" data-delay="1">
+        Cat. 03 / FR<br/>
+        <span style="color:var(--hazard)">Drop 13 · Live</span>
+      </div>
+    </header>
+
+    <div class="filter-bar">
+      <span class="lbl">Filtrer //</span>
+      <button class="filter-btn active" data-filter="all">Tout <span class="count">10</span></button>
+      <button class="filter-btn" data-filter="tee">T-Shirts <span class="count">03</span></button>
+      <button class="filter-btn" data-filter="polo">Polos <span class="count">04</span></button>
+      <button class="filter-btn" data-filter="hoodie">Sweats <span class="count">03</span></button>
+      <div class="right">
+        <span>EN ISO 3758</span>
+        <span style="color:var(--hazard)">· GOTS</span>
+      </div>
+    </div>
+
+    <div class="product-grid">
+
+      <!-- T-SHIRT NOIR -->
+      <article class="product-card reveal" data-cat="tee" data-sku="FR-TS-01-BK" data-name="T-Shirt N°01 — Noir">
+        <div class="product-image">
+          <img class="front" src="Francia/unisex-organic-cotton-t-shirt-black-front-2-6649e29dd4a6d.png" alt="T-Shirt France N°01 — Noir, face" loading="lazy" />
+          <img class="swap" src="Francia/unisex-organic-cotton-t-shirt-black-front-6649e29dd2e09.png" alt="T-Shirt France N°01 — Noir, vue alt" loading="lazy" />
+          <span class="badge">N°01 / 47 PCS</span>
+          <button class="quick" aria-label="Aperçu rapide">
+            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">FR-TS-01-BK</span><span>BIOLOGIQUE · 180 GSM</span></div>
+          <div class="name">T-Shirt N°01</div>
+          <div class="colour">Noir — Coq brodé</div>
+          <div class="price-row">
+            <span class="price">€52,00</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#0a0a0a;border-color:var(--hazard)" title="Noir"></span>
+              <span class="swatch" style="background:#002395" title="Marine"></span>
+              <span class="swatch" style="background:#F4F4F0" title="Blanc"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Taille">
+              <option>XS</option><option>S</option><option selected>M</option>
+              <option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="T-Shirt N°01 — Noir">Ajouter <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- T-SHIRT MARINE -->
+      <article class="product-card reveal" data-cat="tee" data-sku="FR-TS-01-NV" data-name="T-Shirt N°01 — Marine">
+        <div class="product-image">
+          <img class="front" src="Francia/unisex-organic-cotton-t-shirt-french-navy-front-2-6649e29de1d86.png" alt="T-Shirt France N°01 — Marine, face" loading="lazy" />
+          <img class="swap" src="Francia/unisex-organic-cotton-t-shirt-french-navy-front-6649e29dd92d4.png" alt="T-Shirt France N°01 — Marine, vue alt" loading="lazy" />
+          <span class="badge">N°01 / 62 PCS</span>
+          <button class="quick" aria-label="Aperçu rapide">
+            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">FR-TS-01-NV</span><span>BIOLOGIQUE · 180 GSM</span></div>
+          <div class="name">T-Shirt N°01</div>
+          <div class="colour">Marine — Coq brodé</div>
+          <div class="price-row">
+            <span class="price">€52,00</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#0a0a0a" title="Noir"></span>
+              <span class="swatch" style="background:#002395;border-color:var(--hazard)" title="Marine"></span>
+              <span class="swatch" style="background:#F4F4F0" title="Blanc"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Taille">
+              <option>XS</option><option>S</option><option selected>M</option>
+              <option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="T-Shirt N°01 — Marine">Ajouter <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- T-SHIRT BLANC -->
+      <article class="product-card reveal" data-cat="tee" data-sku="FR-TS-01-WH" data-name="T-Shirt N°01 — Blanc">
+        <div class="product-image">
+          <img class="front" src="Francia/unisex-organic-cotton-t-shirt-white-front-2-6649e29e1c4ce.png" alt="T-Shirt France N°01 — Blanc, face" loading="lazy" />
+          <img class="swap" src="Francia/unisex-organic-cotton-t-shirt-white-front-6649e29e03e1b.png" alt="T-Shirt France N°01 — Blanc, vue alt" loading="lazy" />
+          <span class="badge">N°01 / 38 PCS</span>
+          <button class="quick" aria-label="Aperçu rapide">
+            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">FR-TS-01-WH</span><span>BIOLOGIQUE · 180 GSM</span></div>
+          <div class="name">T-Shirt N°01</div>
+          <div class="colour">Blanc — Coq brodé</div>
+          <div class="price-row">
+            <span class="price">€52,00</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#0a0a0a" title="Noir"></span>
+              <span class="swatch" style="background:#002395" title="Marine"></span>
+              <span class="swatch" style="background:#F4F4F0;border-color:var(--hazard)" title="Blanc"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Taille">
+              <option>XS</option><option>S</option><option selected>M</option>
+              <option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="T-Shirt N°01 — Blanc">Ajouter <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- POLO NOIR -->
+      <article class="product-card reveal" data-cat="polo" data-sku="FR-PL-10-BK" data-name="Polo Premium N°10 — Noir">
+        <div class="product-image">
+          <img class="front" src="Francia/Polos/premium-polo-shirt-black-front-6649f3437e691.png" alt="Polo Premium France N°10 — Noir, face" loading="lazy" />
+          <img class="swap" src="Francia/Polos/premium-polo-shirt-black-right-front-6649f3437effd.png" alt="Polo Premium France N°10 — Noir, côté" loading="lazy" />
+          <span class="badge">N°10 / 31 PCS</span>
+          <button class="quick" aria-label="Aperçu rapide">
+            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">FR-PL-10-BK</span><span>PIQUÉ · 220 GSM</span></div>
+          <div class="name">Polo Premium N°10</div>
+          <div class="colour">Noir — Coq brodé</div>
+          <div class="price-row">
+            <span class="price">€78,40</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#0a0a0a;border-color:var(--hazard)" title="Noir"></span>
+              <span class="swatch" style="background:#002395" title="Marine"></span>
+              <span class="swatch" style="background:#CC0000" title="Rouge"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Taille">
+              <option>XS</option><option>S</option><option selected>M</option>
+              <option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="Polo Premium N°10 — Noir">Ajouter <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- POLO MARINE (featured) -->
+      <article class="product-card reveal" data-cat="polo" data-sku="FR-PL-10-NV" data-name="Polo Premium N°10 — Marine">
+        <div class="product-image">
+          <img class="front" src="Francia/Polos/premium-polo-shirt-navy-front-6649f3437fa8d.png" alt="Polo Premium France N°10 — Marine, face" loading="lazy" />
+          <img class="swap" src="Francia/Polos/premium-polo-shirt-navy-right-front-6649f3438054c.png" alt="Polo Premium France N°10 — Marine, côté" loading="lazy" />
+          <span class="badge hz">N°10 / 83 PCS</span>
+          <button class="quick" aria-label="Aperçu rapide">
+            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">FR-PL-10-NV</span><span>PIQUÉ · 220 GSM</span></div>
+          <div class="name">Polo Premium N°10</div>
+          <div class="colour">Marine — Coq brodé</div>
+          <div class="price-row">
+            <span class="price">€78,40</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#0a0a0a" title="Noir"></span>
+              <span class="swatch" style="background:#002395;border-color:var(--hazard)" title="Marine"></span>
+              <span class="swatch" style="background:#CC0000" title="Rouge"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Taille">
+              <option>XS</option><option>S</option><option selected>M</option>
+              <option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="Polo Premium N°10 — Marine">Ajouter <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- POLO ROUGE -->
+      <article class="product-card reveal" data-cat="polo" data-sku="FR-PL-10-RD" data-name="Polo Premium N°10 — Rouge">
+        <div class="product-image">
+          <img class="front" src="Francia/Polos/premium-polo-shirt-red-front-6649f3437f12b.png" alt="Polo Premium France N°10 — Rouge, face" loading="lazy" />
+          <img class="swap" src="Francia/Polos/premium-polo-shirt-red-right-front-6649f3437f816.png" alt="Polo Premium France N°10 — Rouge, côté" loading="lazy" />
+          <span class="badge">N°10 / 28 PCS</span>
+          <button class="quick" aria-label="Aperçu rapide">
+            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">FR-PL-10-RD</span><span>PIQUÉ · 220 GSM</span></div>
+          <div class="name">Polo Premium N°10</div>
+          <div class="colour">Rouge — Coq brodé</div>
+          <div class="price-row">
+            <span class="price">€78,40</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#0a0a0a" title="Noir"></span>
+              <span class="swatch" style="background:#002395" title="Marine"></span>
+              <span class="swatch" style="background:#CC0000;border-color:var(--hazard)" title="Rouge"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Taille">
+              <option>XS</option><option>S</option><option selected>M</option>
+              <option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="Polo Premium N°10 — Rouge">Ajouter <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- POLO PIERRE -->
+      <article class="product-card reveal" data-cat="polo" data-sku="FR-PL-10-ST" data-name="Polo Premium N°10 — Pierre">
+        <div class="product-image">
+          <img class="front" src="Francia/Polos/premium-polo-shirt-stone-front-6649f45404c16.png" alt="Polo Premium France N°10 — Pierre, face" loading="lazy" />
+          <img class="swap" src="Francia/Polos/premium-polo-shirt-stone-right-front-6649f4540553d.png" alt="Polo Premium France N°10 — Pierre, côté" loading="lazy" />
+          <span class="badge">N°10 / 19 PCS</span>
+          <button class="quick" aria-label="Aperçu rapide">
+            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">FR-PL-10-ST</span><span>PIQUÉ · 220 GSM</span></div>
+          <div class="name">Polo Premium N°10</div>
+          <div class="colour">Pierre — Coq brodé</div>
+          <div class="price-row">
+            <span class="price">€78,40</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#C4B9A8;border-color:var(--hazard)" title="Pierre"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Taille">
+              <option>XS</option><option>S</option><option selected>M</option>
+              <option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="Polo Premium N°10 — Pierre">Ajouter <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- HOODIE NOIR -->
+      <article class="product-card reveal" data-cat="hoodie" data-sku="FR-HD-22-BK" data-name="Sweat N°22 — Noir">
+        <div class="product-image">
+          <img class="front" src="Francia/Hoodies/unisex-essential-eco-hoodie-black-front-6649f6e9a7e7b.png" alt="Sweat France N°22 — Noir, face" loading="lazy" />
+          <img class="swap" src="Francia/Hoodies/unisex-essential-eco-hoodie-black-front-6649f6e9a8374.png" alt="Sweat France N°22 — Noir, vue alt" loading="lazy" />
+          <span class="badge">N°22 / 52 PCS</span>
+          <button class="quick" aria-label="Aperçu rapide">
+            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">FR-HD-22-BK</span><span>ÉCO · 320 GSM</span></div>
+          <div class="name">Sweat N°22</div>
+          <div class="colour">Noir — Coq brodé</div>
+          <div class="price-row">
+            <span class="price">€94,00</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#0a0a0a;border-color:var(--hazard)" title="Noir"></span>
+              <span class="swatch" style="background:#002395" title="Marine"></span>
+              <span class="swatch" style="background:#C8A97E" title="Sable du désert"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Taille">
+              <option>XS</option><option>S</option><option selected>M</option>
+              <option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="Sweat N°22 — Noir">Ajouter <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- HOODIE MARINE -->
+      <article class="product-card reveal" data-cat="hoodie" data-sku="FR-HD-22-NV" data-name="Sweat N°22 — Marine">
+        <div class="product-image">
+          <img class="front" src="Francia/Hoodies/unisex-essential-eco-hoodie-french-navy-front-6649f6e9a86d2.png" alt="Sweat France N°22 — Marine, face" loading="lazy" />
+          <img class="swap" src="Francia/Hoodies/unisex-essential-eco-hoodie-french-navy-front-6649f6e9a8917.png" alt="Sweat France N°22 — Marine, vue alt" loading="lazy" />
+          <span class="badge hz">N°22 / 74 PCS</span>
+          <button class="quick" aria-label="Aperçu rapide">
+            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">FR-HD-22-NV</span><span>ÉCO · 320 GSM</span></div>
+          <div class="name">Sweat N°22</div>
+          <div class="colour">Marine — Coq brodé</div>
+          <div class="price-row">
+            <span class="price">€94,00</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#0a0a0a" title="Noir"></span>
+              <span class="swatch" style="background:#002395;border-color:var(--hazard)" title="Marine"></span>
+              <span class="swatch" style="background:#C8A97E" title="Sable du désert"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Taille">
+              <option>XS</option><option>S</option><option selected>M</option>
+              <option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="Sweat N°22 — Marine">Ajouter <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- HOODIE SABLE DU DÉSERT -->
+      <article class="product-card reveal" data-cat="hoodie" data-sku="FR-HD-22-DD" data-name="Sweat N°22 — Sable du Désert">
+        <div class="product-image">
+          <img class="front" src="Francia/Hoodies/unisex-essential-eco-hoodie-desert-dust-front-6649f6e9a8e0a.png" alt="Sweat France N°22 — Sable du Désert, face" loading="lazy" />
+          <img class="swap" src="Francia/Hoodies/unisex-essential-eco-hoodie-desert-dust-front-6649f6e9a92d0.png" alt="Sweat France N°22 — Sable du Désert, vue alt" loading="lazy" />
+          <span class="badge">N°22 / 33 PCS</span>
+          <button class="quick" aria-label="Aperçu rapide">
+            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="product-info">
+          <div class="meta-row"><span class="sku">FR-HD-22-DD</span><span>ÉCO · 320 GSM</span></div>
+          <div class="name">Sweat N°22</div>
+          <div class="colour">Sable du désert — Coq brodé</div>
+          <div class="price-row">
+            <span class="price">€94,00</span>
+            <div class="swatches">
+              <span class="swatch" style="background:#0a0a0a" title="Noir"></span>
+              <span class="swatch" style="background:#002395" title="Marine"></span>
+              <span class="swatch" style="background:#C8A97E;border-color:var(--hazard)" title="Sable du désert"></span>
+            </div>
+          </div>
+          <div class="add-bar">
+            <select class="size" aria-label="Taille">
+              <option>XS</option><option>S</option><option selected>M</option>
+              <option>L</option><option>XL</option><option>XXL</option>
+            </select>
+            <button class="add" data-name="Sweat N°22 — Sable du Désert">Ajouter <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED DROP -->
+<section class="drop">
+  <div class="container">
+    <header class="section-head">
+      <div class="left reveal">
+        <span class="eyebrow">04 / Drop vedette — Polo Marine</span>
+        <h2>Le Coq, <span class="it">à l'avant.</span></h2>
+      </div>
+      <div class="right reveal" data-delay="1">
+        FR-PL-10-NV<br/>
+        <span style="color:var(--hazard)">83 PCS RESTANTS</span>
+      </div>
+    </header>
+
+    <div class="drop-grid">
+      <div class="drop-visual reveal">
+        <img src="Francia/Polos/premium-polo-shirt-navy-front-6649f3437fa8d.png" alt="Polo Premium France N°10 — Marine, drop vedette" loading="lazy" />
+        <div class="corners"><span class="tr"></span><span class="bl"></span></div>
+        <div class="ref">FR-PL-10-NV<br/>VUE FACE<br/>1:1.25</div>
+        <div class="axis">FR / 48.9°N / PRINTEMPS 26</div>
+      </div>
+
+      <div class="drop-spec reveal" data-delay="1">
+        <div class="head">
+          <div class="id">FR-PL-10-NV · DROP 13 · LES BLEUS</div>
+          <h3>Polo N°10 <span class="it">— marine.</span></h3>
+          <p class="pitch">La couleur de référence. Marine profond, Coq Gaulois brodé sur poitrine gauche en 8,640 points d'aiguille, col côtelé deux boutons. Le polo que portent ceux qui n'ont pas besoin d'expliquer d'où ils viennent.</p>
+        </div>
+
+        <div class="spec-table">
+          <div class="spec-row">
+            <span class="key">Matière</span>
+            <span class="val">Piqué double face</span>
+            <span class="unit">220 GSM</span>
+          </div>
+          <div class="spec-row">
+            <span class="key">Broderie</span>
+            <span class="val">Le Coq Gaulois</span>
+            <span class="unit">8,640 pts</span>
+          </div>
+          <div class="spec-row">
+            <span class="key">Fil</span>
+            <span class="val">Rayon 40 wt — mat</span>
+            <span class="unit">PMS 293 C</span>
+          </div>
+          <div class="spec-row">
+            <span class="key">Origine</span>
+            <span class="val">Production atelier — Coupe &amp; couture</span>
+            <span class="unit">Classé 04.62</span>
+          </div>
+          <div class="spec-row">
+            <span class="key">Entretien</span>
+            <span class="val">Lav. 30°C · sans essoreuse</span>
+            <span class="unit">EN ISO 3758</span>
+          </div>
+        </div>
+
+        <div class="drop-actions">
+          <div class="price-block">
+            <span class="price">€78,40</span>
+            <span class="meta">TVA incl. · Livraison €9</span>
+          </div>
+          <a href="#catalogue" class="hero-cta">
+            Commander
+            <span class="arrow">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREST -->
+<section class="crest" id="crest">
+  <div class="container">
+    <div class="crest-grid">
+      <div class="crest-text reveal">
+        <span class="eyebrow">05 / Le blason</span>
+        <h2>Le Coq Gaulois, <span class="it">en 8,640 points.</span></h2>
+        <p>Le coq chante avant le lever du soleil — il chante dans l'obscurité, sans savoir si le jour viendra. C'est le symbole que nous brodons : non pas un trophée, mais une déclaration faite avant que le résultat soit connu. Chaque point est posé à la machine Tajima TMEZ, fil rayon mat, couleur PMS 293 C, identique à celle utilisée par la Fédération Française de Rugby depuis 1906.</p>
+        <div class="crest-stats">
+          <div class="item"><span class="num">1906</span><span class="lbl">Première sélection</span></div>
+          <div class="item"><span class="num">8,640</span><span class="lbl">Points d'aiguille</span></div>
+          <div class="item"><span class="num">PMS 293 C</span><span class="lbl">Bleu de référence</span></div>
+        </div>
+      </div>
+      <div class="crest-zoom reveal" data-delay="1">
+        <img src="france.png" alt="Le Coq Gaulois — blason France Rugby" loading="lazy" />
+        <span class="ring"></span>
+        <span class="stamp">LE COQ GAULOIS · EST. 1906</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HERITAGE -->
+<section class="heritage" id="heritage">
+  <div class="container">
+    <div class="heritage-grid">
+      <div class="heritage-text reveal">
+        <p class="quote">Le rugby français n'est pas un sport. C'est une façon de voir le monde — avec les épaules en avant.</p>
+        <p>En 1906, la France dispute sa première sélection internationale. Depuis, les équipes tricolores ont bâti une tradition fondée sur l'audace, l'improvisation et une intensité défensive qui fait partie du mythe. Le Grand Chelem de 2022, le titre du Tournoi des Six Nations 2026 — les Bleus ne répètent pas les matchs, ils les inventent.</p>
+        <p>Nous documentons cette tradition de la seule façon qui compte : en la portant, brodée, sur du coton biologique certifié GOTS.</p>
+        <div class="signoff">
+          <span>Transmis par</span>
+          <span class="who">THE H CONNECTION</span>
+          <span>·</span>
+          <span>FR / 48.9°N / CAT. 03</span>
+        </div>
+      </div>
+      <div class="heritage-visual reveal" data-delay="1">
+        <img src="Francia/il_fullxfull.2878788725_jd34.webp" alt="Héritage du rugby français — archive visuelle" loading="lazy" />
+        <div class="stamp">ARCHIVE · FR / 1906</div>
+        <div class="caption">
+          <span>FÉDÉRATION FRANÇAISE</span>
+          <span>DEPUIS 1906</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARE & SIZE -->
+<section class="care">
+  <div class="container">
+    <header class="section-head">
+      <div class="left reveal">
+        <span class="eyebrow">06 / Entretien &amp; Tailles</span>
+        <h2>Traité avec <span class="it">— précision.</span></h2>
+      </div>
+    </header>
+    <div class="care-grid">
+      <div class="care-block reveal">
+        <span class="num">// 06.A</span>
+        <div class="title">Guide d'entretien</div>
+        <div class="care-table">
+          <div class="row head">
+            <div class="cell lbl">Article</div>
+            <div class="cell">Lav.</div>
+            <div class="cell">Séchage</div>
+            <div class="cell">Repassage</div>
+            <div class="cell">Nettoyage</div>
+            <div class="cell">GSM</div>
+          </div>
+          <div class="row">
+            <div class="cell lbl">T-Shirt</div>
+            <div class="cell">30°C</div>
+            <div class="cell">Plat</div>
+            <div class="cell">Doux</div>
+            <div class="cell">Non</div>
+            <div class="cell">180</div>
+          </div>
+          <div class="row">
+            <div class="cell lbl">Polo</div>
+            <div class="cell">30°C</div>
+            <div class="cell">Plat</div>
+            <div class="cell">Doux</div>
+            <div class="cell">Non</div>
+            <div class="cell">220</div>
+          </div>
+          <div class="row">
+            <div class="cell lbl">Sweat</div>
+            <div class="cell">30°C</div>
+            <div class="cell">Culbuto</div>
+            <div class="cell">Non</div>
+            <div class="cell">Non</div>
+            <div class="cell">320</div>
+          </div>
+        </div>
+      </div>
+      <div class="care-block reveal" data-delay="1">
+        <span class="num">// 06.B</span>
+        <div class="title">Guide des tailles</div>
+        <ul class="care-list">
+          <li><span class="ix">XS</span><span>Poitrine 84–89 · Taille 70–75 cm</span><span class="unit">EU 44</span></li>
+          <li><span class="ix">S</span><span>Poitrine 90–95 · Taille 76–81 cm</span><span class="unit">EU 46</span></li>
+          <li><span class="ix">M</span><span>Poitrine 96–101 · Taille 82–87 cm</span><span class="unit">EU 48</span></li>
+          <li><span class="ix">L</span><span>Poitrine 102–107 · Taille 88–93 cm</span><span class="unit">EU 50</span></li>
+          <li><span class="ix">XL</span><span>Poitrine 108–113 · Taille 94–99 cm</span><span class="unit">EU 52</span></li>
+          <li><span class="ix">XXL</span><span>Poitrine 114–120 · Taille 100–106 cm</span><span class="unit">EU 54</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STADE DE FRANCE -->
+<section class="si">
+  <div class="container">
+    <div class="si-grid">
+      <div class="si-text reveal">
+        <span class="eyebrow">07 / Stade de France</span>
+        <h2>Le temple du rugby <span class="it">— français.</span></h2>
+        <p>Saint-Denis, 93. À seize minutes de Paris par le RER D, à des années-lumière de tout ce que vous avez vu dans d'autres stades. Le Stade de France n'est pas une enceinte sportive. C'est une usine à mythes — inaugurée en 1998, façonnée par des victoires qui n'auraient pas dû avoir lieu et des défaites qui ont réinventé l'équipe. Quand les 80,698 places se remplissent avant un match contre les All Blacks, l'air lui-même change de nature.</p>
+        <div class="si-stats">
+          <div class="item">
+            <span class="num">1998</span>
+            <span class="lbl">Inauguré</span>
+          </div>
+          <div class="item">
+            <span class="num">80,698</span>
+            <span class="lbl">Places</span>
+          </div>
+          <div class="item">
+            <span class="num">93</span>
+            <span class="lbl">Code postal</span>
+          </div>
+        </div>
+      </div>
+      <figure class="si-logo reveal" data-delay="1">
+        <img src="france 2.png" alt="France Rugby — emblème officiel" loading="lazy" />
+        <span class="stamp">FÉDÉRATION FRANÇAISE · SAINT-DENIS · 1998</span>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- CONTINUE BROWSING -->
+<section class="continue">
+  <div class="container">
+    <header class="section-head">
+      <div class="left reveal">
+        <span class="eyebrow">08 / Continuer la navigation</span>
+        <h2>Autres <span class="it">— catalogues.</span></h2>
+      </div>
+    </header>
+    <div class="continue-grid">
+      <a href="argentina.html" class="continue-tile reveal">
+        <img src="Argentina/el-festejo-de-los-pumas-tras-la-victoria-ante-J4LTT5AWFBHQXJW6DDP65HSWYE.jpg" alt="Los Pumas — Argentine" loading="lazy" />
+        <div class="info">
+          <div class="top"><span>CAT. 01</span><span>AR / 34°S</span></div>
+          <div class="name">Argentine<span class="sub">Los Pumas · Camiseta celeste</span></div>
+          <div class="arrow">Voir le catalogue →</div>
+        </div>
+      </a>
+      <a href="england.html" class="continue-tile reveal" data-delay="1">
+        <img src="England/GettyImages-878946488.webp" alt="England Rugby — Twickenham" loading="lazy" />
+        <div class="info">
+          <div class="top"><span>CAT. 02</span><span>EN / 51°N</span></div>
+          <div class="name">Angleterre<span class="sub">The Red Rose · Twickenham</span></div>
+          <div class="arrow">Voir le catalogue →</div>
+        </div>
+      </a>
+      <a href="ireland.html" class="continue-tile reveal" data-delay="2">
+        <img src="Ireland/IMG_0431.jpg" alt="Ireland Rugby — terrains d'Irlande" loading="lazy" />
+        <div class="info">
+          <div class="top"><span>CAT. 04</span><span>IE / 53°N</span></div>
+          <div class="name">Irlande<span class="sub">The Shamrock · Aviva Stadium</span></div>
+          <div class="arrow">À venir →</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="container">
+    <div class="newsletter-grid">
+      <div class="reveal">
+        <h2>Transmissions <span class="it">— directes.</span></h2>
+        <p>Chaque drop, chaque mise en archive, chaque nouvelle capsule pays. Aucun bruit. Seulement les informations qui comptent — envoyées directement.</p>
+      </div>
+      <div class="reveal" data-delay="1">
+        <form class="nl-form" onsubmit="return false;">
+          <input type="email" placeholder="VOTRE EMAIL — TOUS LES DROPS" aria-label="Adresse e-mail" />
+          <button type="submit">S'abonner</button>
+        </form>
+        <p style="margin-top:12px;font-family:var(--font-mono);font-size:10px;color:var(--ink-faint);letter-spacing:0.14em;text-transform:uppercase;">
+          Aucun spam. Désabonnement en 1 clic. RGPD conforme.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-mega" aria-hidden="true">THE H CONNECTION</div>
+
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="LOGO V1.2.png" alt="The H Connection" style="height:64px;width:auto;filter:brightness(0.9);" loading="lazy" />
+        <p class="pitch">Rugby apparel atelier. Pays par pays. Brodé, jamais imprimé.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Catalogue</h4>
+        <ul>
+          <li><a href="argentina.html">Argentine</a></li>
+          <li><a href="england.html">Angleterre</a></li>
+          <li><a href="france.html">France</a></li>
+          <li><a href="#">Irlande</a></li>
+          <li><a href="#">Écosse</a></li>
+          <li><a href="#">Pays de Galles</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Infos</h4>
+        <ul>
+          <li><a href="#">À propos</a></li>
+          <li><a href="#">Livraison</a></li>
+          <li><a href="#">Retours</a></li>
+          <li><a href="#">Tableau des tailles</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Transmission</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Journal</a></li>
+          <li><a href="#">Fixtures</a></li>
+          <li><a href="#">Presse</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 THE H CONNECTION®</span>
+      <span>FR / CAT. 03 / DROP 13</span>
+      <span>Brodé, jamais imprimé.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // REVEAL
+  (function(){
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+    els.forEach(el => io.observe(el));
+  })();
+
+  // FILTER
+  (function(){
+    const btns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.product-card');
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        cards.forEach(c => {
+          c.classList.toggle('hidden', f !== 'all' && c.dataset.cat !== f);
+        });
+      });
+    });
+  })();
+
+  // ADD TO CART
+  (function(){
+    const addBtns = document.querySelectorAll('.add-bar .add');
+    const cartCount = document.querySelector('.cart-btn .count');
+    let count = 2;
+    addBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        count++;
+        if(cartCount) cartCount.textContent = String(count).padStart(2,'0');
+        btn.textContent = 'Ajouté';
+        setTimeout(() => {
+          btn.innerHTML = 'Ajouter <svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;stroke-width:1.6;fill:none"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+        }, 1400);
+      });
+    });
+  })();
+
+  // MAGNETIC CTA
+  (function(){
+    const cta = document.querySelector('.hero-cta');
+    if(!cta) return;
+    let raf;
+    cta.addEventListener('mousemove', e => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const r = cta.getBoundingClientRect();
+        const dx = (e.clientX - (r.left + r.width/2)) * 0.14;
+        const dy = (e.clientY - (r.top + r.height/2)) * 0.14;
+        cta.style.transform = `translate(${dx}px,${dy}px)`;
+      });
+    });
+    cta.addEventListener('mouseleave', () => {
+      cancelAnimationFrame(raf);
+      cta.style.transform = '';
+    });
+  })();
+</script>
+
+</body>
+</html>
