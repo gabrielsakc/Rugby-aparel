@@ -175,7 +175,7 @@
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
-    height: 72px;
+    height: 100px;
     gap: 32px;
   }
   .brand {
@@ -183,29 +183,14 @@
     align-items: center;
     gap: 14px;
   }
-  .brand-mark {
-    width: 36px;
-    height: 36px;
-    background: var(--ink);
-    color: var(--bg);
-    display: grid;
-    place-items: center;
-    font-family: var(--font-display);
-    font-size: 22px;
-    line-height: 1;
-    position: relative;
+  .brand-mark { display: none; }
+  .brand-text { display: none; }
+  .brand-logo-nav {
+    height: 90px;
+    width: auto;
+    display: block;
+    filter: brightness(1.05);
   }
-  .brand-mark::after {
-    content: "®";
-    position: absolute;
-    top: -6px; right: -10px;
-    font-size: 9px;
-    color: var(--ink);
-    font-family: var(--font-mono);
-  }
-  .brand-text { display: flex; flex-direction: column; line-height: 1; gap: 3px; }
-  .brand-text .name { font-family: var(--font-display); font-size: 13px; letter-spacing: -0.02em; text-transform: uppercase; }
-  .brand-text .meta { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--ink-mute); }
 
   .nav-links {
     display: flex;
@@ -1025,6 +1010,37 @@
     color: var(--ink-faint);
     letter-spacing: 0.16em;
     text-transform: uppercase;
+    z-index: 20;
+  }
+  /* Carousel */
+  .drop-visual .carousel-slide {
+    opacity: 0;
+    transition: opacity 0.55s var(--ease-soft), transform 0.8s var(--ease-soft);
+    z-index: 0;
+  }
+  .drop-visual .carousel-slide.active { opacity: 1; z-index: 1; }
+  .drop-visual:hover .carousel-slide { transform: none; }
+  .drop-visual:hover .carousel-slide.active { transform: scale(1.05); }
+  .carousel-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    z-index: 20;
+    background: rgba(10,10,10,0.72);
+    border: 1px solid var(--hairline-strong);
+    color: var(--ink);
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; padding: 0;
+    transition: background 0.18s;
+  }
+  .carousel-btn:hover { background: var(--hazard); }
+  .carousel-btn svg { pointer-events: none; }
+  .carousel-btn.prev { left: 14px; }
+  .carousel-btn.next { right: 14px; }
+  .carousel-counter {
+    position: absolute; bottom: 16px; right: 24px;
+    font-family: var(--font-mono); font-size: 10px;
+    color: var(--hazard); letter-spacing: 0.16em; text-transform: uppercase;
+    z-index: 20;
   }
   .drop-visual .ref {
     position: absolute;
@@ -1797,11 +1813,7 @@
   <div class="container">
     <div class="row">
       <a href="#" class="brand" aria-label="The H Connection home">
-        <div class="brand-mark">H</div>
-        <div class="brand-text">
-          <span class="name">The H Connection</span>
-          <span class="meta">EST. 2022 · BUENOS AIRES</span>
-        </div>
+        <img class="brand-logo-nav" src="LOGO V1.2.png" alt="The H Connection" />
       </a>
       <div class="nav-links">
         <a href="#collections">Collections</a>
@@ -2310,7 +2322,7 @@
     <header class="section-head reveal">
       <div class="left">
         <span class="eyebrow">03 / Featured Drop</span>
-        <h2>Argentina N°10 <span class="it">— polo</span></h2>
+        <h2>Drop N°10 <span class="it">— polo</span></h2>
       </div>
       <div class="right">
         SKU AR-PL-10-NV<br/>
@@ -2321,17 +2333,40 @@
     <div class="drop-grid">
       <div class="drop-visual reveal">
         <span class="corners"><span class="tr"></span><span class="bl"></span></span>
-        <span class="ref">REF 10/A<br/>FRONT VIEW<br/>1:1.25</span>
-        <img src="Argentina/premium-polo-shirt-navy-front-664f8c393e963.png" alt="Argentina premium polo shirt navy" loading="lazy" />
+        <span class="ref" id="dropRef">REF 01/17<br/>FRONT VIEW<br/>1:1.25</span>
+        <img class="carousel-slide active" src="Carrusel/premium-polo-shirt-cool-heather-front-6649ed7ce41c8.png" alt="Premium polo cool heather front" loading="lazy" />
+        <img class="carousel-slide" src="Carrusel/premium-polo-shirt-steel-grey-front-664f8c393f06c.png" alt="Premium polo steel grey front" loading="lazy" />
+        <img class="carousel-slide" src="Carrusel/premium-polo-shirt-steel-grey-left-front-6649ed7ce3dc7.png" alt="Premium polo steel grey left front" loading="lazy" />
+        <img class="carousel-slide" src="Carrusel/mens-classic-tee-charcoal-front-2-6649ff88abdf5.png" alt="Mens classic tee charcoal front" loading="lazy" />
+        <img class="carousel-slide" src="Carrusel/unisex-organic-cotton-t-shirt-french-navy-front-6649e70c7ffcd.png" alt="Unisex organic cotton tee french navy" loading="lazy" />
+        <img class="carousel-slide" src="Carrusel/unisex-organic-cotton-t-shirt-white-front-6649e7b939678.png" alt="Unisex organic cotton tee white" loading="lazy" />
+        <img class="carousel-slide" src="Carrusel/unisex-organic-cotton-t-shirt-stargazer-front-6649fd9e43b04.png" alt="Unisex organic cotton tee stargazer" loading="lazy" />
+        <img class="carousel-slide" src="Carrusel/unisex-organic-cotton-t-shirt-lavender-front-2-6649fcc7771b4.png" alt="Unisex organic cotton tee lavender" loading="lazy" />
+        <img class="carousel-slide" src="Carrusel/unisex-organic-cotton-t-shirt-khaki-zoomed-in-664f75cc2ab60.png" alt="Unisex organic cotton tee khaki" loading="lazy" />
+        <img class="carousel-slide" src="Carrusel/unisex-organic-cotton-t-shirt-red-zoomed-in-664f75cbb6217.png" alt="Unisex organic cotton tee red" loading="lazy" />
+        <img class="carousel-slide" src="Carrusel/unisex-staple-t-shirt-black-heather-front-6649dec47a5bf.png" alt="Unisex staple tee black heather" loading="lazy" />
+        <img class="carousel-slide" src="Carrusel/unisex-staple-t-shirt-white-front-6649e03551325.png" alt="Unisex staple tee white" loading="lazy" />
+        <img class="carousel-slide" src="Carrusel/unisex-heavy-blend-hoodie-navy-front-664f74fa0c867.png" alt="Unisex hoodie navy front" loading="lazy" />
+        <img class="carousel-slide" src="Carrusel/unisex-heavy-blend-hoodie-navy-front-664f74fa0de3a.png" alt="Unisex hoodie navy alternate" loading="lazy" />
+        <img class="carousel-slide" src="Carrusel/unisex-heavy-blend-hoodie-sand-front-6649f7a3c0e04.png" alt="Unisex hoodie sand front" loading="lazy" />
+        <img class="carousel-slide" src="Carrusel/unisex-essential-eco-hoodie-black-front-6649f4c88ef43.png" alt="Unisex eco hoodie black front" loading="lazy" />
+        <img class="carousel-slide" src="Carrusel/womens-relaxed-t-shirt-navy-front-6649f89f21829.png" alt="Womens relaxed tee navy front" loading="lazy" />
+        <button class="carousel-btn prev" id="dropPrev" aria-label="Previous">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="carousel-btn next" id="dropNext" aria-label="Next">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
         <span class="axis">+ Y / + X — UNIT D-01 / TILE 04</span>
+        <span class="carousel-counter" id="dropCounter">01 / 17</span>
       </div>
 
       <div class="drop-spec reveal" data-delay="1">
         <div class="head">
           <span class="id">SKU AR-PL-10-NV · DROP 12</span>
-          <h3>Premium Polo<br/>— <span class="it">Pumas crest</span></h3>
+          <h3>Premium Polo<br/>— <span class="it">union crest</span></h3>
           <p class="pitch">
-            A polo built for the day after the match. Heavy-gauge piqué cotton, embroidered Pumas crest at the heart, mother-of-pearl placket buttons, and a tonal taping at the back of the neck.
+            Built for the day after the match. Heavy-gauge piqué cotton, embroidered union crest at the heart, mother-of-pearl placket buttons, tonal taping at the back of the neck. Cut and sewn to last.
           </p>
         </div>
 
@@ -2348,8 +2383,8 @@
           </div>
           <div class="spec-row">
             <span class="key">Origin</span>
-            <span class="val">Cut &amp; sewn — Buenos Aires</span>
-            <span class="unit">AR / 34.5°S</span>
+            <span class="val">Cut &amp; sewn — atelier production</span>
+            <span class="unit">Filed 04.62</span>
           </div>
           <div class="spec-row">
             <span class="key">Colour</span>
@@ -2725,11 +2760,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="#" class="brand">
-          <div class="brand-mark">H</div>
-          <div class="brand-text">
-            <span class="name">The H Connection</span>
-            <span class="meta">EST. 2022 · BUENOS AIRES</span>
-          </div>
+          <img class="brand-logo-nav" src="LOGO V1.2.png" alt="The H Connection" />
         </a>
         <p class="pitch">
           A rugby apparel atelier indexing the unions of the world, one country at a time. Embroidered, never printed. Repaired for life.
@@ -2906,6 +2937,33 @@
         tc.textContent = `${pad(h)}:${pad(m)}:${pad(s)}:${pad(f)}`;
       });
     }
+  })();
+
+  /* Drop Carousel */
+  (function () {
+    const slides = document.querySelectorAll('.drop-visual .carousel-slide');
+    const counter = document.getElementById('dropCounter');
+    const ref = document.getElementById('dropRef');
+    const total = slides.length;
+    let current = 0;
+
+    function goTo(n) {
+      slides[current].classList.remove('active');
+      current = (n + total) % total;
+      slides[current].classList.add('active');
+      const idx = String(current + 1).padStart(2, '0');
+      const tot = String(total).padStart(2, '0');
+      if (counter) counter.textContent = idx + ' / ' + tot;
+      if (ref) ref.innerHTML = 'REF ' + idx + '/' + tot + '<br/>FRONT VIEW<br/>1:1.25';
+    }
+
+    document.getElementById('dropPrev').addEventListener('click', () => goTo(current - 1));
+    document.getElementById('dropNext').addEventListener('click', () => goTo(current + 1));
+
+    let autoplay = setInterval(() => goTo(current + 1), 4000);
+    const visual = document.querySelector('.drop-visual');
+    visual.addEventListener('mouseenter', () => clearInterval(autoplay));
+    visual.addEventListener('mouseleave', () => { autoplay = setInterval(() => goTo(current + 1), 4000); });
   })();
 </script>
 

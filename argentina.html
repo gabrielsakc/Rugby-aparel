@@ -178,27 +178,13 @@
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
-    height: 72px;
+    height: 100px;
     gap: 32px;
   }
   .brand { display: flex; align-items: center; gap: 14px; }
-  .brand-mark {
-    width: 36px; height: 36px;
-    background: var(--ink); color: var(--bg);
-    display: grid; place-items: center;
-    font-family: var(--font-display);
-    font-size: 22px; line-height: 1;
-    position: relative;
-  }
-  .brand-mark::after {
-    content: "®";
-    position: absolute; top: -6px; right: -10px;
-    font-size: 9px; color: var(--ink);
-    font-family: var(--font-mono);
-  }
-  .brand-text { display: flex; flex-direction: column; line-height: 1; gap: 3px; }
-  .brand-text .name { font-family: var(--font-display); font-size: 13px; letter-spacing: -0.02em; text-transform: uppercase; }
-  .brand-text .meta { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--ink-mute); }
+  .brand-mark { display: none; }
+  .brand-text { display: none; }
+  .brand-logo-nav { height: 90px; width: auto; display: block; filter: brightness(1.05); }
   .nav-links {
     display: flex; gap: 36px; justify-content: center;
     font-family: var(--font-mono); font-size: 12px;
@@ -1130,6 +1116,60 @@
   .care-list li .unit { color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.18em; font-size: 10px; }
 
   /* ============================================================
+     SAN ISIDRO
+  ============================================================ */
+  .si { padding: clamp(100px, 14vw, 180px) 0; border-bottom: 1px solid var(--hairline); }
+  .si-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .si-text { display: flex; flex-direction: column; gap: 28px; }
+  .si-text .eyebrow {
+    font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.22em; color: var(--ink-mute);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .si-text .eyebrow::before { content: ""; width: 32px; height: 1px; background: var(--hazard); }
+  .si-text h2 {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 64px);
+    line-height: 0.88; letter-spacing: -0.04em; text-transform: uppercase;
+  }
+  .si-text h2 .it {
+    font-family: var(--font-serif); font-style: italic; font-weight: 300;
+    text-transform: lowercase; letter-spacing: -0.02em; color: var(--hazard);
+  }
+  .si-text p { font-family: var(--font-body); font-size: 15px; line-height: 1.7; color: var(--ink-mute); max-width: 52ch; }
+  .si-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--hairline-strong); padding-top: 28px;
+  }
+  .si-stats .item { display: flex; flex-direction: column; gap: 6px; border-right: 1px solid var(--hairline); padding-right: 20px; }
+  .si-stats .item:last-child { border-right: none; padding-right: 0; }
+  .si-stats .item:not(:first-child) { padding-left: 20px; }
+  .si-stats .num { font-family: var(--font-display); font-size: clamp(28px, 4vw, 48px); line-height: 1; letter-spacing: -0.04em; }
+  .si-stats .lbl { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--ink-faint); }
+  .si-logo {
+    position: relative; background: var(--bg-elev);
+    display: flex; align-items: center; justify-content: center;
+    padding: clamp(48px, 8%, 80px); aspect-ratio: 4/5;
+  }
+  .si-logo::before, .si-logo::after {
+    content: ""; position: absolute; width: 18px; height: 18px; border: 1px solid var(--hazard);
+  }
+  .si-logo::before { top: 16px; left: 16px; border-right: none; border-bottom: none; }
+  .si-logo::after { bottom: 16px; right: 16px; border-left: none; border-top: none; }
+  .si-logo img { width: 100%; max-width: 280px; opacity: 0.88; transition: opacity 0.4s; }
+  .si-logo:hover img { opacity: 1; }
+  .si-logo .stamp {
+    position: absolute; bottom: 28px; left: 28px;
+    font-family: var(--font-mono); font-size: 10px;
+    color: var(--ink-faint); letter-spacing: 0.18em; text-transform: uppercase;
+  }
+
+  /* ============================================================
      CONTINUE BROWSING
   ============================================================ */
   .continue {
@@ -1813,7 +1853,7 @@
     .nav-links { display: none; }
   }
   @media (max-width: 900px) {
-    .ch-grid, .editorial-grid, .drop-grid, .crest-grid, .heritage-grid, .newsletter-grid { grid-template-columns: 1fr; gap: 48px; }
+    .ch-grid, .editorial-grid, .drop-grid, .crest-grid, .heritage-grid, .si-grid, .newsletter-grid { grid-template-columns: 1fr; gap: 48px; }
     .ch-meta { grid-template-columns: repeat(2, 1fr); }
     .product-grid, .continue-grid, .care-grid { grid-template-columns: repeat(2, 1fr); }
     .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -1862,11 +1902,7 @@
   <div class="container">
     <div class="row">
       <a href="index.html" class="brand">
-        <div class="brand-mark">H</div>
-        <div class="brand-text">
-          <span class="name">The H Connection</span>
-          <span class="meta">EST. 2022 · BUENOS AIRES</span>
-        </div>
+        <img class="brand-logo-nav" src="LOGO V1.2.png" alt="The H Connection" />
       </a>
       <div class="nav-links">
         <a href="index.html#collections" class="active">Collections</a>
@@ -2563,12 +2599,40 @@
   </div>
 </section>
 
+<!-- SAN ISIDRO -->
+<section class="si">
+  <div class="container">
+    <div class="si-grid">
+      <div class="si-text reveal">
+        <span class="eyebrow">07 / San Isidro</span>
+        <h2>La capital del rugby <span class="it">— argentino.</span></h2>
+        <p>
+          San Isidro no es un suburbio. Es el eje del rugby argentino — una franja de tierra ribereña donde el juego llegó en 1902 y nunca se fue. El Club de San Isidro ha dado más Pumas que cualquier otro club del país. Sus canchas, sus almuerzos de sábado y las paredes de sus vestuarios son la arquitectura detrás de cada prenda de este catálogo.
+        </p>
+        <p>
+          Aquí vive el ritual. Las botas blancas. Los cánticos antes del silbato. El apretón de manos que dura más de lo esperado. No hacemos ropa de calle. Hacemos el guardarropa de esa tarde.
+        </p>
+        <div class="si-stats">
+          <div class="item"><span class="num">1902</span><span class="lbl">Fundado</span></div>
+          <div class="item"><span class="num">34.5°S</span><span class="lbl">Latitud</span></div>
+          <div class="item"><span class="num">CSI</span><span class="lbl">El código</span></div>
+        </div>
+      </div>
+
+      <figure class="si-logo reveal" data-delay="1">
+        <img src="San isidro blanco.png" alt="Club de San Isidro — escudo oficial" loading="lazy" />
+        <span class="stamp">CLUB DE SAN ISIDRO · EST. 1902</span>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <!-- CONTINUE BROWSING -->
 <section class="continue">
   <div class="container">
     <header class="section-head">
       <div class="left reveal">
-        <span class="eyebrow">07 / Continue Browsing</span>
+        <span class="eyebrow">08 / Continue Browsing</span>
         <h2>Other unions, <span class="it">on file.</span></h2>
       </div>
       <div class="right reveal" data-delay="1">
@@ -2640,11 +2704,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="index.html" class="brand">
-          <div class="brand-mark">H</div>
-          <div class="brand-text">
-            <span class="name">The H Connection</span>
-            <span class="meta">EST. 2022 · BUENOS AIRES</span>
-          </div>
+          <img class="brand-logo-nav" src="LOGO V1.2.png" alt="The H Connection" />
         </a>
         <p class="pitch">
           A rugby apparel atelier indexing the unions of the world, one country at a time. Embroidered, never printed. Repaired for life.

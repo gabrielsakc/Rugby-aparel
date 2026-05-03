@@ -1,0 +1,91 @@
+# ─── Archivos de diseño / fuente (no se sirven) ──────────────
+*.cdr
+*.dae
+*.docx
+*.avif
+
+# ─── Carpetas completamente no utilizadas ─────────────────────
+Wales/
+Maquetas/
+textures/
+entrar a ionos/
+vid pres 2/
+
+# ─── Carpetas de países: excluir todo, conservar solo la imagen usada ─
+Ireland/*
+!Ireland/IMG_0431.jpg
+
+Francia/*
+!Francia/img-3551-64fbd76db8dd0730081948.jpg
+
+England/*
+!England/GettyImages-878946488.webp
+
+Scotland/*
+!Scotland/20603606-scaled.jpg
+
+# ─── Generated: excluir renders de modelos no usados ─────────
+generated/model-ar-desert.png
+generated/model-ar-hoodie.png
+generated/model-ar-navy.png
+generated/model-ar-white.png
+
+# ─── Imágenes sueltas en raíz no referenciadas ───────────────
+10588981374ad065ba5c3d4.jpg
+19f9b-porta_hugo_1977_gh_t.jpg
+360_F_713566020_U1TzU0VuTbTVpwvHrtOgg498JTQODLLD.jpg
+3a13e38a548ae28ce4de5bec74891d6e.jpg
+5e95ff45d6400bc8df5d4eaf563533d8.jpeg
+dogo.png
+h1.jpg
+h12.jpg
+h3.jpg
+h4.jpg
+h5.jpg
+h6.jpg
+praying.png
+Screenshot_53.png
+portada.png
+cartel.png
+atras.png
+atras blanco.png
+banco.png
+banco 2.png
+frentes blanco.png
+inpho_01030679.jpg
+istockphoto-1197280456-612x612.jpg
+merlin_181662060_f210970c-d53c-48a7-9fdb-1919a8092078-superJumbo.jpg
+unnamed.jpg
+unnamed (1).jpg
+webb-ellis-leather-puntabout-ball-rugby-souvenir-full-size-14450-p.jpg
+pug england blanco.png
+pug england.png
+pug ireland blanco.png
+pug ireland.png
+england 1.png
+england 2.png
+england blanco.png
+france.png
+france 2.png
+wales.png
+wales blanco.png
+iRELAND.png
+iRELAND BLANCO.png
+Argentina Blanco.png
+Argentina Blanco  Bordado.png
+Argentina.png
+SCOTLAND blanco.png
+Scotland.png
+Japón blanco.png
+Cartel generico.png
+LOGO WEB.png
+ETIQUETA INTERNA.png
+logo 1.png
+logo blanco essential.png
+logo pequeño.png
+logo portada Face.png
+logo white CLOTHE  LIGHT.png
+logo white CLOTHE.png
+logo white.png
+Screenshot_1.png
+San Isidro.png
